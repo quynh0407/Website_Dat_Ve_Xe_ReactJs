@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/tailwind-output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+</head>
+
+<body class=" m-0 p-0">
+    <header class="p-0 mb-3">
+        <div class="menu fixed top-0 left-0 w-full z-50" id="menu">
+            <div class="menu-top flex justify-between w-[80%] lg:w-[80%] mx-auto items-center py-4">
+                <div class="menu-top-left font-bold text-2xl">
+                    <img src="../../public/assets/images/main/logo.png" alt="" class="w-1/2 md:w-[50%]">
+                </div>
+                <div class="menu-top-right flex p-2">
+                    <ul class="flex flex-col md:flex-row gap-4 justify-between list-none items-center">
+                        <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="#">Hỗ trợ</a></li>
+                        <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="#">Đặt chỗ của
+                                tôi</a></li>
+                        <li class="border border-white rounded-lg px-4 py-2 hover:bg-black/10 cursor-pointer"><a
+                                href="#" class="no-underline"><i class="fas fa-user mr-2"></i> Đăng ký</a></li>
+                        <li
+                            class="rounded-lg px-4 py-2 bg-sky-500 hover:text-white transition duration-300 font-bold hover:bg-sky-600/50">
+                            <a href="#" class="no-underline">Đăng nhập</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-gray-500 opacity-50">
+            <div class="menu-bottom flex justify-start w-[80%] lg:w-[80%] mx-auto items-center py-1">
+                <ul class="flex flex-wrap gap-4 justify-center md:justify-start list-none items-center font-bold">
+                    <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Đặt vé xe</li>
+                    <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Về chúng tôi</li>
+                    <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Lịch trình</li>
+                    <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Tin tức</li>
+                    <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Liên hệ</li>
+                </ul>
+            </div>
+            <hr class="border-gray-500 opacity-50">
+        </div>
+
+        <div id="mobileMenu" class=" w-full z-50 bg-[#043175] text-white ">
+            <div class="menu-top flex justify-between w-[90%] mx-auto items-center py-4">
+                <div class="menu-top-left font-bold text-2xl">
+                    <img src="../../public/assets/images/main/logo.png" alt="Logo" class="w-1/2 md:w-[50%]">
+                </div>
+
+                <button id="menu-toggle" class="block md:hidden p-2 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <hr class="border-gray-500 opacity-50">
+
+            <div id="mobileDropdownMenu" class="hidd shadow-md">
+                <ul class="flex flex-col text-center font-bold py-4">
+                    <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Đặt vé xe</li>
+                    <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Về chúng tôi</li>
+                    <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Lịch trình</li>
+                    <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Tin tức</li>
+                    <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Liên hệ</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main class="home mx-auto w-full md:w-[80%] mb-5 px-4 mt-[11%]"  >
+        <div class="bg-white rounded-lg p-4 mb-3">
+            <div class="flex flex-col md:flex-row">
+                <aside class="w-full md:w-1/4 p-4 bg-gray-100 mr-5 mt-2">
+                    <h4 class="text-xl font-bold text-orange-500 border-b-4 border-orange-500 inline-block pb-1 mb-1">
+                        Tin Tức Mới Nhất
+                    </h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <a href="#" class="flex items-center text-gray-800 hover:text-blue-600">
+                                <img src="../../public/assets/images/main/tintuc4.jpeg" alt="Bài viết 1"
+                                    class="w-12 h-12 object-cover rounded mr-3" width="40">
+                                <span class="ml-2 line-clamp-2">Siêu ưu đãi đặt vé xe khách trên VNPAY</span>
+                            </a>
+                        </li>
+                        <li class="flex items-center">
+                            <a href="#" class="flex items-center text-gray-800 hover:text-blue-600">
+                                <img src="../../public/assets/images/main/tintuc3.jpeg" alt="Bài viết 2"
+                                    class="w-12 h-12 object-cover rounded mr-3" width="40">
+                                <span class="ml-2 line-clamp-2">Những sự kiện khuyến mãi không thể bỏ lỡ</span>
+                            </a>
+                        </li>
+                        <li class="flex items-center">
+                            <a href="#" class="flex items-center text-gray-800 hover:text-blue-600">
+                                <img src="../../public/assets/images/main/tintuc5.jpeg" alt="Bài viết 3"
+                                    class="w-12 h-12 object-cover rounded mr-3" width="40">
+                                <span class="ml-2 line-clamp-2">Thuê xe du lịch: ghế ngồi, giường nằm</span>
+                            </a>
+                        </li>
+                    </ul>                    
+
+                    <h5
+                        class="text-xl font-bold text-orange-500 border-b-4 border-orange-500 inline-block pb-1 mb-1 mt-3">
+                        Danh Mục Tin Tức</h5>
+                        <ul class="space-y-3">
+                            <li class="flex items-center">
+                                <a href="#" class="flex items-center text-gray-800 hover:text-blue-600">
+                                    <img src="../../public/assets/images/main/tintuc6.webp" alt="Sách Mới"
+                                        class="w-12 h-12 object-cover rounded mr-3" width="50">
+                                    <span class="ml-2 line-clamp-2">Tuyển dụng tài xế lái xe</span>
+                                </a>
+                            </li>
+                            <li class="flex items-center">
+                                <a href="#" class="flex items-center text-gray-800 hover:text-blue-600">
+                                    <img src="../../public/assets/images/main/tintuc7.webp" alt="Sách Mới"
+                                        class="w-12 h-12 object-cover rounded mr-3" width="50">
+                                    <span class="ml-2 line-clamp-2">Các chương trình khuyến mãi</span>
+                                </a>
+                            </li>
+                            <li class="flex items-center">
+                                <a href="#" class="flex items-center text-gray-800 hover:text-blue-600">
+                                    <img src="../../public/assets/images/main/tintuc8.webp" alt="Tác Giả"
+                                        class="w-12 h-12 object-cover rounded mr-3" width="50">
+                                    <span class="ml-2 line-clamp-2">Tuyến TP. Hồ Chí Minh - TP. Cần Thơ</span>
+                                </a>
+                            </li>
+                        </ul>                        
+                </aside>
+
+                <section class="w-full md:w-3/4 p-4">
+                    <h2 class="text-3xl font-bold text-orange-500 border-b-4 border-orange-500 inline-block pb-1 mb-5">
+                        Tất cả tin Tức
+                    </h2>
+                    <div class="grid grid-cols-1 gap-6">
+                        <div class="flex items-center space-x-4">
+                            <a href="#">
+                                <img src="../../public/assets/images/main/tintuc2.jpg" alt="Sách Bán Chạy"
+                                    class="w-80 h-32 object-cover rounded" width="350" />
+                            </a>
+                            <div>
+                                <h3 class="text-base font-semibold line-clamp-3">
+                                    SIÊU ƯU ĐÃI ĐẶT VÉ XE KHÁCH TRÊN VÍ VNPAY - MUA NHIỀU TẶNG NHIỀU!
+                                </h3>
+                                <p class="text-gray-600 line-clamp-3">
+                                    Từ nay đến 31/04/2025, ví VNPAY triển khai chương trình ưu đãi đặc biệt: mua 3 vé tặng 1 vé, mua 6 vé tặng 2 vé. Ưu đãi áp dụng trong khung giờ từ 11h đến 12h mỗi ngày và số lượng có hạn. Nhanh tay đặt vé để không bỏ lỡ cơ hội tiết kiệm chi phí di chuyển!
+                                </p>
+                                <span class="text-sm text-gray-500">Ngày đăng: 01/01/2025</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <a href="#">
+                                <img src="../../public/assets/images/main/tintuc2.jpg" alt="Sách Bán Chạy"
+                                    class="w-80 h-32 object-cover rounded" width="350" />
+                            </a>
+                            <div>
+                                <h3 class="text-base font-semibold line-clamp-3">
+                                    SIÊU ƯU ĐÃI ĐẶT VÉ XE KHÁCH TRÊN VÍ VNPAY - MUA NHIỀU TẶNG NHIỀU!
+                                </h3>
+                                <p class="text-gray-600 line-clamp-3">
+                                    Từ nay đến 31/04/2025, ví VNPAY triển khai chương trình ưu đãi đặc biệt: mua 3 vé tặng 1 vé, mua 6 vé tặng 2 vé. Ưu đãi áp dụng trong khung giờ từ 11h đến 12h mỗi ngày và số lượng có hạn. Nhanh tay đặt vé để không bỏ lỡ cơ hội tiết kiệm chi phí di chuyển!
+                                </p>
+                                <span class="text-sm text-gray-500">Ngày đăng: 01/01/2025</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4">
+                            <a href="#">
+                                <img src="../../public/assets/images/main/tintuc2.jpg" alt="Sách Bán Chạy"
+                                    class="w-80 h-32 object-cover rounded" width="350" />
+                            </a>
+                            <div>
+                                <h3 class="text-base font-semibold line-clamp-3">
+                                    SIÊU ƯU ĐÃI ĐẶT VÉ XE KHÁCH TRÊN VÍ VNPAY - MUA NHIỀU TẶNG NHIỀU!
+                                </h3>
+                                <p class="text-gray-600 line-clamp-3">
+                                    Từ nay đến 31/04/2025, ví VNPAY triển khai chương trình ưu đãi đặc biệt: mua 3 vé tặng 1 vé, mua 6 vé tặng 2 vé. Ưu đãi áp dụng trong khung giờ từ 11h đến 12h mỗi ngày và số lượng có hạn. Nhanh tay đặt vé để không bỏ lỡ cơ hội tiết kiệm chi phí di chuyển!
+                                </p>
+                                <span class="text-sm text-gray-500">Ngày đăng: 01/01/2025</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4">
+                            <a href="#">
+                                <img src="../../public/assets/images/main/tintuc2.jpg" alt="Sách Bán Chạy"
+                                    class="w-80 h-32 object-cover rounded" width="350" />
+                            </a>
+                            <div>
+                                <h3 class="text-base font-semibold line-clamp-3">
+                                    SIÊU ƯU ĐÃI ĐẶT VÉ XE KHÁCH TRÊN VÍ VNPAY - MUA NHIỀU TẶNG NHIỀU!
+                                </h3>
+                                <p class="text-gray-600 line-clamp-3">
+                                    Từ nay đến 31/04/2025, ví VNPAY triển khai chương trình ưu đãi đặc biệt: mua 3 vé tặng 1 vé, mua 6 vé tặng 2 vé. Ưu đãi áp dụng trong khung giờ từ 11h đến 12h mỗi ngày và số lượng có hạn. Nhanh tay đặt vé để không bỏ lỡ cơ hội tiết kiệm chi phí di chuyển!
+                                </p>
+                                <span class="text-sm text-gray-500">Ngày đăng: 01/01/2025</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4">
+                            <a href="#">
+                                <img src="../../public/assets/images/main/tintuc2.jpg" alt="Sách Bán Chạy"
+                                    class="w-80 h-32 object-cover rounded" width="350" />
+                            </a>
+                            <div>
+                                <h3 class="text-base font-semibold line-clamp-3">
+                                    SIÊU ƯU ĐÃI ĐẶT VÉ XE KHÁCH TRÊN VÍ VNPAY - MUA NHIỀU TẶNG NHIỀU!
+                                </h3>
+                                <p class="text-gray-600 line-clamp-3">
+                                    Từ nay đến 31/04/2025, ví VNPAY triển khai chương trình ưu đãi đặc biệt: mua 3 vé tặng 1 vé, mua 6 vé tặng 2 vé. Ưu đãi áp dụng trong khung giờ từ 11h đến 12h mỗi ngày và số lượng có hạn. Nhanh tay đặt vé để không bỏ lỡ cơ hội tiết kiệm chi phí di chuyển!
+                                </p>
+                                <span class="text-sm text-gray-500">Ngày đăng: 01/01/2025</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4">
+                            <a href="#">
+                                <img src="../../public/assets/images/main/tintuc2.jpg" alt="Sách Bán Chạy"
+                                    class="w-80 h-32 object-cover rounded" width="350" />
+                            </a>
+                            <div>
+                                <h3 class="text-base font-semibold line-clamp-3">
+                                    SIÊU ƯU ĐÃI ĐẶT VÉ XE KHÁCH TRÊN VÍ VNPAY - MUA NHIỀU TẶNG NHIỀU!
+                                </h3>
+                                <p class="text-gray-600 line-clamp-3">
+                                    Từ nay đến 31/04/2025, ví VNPAY triển khai chương trình ưu đãi đặc biệt: mua 3 vé tặng 1 vé, mua 6 vé tặng 2 vé. Ưu đãi áp dụng trong khung giờ từ 11h đến 12h mỗi ngày và số lượng có hạn. Nhanh tay đặt vé để không bỏ lỡ cơ hội tiết kiệm chi phí di chuyển!
+                                </p>
+                                <span class="text-sm text-gray-500">Ngày đăng: 01/01/2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </section>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-top"></div>
+        <div class="footer-bottom bg-[#1C2930] text-white py-10">
+            <div class="px-4 w-full md:w-[80%] mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-start gap-55 md:gap-4">
+                    <div>
+                        <img src="../../public/assets/images/main/logo.png" alt="Logo" class="w-full md:w-[60%] mb-4">
+                        <a href="" class="bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">🤝 Liên
+                            hệ với chúng tôi</a>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Về chúng tôi</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li><a href="#" class="hover:text-gray-100">Cách đặt chỗ</a></li>
+                            <li><a href="#" class="hover:text-gray-100">Liên hệ chúng tôi</a></li>
+                            <li><a href="#" class="hover:text-gray-100">Trợ giúp</a></li>
+                            <li><a href="#" class="hover:text-gray-100">Tuyển dụng</a></li>
+                            <li><a href="#" class="hover:text-gray-100">Về chúng tôi</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Dịch vụ</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li><a href="#" class="hover:text-gray-100">Vé xe khách</a></li>
+                            <li><a href="#" class="hover:text-gray-100">Đưa đón sân bay</a></li>
+                            <li><a href="#" class="hover:text-gray-100">Cho thuê xe</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Chính sách</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li><a href="#" class="hover:text-gray-100">Chính sách bảo mật</a></li>
+                            <li><a href="#" class="hover:text-gray-100">Điều khoản & Điều kiện</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-600 mt-8 pt-4 text-center text-gray-400 text-sm">
+                © 2025 Bụi đường- Tất cả quyền được bảo lưu.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

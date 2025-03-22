@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import "./styles/css/index.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "swiper/css";
+import "swiper/css/navigation"; // Nếu dùng navigation
+import "swiper/css/pagination"; // Nếu dùng pagination
+
+
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/client/Header";
+import Footer from "./components/client/Footer";
+import Home from "./pages/client/home";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <boddy className="m-0 p-0">
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+      <Footer />
+      </boddy>
+    </Router>
   );
 }
 

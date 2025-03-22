@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link href="../css/index.css" rel="stylesheet">
+   <link rel="stylesheet" href="../css/tailwind-output.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+</head>
+
+<body class=" m-0 p-0">
+
+   <header class="p-0 mb-3">
+      <div class=" fixed top-0 left-0 w-full z-50" id="menu">
+         <div class="menu-top flex justify-between w-[80%] lg:w-[80%] mx-auto items-center py-4">
+            <div class="menu-top-left font-bold text-2xl">
+               <img src="../../public/assets/images/main/logo.png" alt class="w-1/2 md:w-[50%]">
+            </div>
+            <div class="menu-top-right flex p-2">
+               <ul class="flex flex-col md:flex-row gap-4 justify-between list-none items-center">
+                  <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="#">Hỗ trợ</a></li>
+                  <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="#">Đặt chỗ của
+                        tôi</a></li>
+                  <li class="border border-white rounded-lg px-4 py-2 hover:bg-black/10 cursor-pointer"><a href="#"
+                        class="no-underline"><i class="fas fa-user mr-2"></i> Đăng
+                        ký</a></li>
+                  <li
+                     class="rounded-lg px-4 py-2 bg-sky-500 hover:text-white transition duration-300 font-bold hover:bg-sky-600/50">
+                     <a href="#" class="no-underline">Đăng nhập</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <hr class="border-gray-500 opacity-50">
+         <div class="menu-bottom flex justify-start w-[80%] lg:w-[80%] mx-auto items-center py-1">
+            <ul class="flex flex-wrap gap-4 justify-center md:justify-start list-none items-center font-bold">
+               <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Đặt
+                  vé xe</li>
+               <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Về
+                  chúng tôi</li>
+               <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="./bus.html">Lịch trình</a>
+               </li>
+               <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Tin
+                  tức</li>
+               <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Liên
+                  hệ</li>
+            </ul>
+         </div>
+         <hr class="border-gray-500 opacity-50">
+      </div>
+
+      <div id="mobileMenu" class=" w-full z-50 bg-[#043175] text-white ">
+         <div class="menu-top flex justify-between w-[90%] mx-auto items-center py-4">
+            <div class="menu-top-left font-bold text-2xl">
+               <img src="../../public/assets/images/main/logo.png" alt="Logo" class="w-1/2 md:w-[50%]">
+            </div>
+
+            <button id="menu-toggle" class="block md:hidden p-2 text-white">
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                  </path>
+               </svg>
+            </button>
+         </div>
+
+         <hr class="border-gray-500 opacity-50">
+
+         <div id="mobileDropdownMenu" class="hidd shadow-md">
+            <ul class="flex flex-col text-center font-bold py-4">
+               <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Đặt
+                  vé xe</li>
+               <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Về
+                  chúng tôi</li>
+               <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="./bus.html">Lịch trình</a>
+               </li>
+               <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Tin
+                  tức</li>
+               <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Liên
+                  hệ</li>
+            </ul>
+         </div>
+      </div>
+   </header>
+   <main class="history mt-[11%] mb-[1%] ">
+      <div class="flex w-[80%] mx-auto">
+         <div class="w-[20%] bg-gray-100 p-5 rounded-md border border-gray-200">
+            <ul class="space-y-4">
+               <li class="border border-gray-200 rounded-md"><a href="#"
+                     class="block hover:bg-gray-300 p-2 rounded-md"><i class="fas fa-user mr-2"></i> Thông tin cá
+                     nhân</a></li>
+               <li class="border border-gray-200 rounded-md"><a href="#"
+                     class="block hover:bg-gray-300 p-2 rounded-md"><i class="fas fa-history mr-2"></i> Lịch sử đặt
+                     vé</a></li>
+               <li class="border border-gray-200 rounded-md"><a href="#"
+                     class="block hover:bg-gray-300 p-2 rounded-md"><i class="fas fa-sign-out-alt mr-2"></i> Đăng
+                     xuất</a></li>
+            </ul>
+         </div>
+         <div class="w-[80%] bg-white p-5 rounded-md ml-4">
+            <h1 class="text-3xl font-bold">Lịch sử đặt vé</h1>
+            <p class="text-gray-600">Theo dõi và quản lý quá trình lịch sử mua vé của bạn.</p>
+
+            <div class="mt-6 p-4 bg-white border border-gray-200 rounded-md shadow-sm w-full relative overflow-hidden"
+               style="background: linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0.849), rgba(255, 255, 255, 0.342)), 
+     url('../../public/assets/images/main/bg-history-item.jpg'); background-position: right center; background-size: cover;">
+               <div class="mb-4 flex justify-between ">
+                  <div class="flex justify-between">
+                     <p class="font-bold">Mã vé:</p>
+                     <p>123456789</p>
+                  </div>
+                  <div class="flex items-center">
+                     <p class="font-bold mr-2">Trạng thái:</p>
+                     <p class="text-yellow-700 bg-yellow-200 p-1 rounded-md">Chưa khởi hành</p>
+                  </div>
+               </div>
+               <div class="space-y-2 ">
+                  <div class="flex justify-between">
+                     <p class="font-medium">Tuyến đường:</p>
+                     <p>Hà Nội - Sài Gòn</p>
+                  </div>
+                  <div class="flex justify-between">
+                     <p class="font-medium">Ngày giờ xuất phát:</p>
+                     <p>20/12/2023 08:00 AM</p>
+                  </div>
+                  <div class="flex justify-between">
+                     <p class="font-medium">Số ghế:</p>
+                     <p>A12</p>
+                  </div>
+                  <div class="flex justify-between">
+                     <p class="font-bold">Tổng giá vé:</p>
+                     <p class="font-bold">500,000 VND</p>
+                  </div>
+               </div>
+               <hr class="mt-2 text-gray-400">
+               <div class="flex justify-end mt-4">
+                  <button class="bg-red-400 text-white px-4 py-2 rounded-md hover:bg-red-600"
+                     onclick="openCancelModal()">Hủy vé</button>
+               </div>
+            </div>
+
+
+
+            <div class="mt-6 p-4 bg-white border border-gray-200 rounded-md shadow-sm w-full relative overflow-hidden"
+               style="background: linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0.849),  rgba(255, 255, 255, 0.445)), url('../../public/assets/images/main/bg-history-item.jpg'); background-position: right center; background-size: cover;">
+               <div class="mb-4 flex justify-between ">
+                  <div class="flex justify-between">
+                     <p class="font-bold mr-1">Mã vé:</p>
+                     <p> 987654321</p>
+                  </div>
+                  <div class="flex items-center">
+                     <p class="font-bold mr-2">Trạng thái:</p>
+                     <p class="text-green-700 bg-green-200 p-1 rounded-md">Đã tới tuyến</p>
+                  </div>
+               </div>
+               <div class="space-y-2 ">
+                  <div class="flex justify-between">
+                     <p class="font-medium">Tuyến đường:</p>
+                     <p>Đà Nẵng - Huế</p>
+                  </div>
+                  <div class="flex justify-between">
+                     <p class="font-medium">Ngày giờ xuất phát:</p>
+                     <p>15/11/2023 02:00 PM</p>
+                  </div>
+                  <div class="flex justify-between">
+                     <p class="font-medium">Số ghế:</p>
+                     <p>B5</p>
+                  </div>
+                  <div class="flex justify-between">
+                     <p class="font-bold">Tổng giá vé:</p>
+                     <p class="font-bold">300,000 VND</p>
+                  </div>
+               </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-white border border-gray-200 rounded-md shadow-sm w-full relative overflow-hidden"
+               style="background: linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0.849),  rgba(255, 255, 255, 0.342)), url('../../public/assets/images/main/bg-history-item.jpg'); background-position: right center; background-size: cover;">
+               <div class="mb-4 flex justify-between ">
+                  <div class="flex justify-between">
+                     <p class="font-bold">Mã vé:</p>
+                     <p>1122334455</p>
+                  </div>
+                  <div class="flex items-center">
+                     <p class="font-bold mr-2">Trạng thái:</p>
+                     <p class="text-red-700 bg-red-200 p-1 rounded-md">Đã hủy</p>
+                  </div>
+               </div>
+               <div class="space-y-2 ">
+                  <div class="flex justify-between">
+                     <p class="font-medium">Tuyến đường:</p>
+                     <p>Hải Phòng - Quảng Ninh</p>
+                  </div>
+                  <div class="flex justify-between">
+                     <p class="font-medium">Ngày giờ xuất phát:</p>
+                     <p>10/10/2023 10:00 AM</p>
+                  </div>
+                  <div class="flex justify-between">
+                     <p class="font-medium">Số ghế:</p>
+                     <p>C3</p>
+                  </div>
+                  <div class="flex justify-between">
+                     <p class="font-bold">Tổng giá vé:</p>
+                     <p class="font-bold">200,000 VND</p>
+                  </div>
+               </div>
+            </div>
+
+
+
+         </div>
+      </div>
+   </main>
+   <!-- Modal Hủy Vé -->
+   <div id="cancelModal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+      <div class="absolute inset-0 bg-black opacity-50"></div>
+
+      <div class="relative bg-white p-6 rounded-lg shadow-lg w-96 z-10">
+         <h2 class="text-lg font-bold mb-4 text-center">Xác nhận hủy vé</h2>
+
+         <p class="font-medium mb-2">Chọn lý do hủy:</p>
+         <div class="space-y-2">
+            <label class="flex items-center space-x-2">
+               <input type="radio" name="cancel_reason" value="Không thể đi" onclick="toggleTextarea(true)">
+               <span>Không thể đi</span>
+            </label>
+            <label class="flex items-center space-x-2">
+               <input type="radio" name="cancel_reason" value="Đổi kế hoạch" onclick="toggleTextarea(false)">
+               <span>Đổi kế hoạch</span>
+            </label>
+            <label class="flex items-center space-x-2">
+               <input type="radio" name="cancel_reason" value="Khác" id="otherReasonRadio"
+                  onclick="toggleTextarea(false)">
+               <span>Khác</span>
+            </label>
+         </div>
+
+         <textarea id="otherReason" class="w-full p-2 mt-3 border border-gray-300 rounded-md hidden"
+            placeholder="Nhập lý do khác..."></textarea>
+
+         <div class="flex justify-end mt-4">
+            <button class="bg-gray-300 text-black px-4 py-2 rounded-md mr-2" onclick="closeCancelModal()">Hủy</button>
+            <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700">Xác nhận</button>
+         </div>
+      </div>
+   </div>
+
+   <div class="bg-gray-100 text-center py-4 text-sm text-gray-600 mb-0">
+      <div class="space-x-4">
+         <a href="#" class="hover:underline">Về chúng tôi</a>
+         <span>·</span>
+         <a href="#" class="hover:underline">Điều khoản và điều kiện</a>
+         <span>·</span>
+         <a href="#" class="hover:underline">Cách chúng tôi hoạt động</a>
+         <span>·</span>
+         <a href="#" class="hover:underline">Chính sách bảo mật & Cookie</a>
+         <span>·</span>
+         <a href="#" class="hover:underline">Trung tâm trợ giúp</a>
+      </div>
+      <p class="mt-2">&copy; 2025 Công ty của bạn. Bảo lưu mọi quyền.</p>
+   </div>
+
+   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+   <script src="../js/main.js"></script>
+</body>
+
+</html>
