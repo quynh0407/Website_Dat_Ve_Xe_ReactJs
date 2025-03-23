@@ -16,7 +16,7 @@
   }
 }
 .footer-top {
-  background-image: url("../assets/images/main/bg-footer.jpg");
+  background-image: url("../../../public/assets/images/main/bg-footer.jpg");
   min-height: 10rem;
   background-size: cover;
   background-position: center;
@@ -39,7 +39,7 @@
 body:has(#home) header,
 body:has(#booktickets) header,
 body:has(#busDetail) header {
-  background-image: url("../assets/images/main/background.webp");
+  background-image: url("../../../public/assets/images/main/background.webp");
   min-height: 35rem;
   background-size: cover;
   color: white !important;
@@ -50,7 +50,7 @@ header {
 }
 
 #home .content {
-  background-image: url("../assets/images/main/area-banner-vn.webp");
+  background-image: url("../../../public/assets/images/main/area-banner-vn.webp");
   background-size: cover;
   background-position: center;
   height: 34rem;

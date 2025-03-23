@@ -5,8 +5,8 @@ import  "../src/styles/js/main.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/client/Header";
 import Footer from "./components/client/Footer";
-import Home from "./pages/client/home";
-import "@fortawesome/fontawesome-free/css/all.min.css";
+import Home from "./pages/client/Home";
+
 
 
 function App() {

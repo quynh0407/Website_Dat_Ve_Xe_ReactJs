@@ -7,7 +7,7 @@ function Footer(){
                     <div
                         class="flex flex-col md:flex-row justify-between items-start gap-55 md:gap-4">
                         <div>
-                            <img src="../../public/assets/images/main/logo.png"
+                            <img src="/assets/images/main/logo.png"
                                 alt="Logo" class="w-full md:w-[60%] mb-4"/>
                             <a href
                                 class="bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">🤝

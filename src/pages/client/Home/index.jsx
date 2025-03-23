@@ -10,7 +10,7 @@ function Home (){
                     class="flex flex-col md:flex-row gap-6 justify-center items-start p-4">
                     <div
                         class="flex items-start text-left rounded-lg shadow-md w-full md:w-1/3">
-                        <img src="../../styles/assets/images/main/icon1.webp"
+                        <img src="./assets/images/main/icon1.webp"
                             alt class="w-20 h-20 mb-2"/>
                         <p class="max-w-xs"><strong>Đáp ứng mọi nhu cầu của
                                 bạn</strong><br/>Từ đặt vé xe, bạn có thể tin
@@ -18,7 +18,7 @@ function Home (){
                     </div>
                     <div
                         class="flex items-start text-left rounded-lg shadow-md w-full md:w-1/3">
-                        <img src="../../public/assets/images/main/icon2.webp"
+                        <img src="/assets/images/main/icon2.webp"
                             alt class="w-20 h-20 mb-2"/>
                         <p class="max-w-xs"><strong>Tùy chọn đặt chỗ linh
                                 hoạt</strong><br/>Kế hoạch thay đổi bất ngờ? Đừng
@@ -26,7 +26,7 @@ function Home (){
                     </div>
                     <div
                         class="flex items-start text-left rounded-lg shadow-md w-full md:w-1/3">
-                        <img src="../../public/assets/images/main/icon3.webp"
+                        <img src="./assets/images/main/icon3.webp"
                             alt class="w-20 h-20 mb-2"/>
                         <p class="max-w-xs"><strong>Thanh toán an toàn và thuận
                                 tiện</strong><br/>Tận hưởng nhiều cách thanh
@@ -47,7 +47,7 @@ function Home (){
                         class="max-w-sm mx-auto p-4 rounded-xl shadow-md w-full md:w-1/3">
                         <div class="relative rounded-xl overflow-hidden">
                             <img
-                                src="../../public/assets/images/main/Rectangle 23 (2).png"
+                                src="/assets/images/main/Rectangle 23 (2).png"
                                 class="w-full"/>
                             <div
                                 class="absolute inset-0 bg-black/40 flex items-end p-4">
@@ -94,7 +94,7 @@ function Home (){
                         class="max-w-sm mx-auto p-4 rounded-xl shadow-md w-full md:w-1/3">
                         <div class="relative rounded-xl overflow-hidden">
                             <img
-                                src="../../public/assets/images/main/Rectangle 23 (3).png"
+                                src="/assets/images/main/Rectangle 23 (3).png"
                                 alt="Đà Lạt" class="w-full"/>
                             <div
                                 class="absolute inset-0 bg-black/40 flex items-end p-4">
@@ -141,7 +141,7 @@ function Home (){
                         class="max-w-sm mx-auto p-4 rounded-xl shadow-md w-full md:w-1/3">
                         <div class="relative rounded-xl overflow-hidden">
                             <img
-                                src="../../public/assets/images/main/Rectangle 23 (4).png"
+                                src="/assets/images/main/Rectangle 23 (4).png"
                                 alt="Đà Nẵng" class="w-full"/>
                             <div
                                 class="absolute inset-0 bg-black/40 flex items-end p-4">
@@ -197,7 +197,7 @@ function Home (){
                     <div class="swiper-wrapper flex mx-auto gap-4 p-2">
                         <a href="#"
                             class="swiper-slide bg-white shadow-md rounded-lg p-2 block">
-                            <img src="../../public/assets/images/main/blog1.png"
+                            <img src="/assets/images/main/blog1.png"
                                 alt="Khám phá vẻ đẹp của Đà Lạt"
                                 class="rounded-lg mb-2 w-full"/>
                             <h3 class="text-lg font-bold truncate-title">Khám
@@ -211,7 +211,7 @@ function Home (){
                         </a>
                         <a href="#"
                             class="swiper-slide bg-white shadow-md rounded-lg p-2 block">
-                            <img src="../../public/assets/images/main/blog2.jpg"
+                            <img src="/assets/images/main/blog2.jpg"
                                 alt="Những món ăn đặc sản"
                                 class="rounded-lg mb-2 w-full"/>
                             <h3 class="text-lg font-bold truncate-title">Những
@@ -225,7 +225,7 @@ function Home (){
                         </a>
                         <a href="#"
                             class="swiper-slide bg-white shadow-md rounded-lg p-2 block">
-                            <img src="../../public/assets/images/main/blog3.png"
+                            <img src="/assets/images/main/blog3.png"
                                 alt="Kinh nghiệm du lịch"
                                 class="w-full rounded-lg mb-2"/>
                             <h3 class="text-lg font-bold truncate-title">Kinh
@@ -239,7 +239,7 @@ function Home (){
                         </a>
                         <a href="#"
                             class="swiper-slide bg-white shadow-md rounded-lg p-2 block">
-                            <img src="../../public/assets/images/main/blog4.png"
+                            <img src="/assets/images/main/blog4.png"
                                 alt="Top 10 địa điểm du lịch"
                                 class="w-full rounded-lg mb-2"/>
                             <h3 class="text-lg font-bold truncate-title">Top 10
@@ -254,7 +254,7 @@ function Home (){
                         </a>
                         <a href="#"
                             class="swiper-slide bg-white shadow-md rounded-lg p-2 block">
-                            <img src="../../public/assets/images/main/blog5.png"
+                            <img src="/assets/images/main/blog5.png"
                                 alt="Lễ hội truyền thống"
                                 class="w-full rounded-lg mb-2"/>
                             <h3 class="text-lg font-bold truncate-title">Những
@@ -269,7 +269,7 @@ function Home (){
                         </a>
                         <a href="#"
                             class="swiper-slide bg-white shadow-md rounded-lg p-2 block">
-                            <img src="../../public/assets/images/main/blog6.png"
+                            <img src="/assets/images/main/blog6.png"
                                 alt="Bí quyết săn vé máy bay"
                                 class="w-full rounded-lg mb-2"/>
                             <h3 class="text-lg font-bold truncate-title">Bí
@@ -283,7 +283,7 @@ function Home (){
                         </a>
                         <a href="#"
                             class="swiper-slide bg-white shadow-md rounded-lg p-2 block">
-                            <img src="../../public/assets/images/main/blog7.png"
+                            <img src="/assets/images/main/blog7.png"
                                 alt="Khám phá văn hóa"
                                 class="w-full rounded-lg mb-2"/>
                             <h3 class="text-lg font-bold truncate-title">Khám
@@ -342,7 +342,7 @@ function Home (){
                                 class="text-4xl font-semibold text-gray-700">456+</p>
                         </div>
                         <img id="bus"
-                            src="../../public/assets/images/main/bus.png"
+                            src="/assets/images/main/bus.png"
                             alt="Bus" width="350"
                             class="absolute bottom-0 left-[100%] opacity-0 transition-all duration-1000 md:left-auto md:right-0"/>
                     </div>

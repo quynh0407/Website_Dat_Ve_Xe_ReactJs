@@ -5,7 +5,7 @@ function Header (){
                 <div
                     class="menu-top flex justify-between w-[80%] lg:w-[80%] mx-auto items-center py-4">
                     <div class="menu-top-left font-bold text-2xl">
-                        <img src="../../public/assets/images/main/logo.png" alt
+                        <img src="/assets/images/main/logo.png" alt
                             class="w-1/2 md:w-[50%]"/>
                     </div>
                     <div class="menu-top-right flex p-2">
