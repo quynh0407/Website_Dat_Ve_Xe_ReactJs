@@ -43,14 +43,14 @@ function Header() {
                             className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Về
                             chúng tôi</li>
                         <li
-                            className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a
-                                href="./bus.html">Lịch trình</a></li>
-                        <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">
-                            <Link to="/blog">Tin tức</Link>
-                        </li>
-                        <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">
-                            <Link to="/contact">Liên hệ</Link>
-                        </li>
+                            class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a
+                                href="/bus">Lịch trình</a></li>
+                        <li
+                            class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="/blog">Tin
+                            tức</a></li>
+                        <li
+                            class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="/contact">Liên
+                            hệ</a></li>
                     </ul>
                 </div>
                 <hr className="border-gray-500 opacity-50" />

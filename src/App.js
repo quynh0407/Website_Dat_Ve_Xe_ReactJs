@@ -8,6 +8,8 @@ import Footer from "./components/client/Footer";
 import Home from "./pages/client/Home";
 import Blog from "./pages/client/Blog";
 import Contact from "./pages/client/Contact/index.jsx";
+import Bus from "./pages/client/Bus";
+import BookingTickets from "./pages/client/BookingTickets";
 
 
 
@@ -20,6 +22,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/bus" element={<Bus />} />
+        <Route path="/bookingTicket" element={<BookingTickets />} />
       </Routes>
       <Footer />
       </boddy>
