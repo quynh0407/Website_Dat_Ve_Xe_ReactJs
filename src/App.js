@@ -10,6 +10,7 @@ import Blog from "./pages/client/Blog";
 import Contact from "./pages/client/Contact/index.jsx";
 import Bus from "./pages/client/Bus";
 import BookingTickets from "./pages/client/BookingTickets";
+import Profile from "./pages/client/Profile";
 
 
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/bus" element={<Bus />} />
         <Route path="/bookingTicket" element={<BookingTickets />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       <Footer />
       </boddy>
