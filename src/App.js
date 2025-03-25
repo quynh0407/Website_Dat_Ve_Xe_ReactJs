@@ -11,6 +11,7 @@ import Contact from "./pages/client/Contact/index.jsx";
 import Bus from "./pages/client/Bus";
 import BookingTickets from "./pages/client/BookingTickets";
 import Profile from "./pages/client/Profile";
+import AboutUs from "./pages/client/About-us/index.jsx";
 
 
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/bus" element={<Bus />} />
         <Route path="/bookingTicket" element={<BookingTickets />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/about-us" element={<AboutUs />} />
       </Routes>
       <Footer />
       </boddy>
