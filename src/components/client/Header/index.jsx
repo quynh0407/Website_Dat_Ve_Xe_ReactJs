@@ -40,8 +40,8 @@ function Header() {
                             className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Đặt
                             vé xe</li>
                         <li
-                            className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Về
-                            chúng tôi</li>
+                            className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="/about-us">Về
+                            chúng tôi</a></li>
                         <li
                             class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a
                                 href="/bus">Lịch trình</a></li>
