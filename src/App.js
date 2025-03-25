@@ -12,6 +12,9 @@ import Bus from "./pages/client/Bus";
 import BookingTickets from "./pages/client/BookingTickets";
 import Profile from "./pages/client/Profile";
 import AboutUs from "./pages/client/About-us/index.jsx";
+import Login from "./pages/client/Login/index.jsx";
+import Register from "./pages/client/Register/index.jsx";
+import BookingHistory from "./pages/client/BookingHistory/index.jsx";
 
 
 
@@ -28,6 +31,9 @@ function App() {
         <Route path="/bookingTicket" element={<BookingTickets />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/bookingHistory" element={<BookingHistory />} />
       </Routes>
       <Footer />
       </boddy>

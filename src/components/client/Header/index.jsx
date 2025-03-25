@@ -17,16 +17,16 @@ function Header() {
                                     href="#">Hỗ trợ</a></li>
                             <li
                                 className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a
-                                    href="#">Đặt chỗ của
+                                    href="/bookingHistory">Đặt chỗ của
                                     tôi</a></li>
                             <li
                                 className="border border-white rounded-lg px-4 py-2 hover:bg-black/10 cursor-pointer"><a
-                                    href="login.html" className="no-underline"><i
+                                    href="/register" className="no-underline"><i
                                         className="fas fa-user mr-2"></i> Đăng
                                     ký</a></li>
                             <li
                                 className="rounded-lg px-4 py-2 bg-sky-500 hover:text-white transition duration-300 font-bold hover:bg-sky-600/50">
-                                <a href="register.html" className="no-underline">Đăng nhập</a>
+                                <a href="/login" className="no-underline">Đăng nhập</a>
                             </li>
                         </ul>
                     </div>
