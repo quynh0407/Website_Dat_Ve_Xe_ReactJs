@@ -8,7 +8,7 @@ import Footer from "./components/client/Footer";
 import Home from "./pages/client/Home";
 import Blog from "./pages/client/Blog";
 import Contact from "./pages/client/Contact/index.jsx";
-
+import AboutUs from "./pages/client/About-us/index.jsx";
 
 
 function App() {
@@ -20,6 +20,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/about-us" element={<AboutUs />} />
       </Routes>
       <Footer />
       </boddy>
