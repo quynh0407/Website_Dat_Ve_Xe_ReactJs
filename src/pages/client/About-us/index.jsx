@@ -1,6 +1,6 @@
 function AboutUs() {
     return(
-    <main className="home mx-auto w-full md:w-[80%] mt-[11%] px-4" >
+    <main className="home mx-auto w-full md:w-[80%] mt-[11%] px-4" id="home">
         <div className="bg-white rounded-lg p-4 mb-3">
             <div className="font-sans text-gray-800">
                 <div className="container mx-auto px-4 py-8">
