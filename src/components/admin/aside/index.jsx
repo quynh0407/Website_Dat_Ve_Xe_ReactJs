@@ -1,129 +1,101 @@
+import { FaTachometerAlt, FaBus, FaRoute, FaUserCog, FaUserTie, FaFileInvoice, FaCommentDots, FaPhone } from "react-icons/fa";
+import { MdDirectionsBus, MdFeedback } from "react-icons/md";
 
-function Aside(){
-    return(
-        <aside class="left-sidebar">
+
+function Aside() {
+  return (
+    <aside className="left-sidebar">
       <div>
-        <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="./index.html" class="text-nowrap logo-img">
-            <img src="../assets/images/logos/dark-logo.svg" width="180" alt="" />
+        <div className="brand-logo d-flex align-items-center justify-content-between">
+          <a href="/admin" className="text-nowrap logo-img">
+            <img src="/assets/images/logos/logo.png" width="180" alt="Logo" />
           </a>
-          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
-            <i class="ti ti-x fs-8"></i>
+          <div className="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i className="ti ti-x fs-8"></i>
           </div>
         </div>
-        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+
+        <nav className="sidebar-nav scroll-sidebar" data-simplebar="">
           <ul id="sidebarnav">
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">Home</span>
+            <li className="nav-small-cap">
+              <span className="hide-menu">Home</span>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-layout-dashboard"></i>
-                </span>
-                <span class="hide-menu">Dashboard</span>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/admin">
+                <FaTachometerAlt />
+                <span className="hide-menu">Bảng điều khiển</span>
               </a>
             </li>
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">UI COMPONENTS</span>
+
+            <li className="nav-small-cap">
+              <span className="hide-menu">Quản lý chuyến</span>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-article"></i>
-                </span>
-                <span class="hide-menu">Buttons</span>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/admin/routes/getAll">
+                <FaRoute />
+                <span className="hide-menu">Quản lý tuyến đường</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-alert-circle"></i>
-                </span>
-                <span class="hide-menu">Alerts</span>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/admin/busRoutes/getAll">
+                <MdDirectionsBus />
+                <span className="hide-menu">Quản lý tuyến xe</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-cards"></i>
-                </span>
-                <span class="hide-menu">Card</span>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/admin/bus/getAll">
+                <FaBus />
+                <span className="hide-menu">Quản lý xe</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-file-description"></i>
-                </span>
-                <span class="hide-menu">Forms</span>
+
+            <li className="nav-small-cap">
+              <span className="hide-menu">Quản lý tài khoản</span>
+            </li>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/admin/user/getAll">
+                <FaUserCog />
+                <span className="hide-menu">Quản lý người dùng</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-typography"></i>
-                </span>
-                <span class="hide-menu">Typography</span>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/admin/driver/getAll">
+                <FaUserTie />
+                <span className="hide-menu">Quản lý tài xế</span>
               </a>
             </li>
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">AUTH</span>
+
+            <li className="nav-small-cap">
+              <span className="hide-menu">Quản lý chung</span>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-login"></i>
-                </span>
-                <span class="hide-menu">Login</span>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/admin/blog/getAll">
+                <MdFeedback />
+                <span className="hide-menu">Quản lý Blog</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-user-plus"></i>
-                </span>
-                <span class="hide-menu">Register</span>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/admin/historyBill/getAll">
+                <FaFileInvoice />
+                <span className="hide-menu">Quản lý Hóa đơn</span>
               </a>
             </li>
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">EXTRA</span>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./icon-tabler.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-mood-happy"></i>
-                </span>
-                <span class="hide-menu">Icons</span>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/admin/review/getAll">
+                <FaCommentDots />
+                <span className="hide-menu">Quản lý Đánh Giá</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./sample-page.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-aperture"></i>
-                </span>
-                <span class="hide-menu">Sample Page</span>
+            <li className="sidebar-item">
+              <a className="sidebar-link" href="/admin/contact/getAll">
+                <FaPhone />
+                <span className="hide-menu">Quản lý Liên hệ</span>
               </a>
             </li>
           </ul>
-          <div class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded">
-            <div class="d-flex">
-              <div class="unlimited-access-title me-3">
-                <h6 class="fw-semibold fs-4 mb-6 text-dark w-85">Upgrade to pro</h6>
-                <a href="https://adminmart.com/product/modernize-bootstrap-5-admin-template/" target="_blank" class="btn btn-primary fs-2 fw-semibold lh-sm">Buy Pro</a>
-              </div>
-              <div class="unlimited-access-img">
-                <img src="../assets/images/backgrounds/rocket.png" alt="" class="img-fluid"/>
-              </div>
-            </div>
-          </div>
         </nav>
       </div>
     </aside>
-    )
+  );
 }
 export default Aside;

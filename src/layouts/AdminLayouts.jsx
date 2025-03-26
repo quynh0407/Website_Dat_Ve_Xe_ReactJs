@@ -4,8 +4,8 @@ import Header from "../components/admin/Header";
 import "../styles/admin/css/styles.min.css";
 
 import "../styles/admin/js/dashboard.ts";
-// import "../styles/admin/js/app.min.ts";
-// import "../styles/admin/js/sidebarmenu.ts";
+import "../styles/admin/js/app.min.ts";
+import "../styles/admin/js/sidebarmenu.ts";
 
 const AdminLayout = () => {
     return (
