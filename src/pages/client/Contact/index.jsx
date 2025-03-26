@@ -1,6 +1,6 @@
 function Contact() {
     return (
-        <main className="home mx-auto w-full md:w-[80%] mt-[11%] mb-5 px-4 rounded-lg" id="home">
+        <main className="home mx-auto w-full md:w-[80%] mb-5 px-4 rounded-lg" id="home">
             <div className="bg-white p-4 mb-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-0 p-4">
                     <div className="w-full p-2">

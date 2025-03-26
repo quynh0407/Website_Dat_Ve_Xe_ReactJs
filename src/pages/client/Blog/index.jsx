@@ -1,6 +1,6 @@
 function Blog () {
     return(
-<main className="home mx-auto w-full md:w-[80%] mb-5 px-4 mt-[11%]"  id="home">
+<main className="home mx-auto w-full md:w-[80%] mb-5 px-4"  id="home">
         <div className="bg-white rounded-lg p-4 mb-3">
             <div className="flex flex-col md:flex-row">
                 <aside className="w-full md:w-1/4 p-4 bg-gray-100 mr-5 mt-2">

@@ -1,7 +1,7 @@
 function BookingHistory() {
     return (
         <>
-            <main className="history my-[10%]  " id="home">
+            <main className="history mb-4 " id="home">
                 <div className="flex w-[80%]  mx-auto">
                     <div className="w-[20%] bg-gray-100 p-5 rounded-md border border-gray-200">
                         <ul className="space-y-4">

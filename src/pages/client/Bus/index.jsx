@@ -73,39 +73,39 @@ function Bus (){
                 </div>
             </div>
             <div className="w-[60%] p-4 w-full">
-                <h1 className="font-awesome text-[30px] font-bold pt-4">Điểm xuất phát - Điểm đến</h1>
+                <h1 className="font-awesome text-[30px] font-bold pt-2">Điểm xuất phát - Điểm đến</h1>
                 <div className="bg-white p-4 pl-8 pr-8 rounded-lg mt-8">
                     <div className="flex justify-between">
-                        <div className="flex">
-                            <div className="grid grid-cols-1 ">
+                        <div className="flex items-center w-full">
+                            <div className="grid grid-cols-1 w-[30%] ">
                                 <span
                                     className="font-bold text-4xl p-2">13:30</span>
-                                <span className="text-[15px]">An Khe - Vinh
+                                <span className="text-[15px] break-words whitespace-normal">An Khe - Vinh
                                     Long</span>
                             </div>
 
-                            <div className="flex">
-                                <div className="flex">
-                                    <img className="w-4 mb-8"
+                            <div className="flex items-center mb-4 w-[30%]">
+                                <div className="flex items-center">
+                                    <img className="w-4 mr-2"
                                         src="https://futabus.vn/images/icons/pickup.svg"
                                         alt/>
                                     <hr
-                                        className=" w-[25px] border-t-2 border-dashed border-gray-500 w-18 mt-8 "/>
+                                        className=" w-[40px] border-t-2 border-dashed border-gray-500 w-18"/>
                                 </div>
-                                <div className="text-[15px] p-2 pt-4">13 giờ</div>
-                                <div className="flex">
+                                <div className="text-[15px] pl-2 pr-2">13 giờ</div>
+                                <div className="flex items-center">
                                     <hr
-                                        className="  w-[25px] border-t-2 border-dashed border-gray-500 w-18 mt-8 "/>
-                                    <img className="w-4 mb-8"
+                                        className="  w-[40px] border-t-2 border-dashed border-gray-500 w-18 "/>
+                                    <img className="w-4 ml-2"
                                         src="https://futabus.vn/images/icons/station.svg"
                                         alt/>
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 ">
+                            <div className="grid grid-cols-1 pl-4 w-[30%]">
                                 <span
                                     className="font-bold text-4xl p-2">17:30</span>
-                                <span className="text-[15px]">An Minh (Kiên Giang) -
+                                <span className="text-[15px] break-words whitespace-normal">An Minh (Kiên Giang) -
                                     TP.Hồ Chí Minh</span>
                             </div>
                         </div>
@@ -116,7 +116,7 @@ function Bus (){
                                 className="p-2 text-xl pt-15 font-bold text-orange-600 ">200.0000đ</span>
                         </div>
                     </div>
-                    <hr className="border-gray-300"/>
+                    <hr className="border-gray-300 mt-2"/>
                     <div className="flex pt-4 justify-between">
                         <div className="flex">
                             <div className="flex">
@@ -141,37 +141,37 @@ function Bus (){
 
                 <div className="bg-white p-4 pl-8 pr-8 rounded-lg mt-8">
                     <div className="flex justify-between">
-                        <div className="flex">
-                            <div className="grid grid-cols-1 ">
+                        <div className="flex items-center w-full">
+                            <div className="grid grid-cols-1 w-[30%] ">
                                 <span
                                     className="font-bold text-4xl p-2">13:30</span>
-                                <span className="text-[15px]">ANKHE - TP. Hồ Chí
-                                    Minh</span>
+                                <span className="text-[15px] break-words whitespace-normal">An Khe - Vinh
+                                    Long</span>
                             </div>
 
-                            <div className="flex">
-                                <div className="flex">
-                                    <img className="w-4 mb-8"
+                            <div className="flex items-center mb-4 w-[30%]">
+                                <div className="flex items-center">
+                                    <img className="w-4 mr-2"
                                         src="https://futabus.vn/images/icons/pickup.svg"
                                         alt/>
                                     <hr
-                                        className=" w-[25px] border-t-2 border-dashed border-gray-500 w-18 mt-8 "/>
+                                        className=" w-[40px] border-t-2 border-dashed border-gray-500 w-18"/>
                                 </div>
-                                <div className="text-[15px] p-2 pt-4">13 giờ</div>
-                                <div className="flex">
+                                <div className="text-[15px] pl-2 pr-2">13 giờ</div>
+                                <div className="flex items-center">
                                     <hr
-                                        className=" w-[25px] border-t-2 border-dashed border-gray-500 w-18 mt-8 "/>
-                                    <img className="w-4 mb-8"
+                                        className="  w-[40px] border-t-2 border-dashed border-gray-500 w-18 "/>
+                                    <img className="w-4 ml-2"
                                         src="https://futabus.vn/images/icons/station.svg"
                                         alt/>
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 ">
+                            <div className="grid grid-cols-1 pl-4 w-[30%]">
                                 <span
-                                    className="font-bold text-4xl p-2">18:30</span>
-                                <span className="text-[15px]">ANKHE - TP. Hồ Chí
-                                    Minh</span>
+                                    className="font-bold text-4xl p-2">17:30</span>
+                                <span className="text-[15px] break-words whitespace-normal">An Minh (Kiên Giang) -
+                                    TP.Hồ Chí Minh</span>
                             </div>
                         </div>
                         <div className="grid grid-cols-1 justify-between">
@@ -181,7 +181,7 @@ function Bus (){
                                 className="p-2 text-xl pt-15 font-bold text-orange-600 ">200.0000đ</span>
                         </div>
                     </div>
-                    <hr className="border-gray-300"/>
+                    <hr className="border-gray-300 mt-2"/>
                     <div className="flex pt-4 justify-between">
                         <div className="flex">
                             <div className="flex">
@@ -198,8 +198,8 @@ function Bus (){
                             </div>
                         </div>
                         <button
-                            className="p-2 pl-6 pr-6 bg-orange-500 rounded-[30px] text-white">Chọn
-                            chuyến</button>
+                            className="p-2 pl-6 pr-6 bg-orange-500 rounded-[30px] text-white"><a href="/bookingTicket">Chọn
+                                chuyến</a></button>
                     </div>
                     <div className></div>
                 </div>

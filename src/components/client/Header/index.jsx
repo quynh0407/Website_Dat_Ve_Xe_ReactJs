@@ -37,8 +37,8 @@ function Header() {
                     <ul
                         className="flex flex-wrap gap-4 justify-center md:justify-start list-none items-center font-bold">
                         <li
-                            className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Đặt
-                            vé xe</li>
+                            className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="/">Đặt
+                            vé xe</a></li>
                         <li
                             className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="/about-us">Về
                             chúng tôi</a></li>
