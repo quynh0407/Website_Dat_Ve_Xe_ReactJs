@@ -1,44 +1,40 @@
-import "./styles/css/index.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import  "../src/styles/js/main.js";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./components/client/Header";
-import Footer from "./components/client/Footer";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import AdminLayout from "./layouts/AdminLayouts";
+import ClientLayout from "./layouts/ClientLayouts";
+import Dashboard from "./pages/admin/dashboard";
+import BusRoute from "./pages/admin/busRoute";
 import Home from "./pages/client/Home";
-import Blog from "./pages/client/Blog";
-import Contact from "./pages/client/Contact/index.jsx";
 import Bus from "./pages/client/Bus";
-import BookingTickets from "./pages/client/BookingTickets";
-import Profile from "./pages/client/Profile";
-import AboutUs from "./pages/client/About-us/index.jsx";
-import Login from "./pages/client/Login/index.jsx";
-import Register from "./pages/client/Register/index.jsx";
-import BookingHistory from "./pages/client/BookingHistory/index.jsx";
+import {MainJs} from "./styles/client/js";
 
+// Hàm kiểm tra quyền Admin
+/* const isAdmin = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  return user?.role === "admin";
+};
+ */
+/* const AdminRoute = ({ element }) => {
+  return isAdmin() ? element : <Navigate to="/" />;
+}; */
 
-
-function App() {
+const AppRoutes = () => {
+  MainJs(); // Chạy JS cho client
   return (
     <Router>
-      <boddy className="m-0 p-0">
-      <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/bus" element={<Bus />} />
-        <Route path="/bookingTicket" element={<BookingTickets />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/bookingHistory" element={<BookingHistory />} />
+        <Route path="/" element={<ClientLayout />}>
+          <Route index element={<Home />} />
+          <Route path="bus" element={<Bus />} />
+        </Route>
+
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="busroute" element={<BusRoute />} />
+        </Route>
       </Routes>
-      <Footer />
-      </boddy>
     </Router>
   );
-}
+};
 
-export default App;
+export default AppRoutes;
