@@ -1,88 +1,79 @@
 function Contact() {
     return (
-        <main className="home mx-auto w-full md:w-[80%] mb-5 px-4 rounded-lg" id="home">
-            <div className="bg-white p-4 mb-3">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-0 p-4">
-                    <div className="w-full p-2">
-                        <section className="contact-page py-5 bg-light">
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-lg-5 mb-8">
-                                        <div className="text-center">
-                                            <h1 className="text-3xl font-bold mb-8 mt-3">Công ty cổ phần Bụi Đường</h1>
-                                            <hr className="border-gray-300 mx-auto w-1/4 mb-8" />
-                                        </div>
-                                        <ul className="list-none">
-                                            <li className="mb-4 flex items-start">
-                                                <img src="/assets/images/main/map.svg" alt="Map Icon" className="mr-2 mt-1 w-6 h-6" />
-                                                <address className="flex-grow text-lg break-words whitespace-normal">
-                                                    <strong className="font-semibold">Trụ sở chính:</strong> 106 Đường Hai Bà Trưng, Tân An, Ninh Kiều, TP.Cần Thơ, Việt Nam
-                                                </address>
-                                            </li>
-                                            <li className="mb-4 flex items-start">
-                                                <img src="/assets/images/main/map.svg" alt="Map Icon" className="mr-2 mt-1 w-6 h-6" />
-                                                <address className="flex-grow text-lg break-words whitespace-normal">
-                                                    <strong className="font-semibold">Văn phòng TP.Cần Thơ:</strong> KDC Hoàng Quân, đường số 26 số C1/06, phường Thường Thạnh, Cái Răng, TP.Cần Thơ
-                                                </address>
-                                            </li>
-                                            <li className="mb-4 flex items-start">
-                                                <img src="/assets/images/main/phone.svg" alt="Phone Icon" className="mr-2 mt-1 w-6 h-6" />
-                                                <p className="flex-grow text-lg break-words whitespace-normal">
-                                                    <strong className="font-semibold">Hotline:</strong> <a href="#" className="italic">1900 55 88 88</a>
-                                                </p>
-                                            </li>
-                                            <li className="mb-4 flex items-start">
-                                                <img src="/assets/images/main/email.svg" alt="Email Icon" className="mr-2 mt-1 w-6 h-6" />
-                                                <p className="flex-grow text-lg break-words whitespace-normal">
-                                                    <strong className="font-semibold">Email:</strong> <a href="#" className="italic">buiduong@gmail.com</a>
-                                                </p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+        <main class="max-w-6xl mx-auto p-8 bg-white shadow-lg rounded-lg my-[20px] mt-[11%]" >
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <section class="py-2">
+                    <h2 class="px-3 text-3xl font-bold text-blue-950 mb-6 border-b border-gray-300 pb-2">Câu hỏi thường gặp</h2>
+                    <div class="space-y-3 px-4">
+                        <details class="border border-gray-300 p-2 rounded-md bg-gray-50">
+                            <summary class="cursor-pointer font-semibold text-lg text-gray-800">Làm thế nào để đặt vé?
+                            </summary>
+                            <p class="mt-3 text-gray-700 leading-relaxed">Bạn có thể đặt vé trực tuyến qua trang web chính
+                                thức của chúng tôi hoặc thông qua ứng dụng di động. Ngoài ra, nếu cần hỗ trợ, bạn có thể gọi
+                                tổng đài để được hướng dẫn chi tiết.</p>
+                        </details>
+                        <details class="border border-gray-300 p-2 rounded-md bg-gray-50">
+                            <summary class="cursor-pointer font-semibold text-lg text-gray-800">Chính sách hoàn tiền như thế
+                                nào?</summary>
+                            <p class="mt-3 text-gray-700 leading-relaxed">Chúng tôi hỗ trợ hoàn tiền nếu bạn hủy vé trước 48
+                                giờ so với giờ khởi hành. Sau thời gian này, phí hủy sẽ được áp dụng tùy theo từng loại vé.
+                                Vui lòng xem chi tiết tại trang chính sách hoàn tiền.</p>
+                        </details>
+                        <details class="border border-gray-300 p-2 rounded-md bg-gray-50">
+                            <summary class="cursor-pointer font-semibold text-lg text-gray-800">Tôi có thể thay đổi thông
+                                tin vé sau khi đặt không?</summary>
+                            <p class="mt-3 text-gray-700 leading-relaxed">Có, bạn có thể thay đổi thông tin vé trước khi
+                                khởi hành ít nhất 24 giờ. Việc thay đổi có thể phát sinh phí tùy vào loại vé bạn đã đặt. Vui
+                                lòng liên hệ tổng đài để được hỗ trợ.</p>
+                        </details>
+                        <details class="border border-gray-300 p-2 rounded-md bg-gray-50">
+                            <summary class="cursor-pointer font-semibold text-lg text-gray-800">Thanh toán có an toàn không?
+                            </summary>
+                            <p class="mt-3 text-gray-700 leading-relaxed">Chúng tôi sử dụng hệ thống thanh toán bảo mật hàng
+                                đầu với chứng chỉ SSL để đảm bảo thông tin của bạn được bảo vệ tuyệt đối. Bạn có thể thanh
+                                toán qua thẻ ngân hàng, ví điện tử hoặc chuyển khoản.</p>
+                        </details>
                     </div>
-                    <div className="w-full p-2">
-                        <div className="col-lg-7">
-                            <div className="overflow-hidden rounded-lg">
-                                <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31435.36395698237!2d105.72011857431642!3d9.982081500000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a08906415c355f%3A0x416815a99ebd841e!2zVHLGsOG7nW5nIENhbyDEkeG6s25nIEZQVCBQb2x5dGVjaG5pYw!5e0!3m2!1svi!2s!4v1731045254641!5m2!1svi!2s"
-                                    width="100%" height="400px" loading="lazy"
-                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-                            </div>
+                </section>
+
+
+                <section class="py-3">
+                    <h2 class="text-3xl font-bold text-blue-950 mb-6 border-b border-gray-300 pb-2">Liên hệ hỗ trợ</h2>
+                    <form class="space-y-6">
+                        <div>
+                            <label class="block text-gray-800 font-semibold mb-2">Tên của bạn</label>
+                            <input type="text"
+                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                required />
                         </div>
-                    </div>
-                </div>
-                <div className="bg-white p-4 mb-3 flex justify-center items-center min-h-screen">
-                    <div className="w-full max-w-md p-6 sm:px-4">
-                        <div className="text-center">
-                            <h1 className="text-3xl font-bold mt-3">Liên hệ với chúng tôi</h1>
+                        <div>
+                            <label class="block text-gray-800 font-semibold mb-2">Email</label>
+                            <input type="email"
+                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                required />
+
                         </div>
-                        <form className="space-y-5">
-                            <div>
-                                <label for="email" className="block font-semibold mb-2 text-base">Email</label>
-                                <input type="email" id="email" placeholder="Nhập địa chỉ email..."
-                                    className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300 text-base" />
-                            </div>
-                            <div>
-                                <label for="username" className="block font-semibold mb-2 text-base">Họ và tên</label>
-                                <input type="text" id="username" placeholder="Nhập họ và tên..."
-                                    className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300 text-base" />
-                            </div>
-                            <div>
-                                <label for="content" className="block font-semibold mb-2 text-base">Nội dung</label>
-                                <textarea id="content" placeholder="Nhập nội dung..." rows="4"
-                                    className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300 text-base"></textarea>
-                            </div>
-                            <button type="submit"
-                                className="w-full py-2 bg-sky-500 text-white rounded-md hover:opacity-75 focus:outline-none focus:ring focus:border-sky-300 mb-4 font-bold text-base">
-                                Gửi
-                            </button>
-                        </form>
-                    </div>
-                </div>
+                        <div>
+                            <label class="block text-gray-800 font-semibold mb-2">Nội dung hỗ trợ</label>
+                            <textarea class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                rows="4" required></textarea>
+                        </div>
+                        <button class="w-full bg-[#043175] text-white py-3 rounded-lg hover:bg-blue-950 font-semibold">Gửi
+                            yêu
+                            cầu</button>
+                    </form>
+                </section>
             </div>
+
+            <section class="mt-8 text-gray-800 text-center border-t border-gray-300">
+                <h2 class="text-3xl font-bold text-blue-950 mb-6 mt-8 pb-2">Thông tin liên hệ</h2>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31435.36395698237!2d105.72011857431642!3d9.982081500000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a08906415c355f%3A0x416815a99ebd841e!2zVHLGsOG7nW5nIENhbyDEkeG6s25nIEZQVCBQb2x5dGVjaG5pYw!5e0!3m2!1svi!2s!4v1731045254641!5m2!1svi!2s"
+                    width="100%" height="400px" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <p>Email: <a href=" " class="text-blue-500">hotrowebsite.com</a></p>
+                <p>Hotline: <a href="tel:18001000" class="text-blue-500">1800 1000</a></p>
+                <p>Địa chỉ: Cái Răng, Cần Thơ.</p>
+            </section>
         </main>
     )
 }

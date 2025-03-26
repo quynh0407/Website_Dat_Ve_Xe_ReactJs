@@ -15,7 +15,7 @@ function Footer(){
                                 hệ với chúng tôi</a>
                         </div>
                         <div>
-                            <h3 className="text-lg font-semibold mb-3">Về chúng
+                            <h3 className="text-lg text-gray-500 font-semibold mb-3">Về chúng
                                 tôi</h3>
                             <ul className="space-y-2 text-gray-300">
                                 <li><a href="#" className="hover:text-gray-100">Cách
@@ -32,7 +32,7 @@ function Footer(){
                             </ul>
                         </div>
                         <div>
-                            <h3 className="text-lg font-semibold mb-3">Dịch vụ</h3>
+                            <h3 className="text-lg  text-gray-500 font-semibold mb-3">Dịch vụ</h3>
                             <ul className="space-y-2 text-gray-300">
                                 <li><a href="#" className="hover:text-gray-100">Vé
                                         xe khách</a></li>
@@ -43,7 +43,7 @@ function Footer(){
                             </ul>
                         </div>
                         <div>
-                            <h3 className="text-lg font-semibold mb-3">Chính
+                            <h3 className="text-lg  text-gray-500 font-semibold mb-3">Chính
                                 sách</h3>
                             <ul className="space-y-2 text-gray-300">
                                 <li><a href="#"

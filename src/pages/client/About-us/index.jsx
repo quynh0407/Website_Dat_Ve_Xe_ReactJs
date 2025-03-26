@@ -1,6 +1,6 @@
 function AboutUs() {
     return(
-    <main className="home mx-auto w-full md:w-[80%] px-4" id="home">
+    <main className="home mx-auto w-full md:w-[80%] px-4 mt-[11%]" >
         <div className="bg-white rounded-lg p-4 mb-3 mt-22">
             <div className="font-sans text-gray-800">
                 <div className="container mx-auto px-4 py-8">
@@ -9,7 +9,7 @@ function AboutUs() {
                             ĐƯỜNG</h1>
                         <p className="text-xl italic mt-2 font-bold">"Chất lượng là danh dự"</p>
                     </div>
-                    <div className="about-us">
+                    <div className="about-us text-md">
                         <p>
                             <em>"Bụi Đường"</em>, chính thức ra mắt vào tháng 01/2025, tự hào là nền tảng đặt vé xe
                             online tiên phong,

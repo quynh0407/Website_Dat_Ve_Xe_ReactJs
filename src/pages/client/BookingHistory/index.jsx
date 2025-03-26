@@ -1,150 +1,177 @@
+import Navbar from "../../../components/client/Navbar";
 function BookingHistory() {
     return (
         <>
-            <main className="history mb-4 " id="home">
+            <main className="history mb-4 mt-[11%]">
                 <div className="flex w-[80%]  mx-auto">
-                    <div className="w-[20%] bg-gray-100 p-5 rounded-md border border-gray-200">
-                        <ul className="space-y-4">
-                            <li className="border border-gray-200 rounded-md"><a href="/profile"
-                                className="block hover:bg-gray-300 p-2 rounded-md"><i className="fas fa-user mr-2"></i> Thông tin cá
-                                nhân</a></li>
-                            <li className="border border-gray-200 rounded-md"><a href="/bookingHistory"
-                                className="block hover:bg-gray-300 p-2 rounded-md"><i className="fas fa-history mr-2"></i> Lịch sử đặt
-                                vé</a></li>
-                            <li className="border border-gray-200 rounded-md"><a href="/logout"
-                                className="block hover:bg-gray-300 p-2 rounded-md"><i className="fas fa-sign-out-alt mr-2"></i> Đăng
-                                xuất</a></li>
-                        </ul>
+                    <div className="w-[20%] bg-gray-100 p-3 rounded-md border border-gray-200">
+                        <Navbar />
                     </div>
-                    <div className="w-[80%] bg-white p-5 rounded-md ml-4">
+                    <div className="w-[80%] bg-white p-3 rounded-md ml-4 ">
                         <h1 className="text-3xl font-bold">Lịch sử đặt vé</h1>
-                        <p className="text-gray-600">Theo dõi và quản lý quá trình lịch sử mua vé của bạn.</p>
-                        <div
-                            className="mt-6 p-4 bg-white border border-gray-200 rounded-md shadow-sm w-full relative overflow-hidden"
-                            style={{
-                                background: `linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0.849), rgba(255, 255, 255, 0.342)), 
-                                 url('../../public/assets/images/main/bg-history-item.jpg')`,
-                                backgroundPosition: "right center",
-                                backgroundSize: "cover",
-                            }}
-                        >
-                            <div className="mb-4 flex justify-between ">
-                                <div className="flex justify-between">
-                                    <p className="font-bold">Mã vé:</p>
-                                    <p>123456789</p>
-                                </div>
-                                <div className="flex items-center">
-                                    <p className="font-bold mr-2">Trạng thái:</p>
-                                    <p className="text-yellow-700 bg-yellow-200 p-1 rounded-md">Chưa khởi hành</p>
-                                </div>
-                            </div>
-                            <div className="space-y-2 ">
-                                <div className="flex justify-between">
-                                    <p className="font-medium">Tuyến đường:</p>
-                                    <p>Hà Nội - Sài Gòn</p>
-                                </div>
-                                <div className="flex justify-between">
-                                    <p className="font-medium">Ngày giờ xuất phát:</p>
-                                    <p>20/12/2023 08:00 AM</p>
-                                </div>
-                                <div className="flex justify-between">
-                                    <p className="font-medium">Số ghế:</p>
-                                    <p>A12</p>
-                                </div>
-                                <div className="flex justify-between">
-                                    <p className="font-bold">Tổng giá vé:</p>
-                                    <p className="font-bold">500,000 VND</p>
-                                </div>
-                            </div>
-                            <hr className="mt-2 text-gray-400" />
-                            <div className="flex justify-end mt-4">
-                                <button className="bg-red-400 text-white px-4 py-2 rounded-md hover:bg-red-600"
-                                    onclick="openCancelModal()">Hủy vé</button>
-                            </div>
-                        </div>
+                        <p className="text-gray-600 mb-3">Theo dõi và quản lý quá trình lịch sử mua vé của bạn.</p>
 
 
-
-                        <div
-                            className="mt-6 p-4 bg-white border border-gray-200 rounded-md shadow-sm w-full relative overflow-hidden"
-                            style={{
-                                background: `linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0.849), rgba(255, 255, 255, 0.342)), 
-                                url('../../public/assets/images/main/bg-history-item.jpg')`,
-                                backgroundPosition: "right center",
-                                backgroundSize: "cover",
-                            }}
-                        >
-                            <div className="mb-4 flex justify-between ">
-                                <div className="flex justify-between">
-                                    <p className="font-bold mr-1">Mã vé:</p>
-                                    <p> 987654321</p>
+                        <div class="bg-white  mb-3 shadow-lg rounded-lg m-auto m-y-2  flex  border border-gray-300">
+                            <div class="w-2/3  border-r border-dashed border-gray-400">
+                                <div class="text-white font-mono rounded-tl-lg text-lg font-bold bg-[#043175] px-3 py-2">Mã vé:
+                                    098765
                                 </div>
-                                <div className="flex items-center">
-                                    <p className="font-bold mr-2">Trạng thái:</p>
-                                    <p className="text-green-700 bg-green-200 p-1 rounded-md">Đã tới tuyến</p>
+                                <div class="text-gray-800 font-mono text-lg font-bold px-3">PRICE <span
+                                    class="float-right">TRAIN</span>
+                                </div>
+                                <div class="text-xl font-bold text-gray-900 px-3">$100 <span class="float-right">1234</span>
+                                </div>
+
+                                <div class="mt-2 flex justify-between px-3">
+                                    <div>
+                                        <p class="text-gray-700 font-mono text-sm">FROM</p>
+                                        <p class="text-lg font-bold">NEW YORK</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-700 font-mono text-sm">DEPARTURE</p>
+                                        <p class="text-lg font-bold">07:00AM</p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2 flex justify-between px-3">
+                                    <div>
+                                        <p class="text-gray-700 font-mono text-sm">TO</p>
+                                        <p class="text-lg font-bold">LOS ANGELES</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-700 font-mono text-sm">ARRIVE</p>
+                                        <p class="text-lg font-bold">10:00AM</p>
+                                    </div>
+                                </div>
+
+                                <div class=" flex justify-between  p-3">
+                                    <div>
+                                        <p class="text-gray-700 font-mono text-sm">DATE</p>
+                                        <p class="text-lg font-bold">15 AUGUST 2022</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-700 font-mono text-sm">SEAT</p>
+                                        <p class="text-lg font-bold">A3</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="space-y-2 ">
-                                <div className="flex justify-between">
-                                    <p className="font-medium">Tuyến đường:</p>
-                                    <p>Đà Nẵng - Huế</p>
+
+
+                            <div class="w-1/3 p-3 text-center">
+                                <div class="flex justify-between align-items-center ">
+                                    <b>Chưa khởi hành</b>
+                                    <button class="bg-red-400 text-white px-4 py-2 font-mono rounded-md hover:bg-red-600"
+                                        onclick="openCancelModal()">Hủy vé</button>
                                 </div>
-                                <div className="flex justify-between">
-                                    <p className="font-medium">Ngày giờ xuất phát:</p>
-                                    <p>15/11/2023 02:00 PM</p>
+                                <div class="border-b border-gray-400 my-2"></div>
+
+                                <div class="flex justify-between">
+                                    <p class="text-gray-700 font-mono text-sm">NAME</p>
+                                    <p class="text-lg font-bold">BENJAMIN SHAH</p>
                                 </div>
-                                <div className="flex justify-between">
-                                    <p className="font-medium">Số ghế:</p>
-                                    <p>B5</p>
+
+                                <div class="flex justify-between mt-2">
+                                    <p class="text-gray-700 font-mono text-sm">FROM</p>
+                                    <p class="text-lg font-bold">NEW YORK</p>
                                 </div>
-                                <div className="flex justify-between">
-                                    <p className="font-bold">Tổng giá vé:</p>
-                                    <p className="font-bold">300,000 VND</p>
+
+                                <div class="flex justify-between mt-2">
+                                    <p class="text-gray-700 font-mono text-sm">TO</p>
+                                    <p class="text-lg font-bold">LOS ANGELES</p>
+                                </div>
+
+                                <div class="flex justify-between mt-2">
+                                    <p class="text-gray-700 font-mono text-sm">TRAIN</p>
+                                    <p class="text-lg font-bold">1234</p>
+                                </div>
+
+                                <div class="flex justify-between mt-2">
+                                    <p class="text-gray-700 font-mono text-sm">SEAT</p>
+                                    <p class="text-lg font-bold">A3</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div
-                            className="mt-6 p-4 bg-white border border-gray-200 rounded-md shadow-sm w-full relative overflow-hidden"
-                            style={{
-                                background: `linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0.849), rgba(255, 255, 255, 0.342)), 
-                                url('../../public/assets/images/main/bg-history-item.jpg')`,
-                                backgroundPosition: "right center",
-                                backgroundSize: "cover",
-                            }}
-                        >
-                            <div className="mb-4 flex justify-between ">
-                                <div className="flex justify-between">
-                                    <p className="font-bold">Mã vé:</p>
-                                    <p>1122334455</p>
+                        <div class="bg-white  mb-3 shadow-lg rounded-lg m-auto m-y-2  flex  border border-gray-300">
+                            <div class="w-2/3  border-r border-dashed border-gray-400">
+                                <div class="text-white font-mono rounded-tl-lg text-lg font-bold bg-[#043175] px-3 py-3">Mã vé:
+                                    098765
                                 </div>
-                                <div className="flex items-center">
-                                    <p className="font-bold mr-2">Trạng thái:</p>
-                                    <p className="text-red-700 bg-red-200 p-1 rounded-md">Đã hủy</p>
+                                <div class="text-gray-800 font-mono text-lg font-bold px-3">PRICE <span
+                                    class="float-right">TRAIN</span>
+                                </div>
+                                <div class="text-xl font-bold text-gray-900 px-3">$100 <span class="float-right">1234</span>
+                                </div>
+
+                                <div class="mt-2 flex justify-between px-3">
+                                    <div>
+                                        <p class="text-gray-700 font-mono text-sm">FROM</p>
+                                        <p class="text-lg font-bold">NEW YORK</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-700 font-mono text-sm">DEPARTURE</p>
+                                        <p class="text-lg font-bold">07:00AM</p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2 flex justify-between px-3">
+                                    <div>
+                                        <p class="text-gray-700 font-mono text-sm">TO</p>
+                                        <p class="text-lg font-bold">LOS ANGELES</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-700 font-mono text-sm">ARRIVE</p>
+                                        <p class="text-lg font-bold">10:00AM</p>
+                                    </div>
+                                </div>
+
+                                <div class=" flex justify-between  p-3">
+                                    <div>
+                                        <p class="text-gray-700 font-mono text-sm">DATE</p>
+                                        <p class="text-lg font-bold">15 AUGUST 2022</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-700 font-mono text-sm">SEAT</p>
+                                        <p class="text-lg font-bold">A3</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="space-y-2 ">
-                                <div className="flex justify-between">
-                                    <p className="font-medium">Tuyến đường:</p>
-                                    <p>Hải Phòng - Quảng Ninh</p>
+
+
+                            <div class="w-1/3 p-3 text-center">
+                                <div class="flex justify-between align-items-center py-1">
+                                    <b>Chưa khởi hành</b>
+
                                 </div>
-                                <div className="flex justify-between">
-                                    <p className="font-medium">Ngày giờ xuất phát:</p>
-                                    <p>10/10/2023 10:00 AM</p>
+                                <div class="border-b border-gray-400 my-2"></div>
+
+                                <div class="flex justify-between">
+                                    <p class="text-gray-700 font-mono text-sm">NAME</p>
+                                    <p class="text-lg font-bold">BENJAMIN SHAH</p>
                                 </div>
-                                <div className="flex justify-between">
-                                    <p className="font-medium">Số ghế:</p>
-                                    <p>C3</p>
+
+                                <div class="flex justify-between mt-2">
+                                    <p class="text-gray-700 font-mono text-sm">FROM</p>
+                                    <p class="text-lg font-bold">NEW YORK</p>
                                 </div>
-                                <div className="flex justify-between">
-                                    <p className="font-bold">Tổng giá vé:</p>
-                                    <p className="font-bold">200,000 VND</p>
+
+                                <div class="flex justify-between mt-2">
+                                    <p class="text-gray-700 font-mono text-sm">TO</p>
+                                    <p class="text-lg font-bold">LOS ANGELES</p>
+                                </div>
+
+                                <div class="flex justify-between mt-2">
+                                    <p class="text-gray-700 font-mono text-sm">TRAIN</p>
+                                    <p class="text-lg font-bold">1234</p>
+                                </div>
+
+                                <div class="flex justify-between mt-2">
+                                    <p class="text-gray-700 font-mono text-sm">SEAT</p>
+                                    <p class="text-lg font-bold">A3</p>
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
             </main>

@@ -1,32 +1,37 @@
-
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayouts";
 import ClientLayout from "./layouts/ClientLayouts";
 import Dashboard from "./pages/admin/dashboard";
 import BusRoute from "./pages/admin/busRoute";
 import Home from "./pages/client/Home";
 import Bus from "./pages/client/Bus";
-import {MainJs} from "./styles/client/js";
-
-// Hàm kiểm tra quyền Admin
-/* const isAdmin = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  return user?.role === "admin";
-};
- */
-/* const AdminRoute = ({ element }) => {
-  return isAdmin() ? element : <Navigate to="/" />;
-}; */
-
+import AboutUs from "./pages/client/About-us";
+import Blog from "./pages/client/Blog";  
+import Contact from "./pages/client/Contact";
+import BusDetail from "./pages/client/BusDetail";
+import BookingHistory from "./pages/client/BookingHistory";
+import Profile from "./pages/client/Profile";
+import Login from "./pages/client/Login";
+import Register from "./pages/client/Register";
+ 
+ 
 const AppRoutes = () => {
-  MainJs(); // Chạy JS cho client
   return (
     <Router>
       <Routes>
         <Route path="/" element={<ClientLayout />}>
           <Route index element={<Home />} />
           <Route path="bus" element={<Bus />} />
+          <Route path="BusDetail" element={<BusDetail />} />
+          <Route path="about" element={<AboutUs />} />
+          <Route path="blog" element={<Blog />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="bookingHistory" element={<BookingHistory />} />
+=          <Route path="profile" element={<Profile />} />
         </Route>
+
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
 
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />

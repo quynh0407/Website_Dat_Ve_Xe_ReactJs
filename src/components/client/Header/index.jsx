@@ -11,10 +11,10 @@ function Header() {
                     </div>
                     <div className="menu-top-right flex p-2">
                         <ul
-                            className="flex flex-col md:flex-row gap-4 justify-between list-none items-center">
+                            className="flex flex-col md:flex-row gap-2 justify-between list-none items-center">
                             <li
                                 className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a
-                                    href="#">Hỗ trợ</a></li>
+                                href="/contact">Hỗ trợ</a></li>
                             <li
                                 className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a
                                     href="/bookingHistory">Đặt chỗ của
@@ -35,12 +35,12 @@ function Header() {
                 <div
                     className="menu-bottom flex justify-start w-[80%] lg:w-[80%] mx-auto items-center py-1">
                     <ul
-                        className="flex flex-wrap gap-4 justify-center md:justify-start list-none items-center font-bold">
+                        className="flex flex-wrap gap-1 justify-center md:justify-start list-none items-center font-bold">
                         <li
                             className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="/">Đặt
                             vé xe</a></li>
                         <li
-                            className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="/about-us">Về
+                            className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="/about">Về
                             chúng tôi</a></li>
                         <li
                             class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a
@@ -99,11 +99,11 @@ function Header() {
                 </div>
             </div>
 
-            <div
+            <div id="homeHeader"
                 className="w-full h-[300px] md:h-[500px] bg-cover bg-center relative text-white flex justify-center items-center">
                 <div
                     className="absolute w-full md:w-3/4 max-w-[1000px] text-center mt-[13%] px-4 header-content">
-                    <h1 className="text-2xl md:text-4xl font-bold mb-8">Khám Phá
+                    <h1 className="text-2xl md:text-4xl font-bold mb-8 text-white">Khám Phá
                         Việt Nam, Theo Cách Của Bạn</h1>
                     <div
                         className="w-full flex justify-center items-center rounded-[16px] border-[6px] border-gray-100/10">
@@ -154,7 +154,7 @@ function Header() {
                                 </div>
                             </div>
                             <button
-                                className="bg-orange-500 hover:bg-orange-600 w-full md:w-[5%] text-white p-3 rounded transition duration-300">
+                                className="bg-orange-500  hover:bg-orange-600 w-full md:w-[5%] text-white p-2 rounded transition duration-300">
                                 <i className="fas fa-search"></i>
                             </button>
                         </form>
@@ -172,7 +172,7 @@ function Header() {
                 </div>
             </div>
 
-            <div className="w-full text-center mb-7">
+            <div className="w-auto text-center mb-7" id="homeComment">
                 <div id="comment-container"
                     className="inline-block bg-gray-100 p-3 rounded-lg text-sm text-gray-700 italic">
                     <p>“Tuyến Sài Gòn - Đà Lạt dịch vụ tốt, tài xế vui vẻ, xe

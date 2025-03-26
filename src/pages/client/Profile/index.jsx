@@ -1,19 +1,11 @@
+import Navbar from "../../../components/client/Navbar";
+
 function Profile() {
     return (
         <main className="profile mt-[11%] mb-[1%] h-full">
             <div className="flex w-[80%] mx-auto ">
-                <div className="w-[20%] bg-gray-100 p-5 rounded-md border border-gray-200 ">
-                    <ul className="space-y-4">
-                        <li className="border border-gray-200 rounded-md"><a href="#"
-                            className="block hover:bg-gray-300 p-2 rounded-md"><i className="fas fa-user mr-2"></i> Thông tin cá
-                            nhân</a></li>
-                        <li className="border border-gray-200 rounded-md"><a href="#"
-                            className="block hover:bg-gray-300 p-2 rounded-md"><i className="fas fa-history mr-2"></i> Lịch sử đặt
-                            vé</a></li>
-                        <li className="border border-gray-200 rounded-md"><a href="#"
-                            className="block hover:bg-gray-300 p-2 rounded-md"><i className="fas fa-sign-out-alt mr-2"></i> Đăng
-                            xuất</a></li>
-                    </ul>
+                <div className="w-[20%] bg-gray-100 p-3 rounded-md border border-gray-200 ">
+                  <Navbar/>
                 </div>
                 <form className="w-[80%] bg-white p-5 rounded-md ml-4">
                     <div className="flex items-center gap-4 relative justify-between">
@@ -22,7 +14,7 @@ function Profile() {
                             <p className="text-gray-600">Quản lý và cập nhật thông tin cá nhân của bạn.</p>
                         </div>
                         <label for="avatarInput" className="cursor-pointer">
-                            <img src="../../public/assets/images/main/avatar.jpg" alt=""
+                            <img src="/assets/images/main/avatar.jpg" alt="Avatar"
                                 className="w-[100px] h-[100px] rounded-full border-4 border-orange-500" />
                             <input type="file" id="avatarInput"
                                 className="opacity-0 absolute w-full h-full top-0 left-0 cursor-pointer" />
@@ -30,10 +22,10 @@ function Profile() {
                     </div>
 
                     <div className="space-y-4 border-gray-300 mt-[2%] ">
-                        <div className="flex justify-between items-center border-b border-t border-gray-300 p-2">
-                            <label className="font-medium w-1/5">Tên</label>
+                    <div className="flex justify-between items-center border-b border-gray-300 pb-2">
+                            <label className="font-medium w-1/5">Họ và tên</label>
                             <div className="flex items-center gap-2 w-4/5">
-                                <input type="text" value="Bao Duyen Kha Thi"
+                                <input type="text" placeholder=""
                                     className="rounded-md p-2 w-full focus:ring-1 focus:ring-blue-500 border-gray-300" />
                                 <i className="fas fa-pen text-gray-400"></i>
                             </div>
@@ -42,7 +34,7 @@ function Profile() {
                         <div className="flex justify-between items-center border-b border-gray-300 pb-2">
                             <label className="font-medium w-1/5">Password</label>
                             <div className="flex items-center gap-2 w-4/5">
-                                <input type="password" placeholder=""
+                                <input type="password"  
                                     className="rounded-md p-2 w-full focus:ring-1 focus:ring-blue-500 border-gray-300" />
                                 <i className="fas fa-pen text-gray-400"></i>
                             </div>

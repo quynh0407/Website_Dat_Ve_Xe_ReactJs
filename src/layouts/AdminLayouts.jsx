@@ -1,13 +1,11 @@
 import { Outlet, Link } from "react-router-dom";
 import Aside from "../components/admin/aside";
 import Header from "../components/admin/Header";
-import "../styles/admin/css/styles.css";
-/* import "../../public/assets/libs/jquery/dist/jquery.js";
-import "../../public/assets/js/dashboard.js";
-import "../../public/assets/js/sidebarmenu.js";
-import "../../public/assets/libs/apexcharts/dist/apexcharts.js";
-import "../../public/assets/libs/simplebar/dist/simplebar.js"; */
+import "../styles/admin/css/styles.min.css";
 
+import "../styles/admin/js/dashboard.ts";
+// import "../styles/admin/js/app.min.ts";
+// import "../styles/admin/js/sidebarmenu.ts";
 
 const AdminLayout = () => {
     return (

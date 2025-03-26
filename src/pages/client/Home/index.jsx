@@ -1,5 +1,5 @@
-function Home (){
-    return(
+function Home() {
+    return (
         <main class="home mx-auto w-full md:w-[80%] mb-5 px-4" id="home">
             <div
                 class="bg-white p-4 rounded-lg shadow mt-4 text-center mx-auto">
@@ -11,25 +11,25 @@ function Home (){
                     <div
                         class="flex items-start text-left rounded-lg shadow-md w-full md:w-1/3">
                         <img src="./assets/images/main/icon1.webp"
-                            alt class="w-20 h-20 mb-2"/>
+                            alt class="w-20 h-20 mb-2" />
                         <p class="max-w-xs"><strong>Đáp ứng mọi nhu cầu của
-                                bạn</strong><br/>Từ đặt vé xe, bạn có thể tin
+                            bạn</strong><br />Từ đặt vé xe, bạn có thể tin
                             chọn sản phẩm hoàn chỉnh của chúng tôi.</p>
                     </div>
                     <div
                         class="flex items-start text-left rounded-lg shadow-md w-full md:w-1/3">
                         <img src="/assets/images/main/icon2.webp"
-                            alt class="w-20 h-20 mb-2"/>
+                            alt class="w-20 h-20 mb-2" />
                         <p class="max-w-xs"><strong>Tùy chọn đặt chỗ linh
-                                hoạt</strong><br/>Kế hoạch thay đổi bất ngờ? Đừng
+                            hoạt</strong><br />Kế hoạch thay đổi bất ngờ? Đừng
                             lo!Đổi lịch hoặc Hoàn tiền dễ dàng.</p>
                     </div>
                     <div
                         class="flex items-start text-left rounded-lg shadow-md w-full md:w-1/3">
                         <img src="./assets/images/main/icon3.webp"
-                            alt class="w-20 h-20 mb-2"/>
+                            alt class="w-20 h-20 mb-2" />
                         <p class="max-w-xs"><strong>Thanh toán an toàn và thuận
-                                tiện</strong><br/>Tận hưởng nhiều cách thanh
+                            tiện</strong><br />Tận hưởng nhiều cách thanh
                             toán an toàn thuận tiện nhất cho bạn</p>
                     </div>
                 </div>
@@ -39,21 +39,21 @@ function Home (){
                 class="bg-white p-4 rounded-lg shadow mt-4 text-center mx-auto">
                 <h2 class="text-xl md:text-2xl font-bold text-[#003b95]">TUYẾN
                     PHỔ BIẾN</h2>
-                <p class="mb-4">Được khách hàng tin tưởng và lựa chọn</p>
+                <p class="mb-2">Được khách hàng tin tưởng và lựa chọn</p>
                 <div
-                    class="flex flex-nowrap gap-5 justify-center overflow-x-auto md:overflow-visible">
+                    class="flex flex-nowrap gap-4 p-2 justify-center overflow-x-auto md:overflow-visible">
 
                     <div
-                        class="max-w-sm mx-auto p-4 rounded-xl shadow-md w-full md:w-1/3">
+                        class="max-w-sm mx-auto p-3 rounded-xl shadow-md w-full md:w-1/3">
                         <div class="relative rounded-xl overflow-hidden">
                             <img
                                 src="/assets/images/main/Rectangle 23 (2).png"
-                                class="w-full"/>
+                                class="w-full" />
                             <div
                                 class="absolute inset-0 bg-black/40 flex items-end p-4">
                                 <p
                                     class="text-white text-lg font-semibold">Tuyến
-                                    xe từ <br/> <span class="text-2xl">Tp Hồ
+                                    xe từ <br /> <span class="text-2xl">Tp Hồ
                                         Chí Minh</span></p>
                             </div>
                         </div>
@@ -91,16 +91,16 @@ function Home (){
                         </div>
                     </div>
                     <div
-                        class="max-w-sm mx-auto p-4 rounded-xl shadow-md w-full md:w-1/3">
+                        class="max-w-sm mx-auto p-3 rounded-xl shadow-md w-full md:w-1/3">
                         <div class="relative rounded-xl overflow-hidden">
                             <img
                                 src="/assets/images/main/Rectangle 23 (3).png"
-                                alt="Đà Lạt" class="w-full"/>
+                                alt="Đà Lạt" class="w-full" />
                             <div
                                 class="absolute inset-0 bg-black/40 flex items-end p-4">
                                 <p
                                     class="text-white text-lg font-semibold">Tuyến
-                                    xe từ <br/> <span class="text-2xl">Đà
+                                    xe từ <br /> <span class="text-2xl">Đà
                                         Lạt</span></p>
                             </div>
                         </div>
@@ -138,16 +138,16 @@ function Home (){
                         </div>
                     </div>
                     <div
-                        class="max-w-sm mx-auto p-4 rounded-xl shadow-md w-full md:w-1/3">
+                        class="max-w-sm mx-auto p-3 rounded-xl shadow-md w-full md:w-1/3">
                         <div class="relative rounded-xl overflow-hidden">
                             <img
                                 src="/assets/images/main/Rectangle 23 (4).png"
-                                alt="Đà Nẵng" class="w-full"/>
+                                alt="Đà Nẵng" class="w-full" />
                             <div
                                 class="absolute inset-0 bg-black/40 flex items-end p-4">
                                 <p
                                     class="text-white text-lg font-semibold">Tuyến
-                                    xe từ <br/> <span class="text-2xl">Đà
+                                    xe từ <br /> <span class="text-2xl">Đà
                                         Nẵng</span></p>
                             </div>
                         </div>
@@ -194,12 +194,12 @@ function Home (){
                     TỨC</h2>
                 <p class="mb-4">Được khách hàng tin tưởng và lựa chọn</p>
                 <div class="swiper mySwiper overflow-hidden">
-                    <div class="swiper-wrapper flex mx-auto gap-4 p-2">
+                    <div class="swiper-wrapper flex mx-auto gap-3 p-2">
                         <a href="#"
-                            class="swiper-slide bg-white shadow-md rounded-lg p-2 block">
+                            class="swiper-slide bg-white text-left shadow-md rounded-lg p-2 block">
                             <img src="/assets/images/main/blog1.png"
                                 alt="Khám phá vẻ đẹp của Đà Lạt"
-                                class="rounded-lg mb-2 w-full"/>
+                                class="rounded-lg mb-2 w-full" />
                             <h3 class="text-lg font-bold truncate-title">Khám
                                 phá vẻ đẹp của Đà Lạt: Thành phố mộng mơ...
                             </h3>
@@ -210,10 +210,10 @@ function Home (){
                                 lý tưởng để nghỉ dưỡng...</p>
                         </a>
                         <a href="#"
-                            class="swiper-slide bg-white shadow-md rounded-lg p-2 block">
+                            class="swiper-slide bg-white text-left shadow-md rounded-lg p-2 block">
                             <img src="/assets/images/main/blog2.jpg"
                                 alt="Những món ăn đặc sản"
-                                class="rounded-lg mb-2 w-full"/>
+                                class="rounded-lg mb-2 w-full" />
                             <h3 class="text-lg font-bold truncate-title">Những
                                 món ăn đặc sản không thể bỏ qua khi du lịch
                                 Việt Nam...</h3>
@@ -224,10 +224,10 @@ function Home (){
                                 mang đậm bản sắc văn hóa...</p>
                         </a>
                         <a href="#"
-                            class="swiper-slide bg-white shadow-md rounded-lg p-2 block">
+                            class="swiper-slide text-left bg-white shadow-md rounded-lg p-2 block">
                             <img src="/assets/images/main/blog3.png"
                                 alt="Kinh nghiệm du lịch"
-                                class="w-full rounded-lg mb-2"/>
+                                class="w-full rounded-lg mb-2" />
                             <h3 class="text-lg font-bold truncate-title">Kinh
                                 nghiệm du lịch tiết kiệm chi phí mà vẫn trọn
                                 vẹn...</h3>
@@ -238,10 +238,10 @@ function Home (){
                                 nghiệm ẩm thực đường phố...</p>
                         </a>
                         <a href="#"
-                            class="swiper-slide bg-white shadow-md rounded-lg p-2 block">
+                            class="swiper-slide text-left bg-white shadow-md rounded-lg p-2 block">
                             <img src="/assets/images/main/blog4.png"
                                 alt="Top 10 địa điểm du lịch"
-                                class="w-full rounded-lg mb-2"/>
+                                class="w-full rounded-lg mb-2" />
                             <h3 class="text-lg font-bold truncate-title">Top 10
                                 địa điểm du lịch đẹp nhất Việt Nam không thể
                                 bỏ lỡ...</h3>
@@ -253,10 +253,10 @@ function Home (){
                                 biển trong xanh...</p>
                         </a>
                         <a href="#"
-                            class="swiper-slide bg-white shadow-md rounded-lg p-2 block">
+                            class="swiper-slide text-left bg-white shadow-md rounded-lg p-2 block">
                             <img src="/assets/images/main/blog5.png"
                                 alt="Lễ hội truyền thống"
-                                class="w-full rounded-lg mb-2"/>
+                                class="w-full rounded-lg mb-2" />
                             <h3 class="text-lg font-bold truncate-title">Những
                                 lễ hội truyền thống đặc sắc của người Việt...
                             </h3>
@@ -268,10 +268,10 @@ function Home (){
                                 mang ý nghĩa lịch sử to lớn...</p>
                         </a>
                         <a href="#"
-                            class="swiper-slide bg-white shadow-md rounded-lg p-2 block">
+                            class="swiper-slide text-left bg-white shadow-md rounded-lg p-2 block">
                             <img src="/assets/images/main/blog6.png"
                                 alt="Bí quyết săn vé máy bay"
-                                class="w-full rounded-lg mb-2"/>
+                                class="w-full rounded-lg mb-2" />
                             <h3 class="text-lg font-bold truncate-title">Bí
                                 quyết săn vé máy bay giá rẻ cho chuyến du lịch
                                 tiết kiệm...</h3>
@@ -282,10 +282,10 @@ function Home (){
                                 ứng dụng đặt vé thông minh...</p>
                         </a>
                         <a href="#"
-                            class="swiper-slide bg-white shadow-md rounded-lg p-2 block">
+                            class="swiper-slide text-left bg-white shadow-md rounded-lg p-2 block">
                             <img src="/assets/images/main/blog7.png"
                                 alt="Khám phá văn hóa"
-                                class="w-full rounded-lg mb-2"/>
+                                class="w-full rounded-lg mb-2" />
                             <h3 class="text-lg font-bold truncate-title">Khám
                                 phá những nét văn hóa độc đáo của dân tộc Việt
                                 Nam...</h3>
@@ -344,7 +344,7 @@ function Home (){
                         <img id="bus"
                             src="/assets/images/main/bus.png"
                             alt="Bus" width="350"
-                            class="absolute bottom-0 left-[100%] opacity-0 transition-all duration-1000 md:left-auto md:right-0"/>
+                            class="absolute bottom-0 left-[100%]  transition-all duration-1000 md:left-auto md:right-0" />
                     </div>
                 </div>
             </div>
