@@ -26,11 +26,11 @@ function RoutesEdit() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Updated route:", formData);
     };
 
     return (
         <div className="container mx-auto p-4">
+                <div className="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
             <h3 className="text-2xl font-bold mb-4">Chỉnh sửa tuyến đường</h3>
             <form onSubmit={handleSubmit} className="p-4 border rounded-md shadow-lg">
                 <div className="mb-4">
@@ -69,6 +69,8 @@ function RoutesEdit() {
                 <button type="submit" className="px-4 py-2 bg-[#073272] text-white rounded">Cập nhật tuyến đường</button>
             </form>
         </div>
+        </div>
+   
     );
 }
 

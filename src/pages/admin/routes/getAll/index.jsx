@@ -31,16 +31,17 @@ export default function RoutesGetAll() {
                                 <td className="p-2 border">{route.end}</td>
                                 <td className="p-2 border">{route.distance} km</td>
                                 <td className="p-2 border flex gap-2">
-                                    <Link
-                                        to={`/admin/routes/edit/${route.id}`}
-                                        className="bg-yellow-500 text-white p-2 rounded"
-                                    >
-                                        <i className="fa-solid fa-pen-to-square text-xl"></i>
-                                    </Link>
-                                    <button className="bg-red-500 text-white p-2 rounded">
-                                        <i className="fa-solid fa-trash text-xl"></i>
-                                    </button>
-                                </td>
+                                <Link
+                                    to={`/admin/routes/edit/${route.id}`}
+                                    className="bg-yellow-500 text-white py-2 px-3 rounded"
+                                >
+                                    <i className="fa-solid fa-pen-to-square text-md"></i>
+                                </Link>
+                                <button className="bg-red-500 text-white py-2 px-3 rounded">
+                                    <i className="fa-solid fa-trash text-md"></i>
+                                </button>
+                            </td>
+                             
                             </tr>
                         ))}
                     </tbody>
