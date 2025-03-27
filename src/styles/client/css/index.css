@@ -53,7 +53,6 @@ body:has(#busDetail) header {
   background-size: cover;
   color: white !important;
 }
-
 header {
   color: white !important;
 }
@@ -70,7 +69,7 @@ header {
     opacity: 1;
   }
   100% {
-    transform: translateX(0); 
+    transform: translateX(0);
     opacity: 1;
   }
 }
@@ -78,8 +77,8 @@ header {
 #bus {
   position: absolute;
   bottom: 0;
-  left: 40%; 
-  transform: translateX(100%); 
+  left: 40%;
+  transform: translateX(100%);
   animation: none;
 }
 
@@ -87,6 +86,7 @@ header {
   opacity: 1;
   animation: busMove 3s ease-out forwards;
 }
+
 
 body {
   color: var(--text-color);

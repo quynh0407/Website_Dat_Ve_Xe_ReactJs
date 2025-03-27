@@ -1,10 +1,12 @@
 
 function Header() {
+
     return (
+        
         <header className="p-0 mb-3">
             <div className="menu fixed top-0 left-0 w-full z-50" id="menu">
                 <div
-                    className="menu-top flex justify-between w-[80%] lg:w-[80%] mx-auto items-center py-4">
+                    className="menu-top flex justify-between w-[80%] lg:w-[80%] mx-auto items-center py-3">
                     <div className="menu-top-left font-bold text-2xl">
                         <img src="/assets/images/main/logo.png" alt
                             className="w-1/2 md:w-[50%]" />

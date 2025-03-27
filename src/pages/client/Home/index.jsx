@@ -2,7 +2,7 @@ function Home() {
     return (
         <main class="home mx-auto w-full md:w-[80%] mb-5 px-4" id="home">
             <div
-                class="bg-white p-4 rounded-lg shadow mt-4 text-center mx-auto">
+                class="bg-white p-2 rounded-lg shadow mt-4 text-center mx-auto">
                 <h2 class="text-xl md:text-2xl font-bold text-[#003b95]">TẠI SAO LẠI LỰA CHỌN CHÚNG TÔI?</h2>
                 <p class="mb-4">Chúng tôi cam kết mang đến dịch vụ tốt nhất cho
                     khách hàng</p>
