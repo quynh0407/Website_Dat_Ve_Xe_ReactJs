@@ -5,8 +5,7 @@ import "../styles/admin/css/styles.min.css";
 
 
 import "../styles/admin/js/app.min.ts";
-import "../styles/admin/js/sidebarmenu.ts";
-import  "../styles/admin/js/dashboard.js";
+import "../styles/admin/js/sidebarmenu.js";
 
 const AdminLayout = () => {
     return (
@@ -17,7 +16,7 @@ const AdminLayout = () => {
 
                 <Header />
                 <div className="container-fluid">
-                <div className="row bg-white p-3 mt-2 rounded-1">
+                <div className="row p-3 mt-2 rounded-1">
                 <Outlet />
                 </div>
                 </div>

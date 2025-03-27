@@ -18,6 +18,10 @@ import BusGetAll from "./pages/admin/bus/getAll";
 import BusCreate from "./pages/admin/bus/Create";
 import BusEdit from "./pages/admin/bus/Edit";
 
+import BusTypeGetAll from "./pages/admin/busType/getAll";
+import BusTypeCreate from "./pages/admin/busType/Create";
+import BusTypeEdit from "./pages/admin/busType/Edit";
+
 import RoutesGetAll from "./pages/admin/routes/getAll";
 import RoutesCreate from "./pages/admin/routes/Create";
 import RoutesEdit from "./pages/admin/routes/Edit";
@@ -74,6 +78,12 @@ const AppRoutes = () => {
             <Route path="getAll" element={<BusGetAll />} />
             <Route path="create" element={<BusCreate />} />
             <Route path="edit/:id" element={<BusEdit />} />
+          </Route>
+
+          <Route path="busType">
+            <Route path="getAll" element={<BusTypeGetAll />} />
+            <Route path="create" element={<BusTypeCreate />} />
+            <Route path="edit/:id" element={<BusTypeEdit />} />
           </Route>
 
           <Route path="routes">

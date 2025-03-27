@@ -11,7 +11,7 @@ export default function RoutesGetAll() {
             <div className="bg-white p-4 shadow rounded-md">
                 <Link
                     to="/admin/routes/create"
-                    className="mb-4 inline-block bg-[#073272] text-white px-4 py-2 rounded"
+                    className=" inline-block bg-[#073272] text-white px-4 py-2 rounded"
                 >
                     Thêm tuyến đường
                 </Link>
