@@ -21,7 +21,7 @@ export function initCommentSlider() {
       currentIndex = (currentIndex + 1) % comments.length;
       updateComment();
     }
-    setInterval(nextComment, 3000);
+    setInterval(nextComment, 5000);
     updateComment();
   }
 }
@@ -46,13 +46,19 @@ export function initSwiper() {
 // ================== HIỆU ỨNG MENU ==================
 export function initMenu() {
   const menu = document.getElementById("menu");
-  const main = document.querySelector("main"); 
+  const main = document.querySelector("main");
 
-  if (!menu || !main) return;
+  if (!menu || !main) return () => {};
+
+  let scrollHandler = null;
 
   function updateMenuStyle() {
+    if (scrollHandler) {
+      window.removeEventListener("scroll", scrollHandler);
+    }
+
     if (main.id === "home" || main.id === "busDetail") {
-      function handleScroll() {
+      scrollHandler = () => {
         if (window.scrollY > 50) {
           menu.classList.add("bg-[#043175]");
           menu.classList.remove("bg-transparent");
@@ -60,21 +66,27 @@ export function initMenu() {
           menu.classList.remove("bg-[#043175]");
           menu.classList.add("bg-transparent");
         }
-      }
-      window.addEventListener("scroll", handleScroll);
-      handleScroll(); 
+      };
+      
+      window.addEventListener("scroll", scrollHandler);
+      scrollHandler();
     } else {
       menu.classList.add("bg-[#043175]");
       menu.classList.remove("bg-transparent");
     }
   }
 
-  const observer = new MutationObserver(() => updateMenuStyle());
+  const observer = new MutationObserver(updateMenuStyle);
   observer.observe(main, { attributes: true, attributeFilter: ["id"] });
-
   updateMenuStyle();
-}
 
+  return () => {
+    if (scrollHandler) {
+      window.removeEventListener("scroll", scrollHandler);
+    }
+    observer.disconnect();
+  };
+}
 // ================== HIỆU ỨNG XE DI CHUYỂN ==================
 export function initBusAnimation() {
   const busElement = document.getElementById("bus");
@@ -128,7 +140,7 @@ export function toggleTextarea(show) {
   const homeHeader = document.getElementById("homeHeader");
   const homeComment = document.getElementById("homeComment");
 
-  if (!main) return; // Nếu không tìm thấy <main>, thoát sớm
+  if (!main) return; 
 
   const allowedPages = ["home", "booktickets", "busDetail"];
 
@@ -142,10 +154,9 @@ export function toggleTextarea(show) {
     }
   }
 
-  // Lắng nghe khi `id` của <main> thay đổi
+ 
   const observer = new MutationObserver(() => updateVisibility());
   observer.observe(main, { attributes: true, attributeFilter: ["id"] });
 
-  // Cập nhật ngay khi chạy lần đầu
-  updateVisibility();
+   updateVisibility();
 }
