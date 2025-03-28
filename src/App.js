@@ -1,3 +1,4 @@
+//--------------------CLIENT--------------------
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayouts";
 import ClientLayout from "./layouts/ClientLayouts";
@@ -13,7 +14,7 @@ import Profile from "./pages/client/Profile";
 import Login from "./pages/client/Login";
 import Register from "./pages/client/Register";
 
-
+//------------ADMIN-------------
 import BusGetAll from "./pages/admin/bus/getAll";
 import BusCreate from "./pages/admin/bus/Create";
 import BusEdit from "./pages/admin/bus/Edit";
