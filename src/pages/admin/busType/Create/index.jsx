@@ -1,4 +1,5 @@
 import { FaSave, FaTimes } from 'react-icons/fa';
+import {Link } from "react-router";
 
 function BusTypeCreate() {
   return (
@@ -44,6 +45,7 @@ function BusTypeCreate() {
             >
               <FaSave className="mr-2" /> Lưu lại
             </button>
+            <Link to="/admin/busType/getAll" className="bg-gray-400 text-white px-4 py-2 rounded">Hủy</Link>
           </div>
         </form>
       </div>

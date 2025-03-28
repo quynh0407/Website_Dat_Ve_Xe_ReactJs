@@ -13,10 +13,9 @@ const AdminLayout = () => {
             data-sidebar-position="fixed" data-header-position="fixed">
             <Aside />
             <div class="body-wrapper">
-
                 <Header />
                 <div className="container-fluid">
-                <div className="row p-3 mt-2 rounded-1">
+                <div className="row mt-2 rounded-1">
                 <Outlet />
                 </div>
                 </div>

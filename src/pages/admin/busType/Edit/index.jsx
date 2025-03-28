@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { FaSave } from "react-icons/fa";
 
 const busTypesData = [
@@ -77,6 +77,7 @@ function BusTypeEdit() {
             >
               <FaSave className="mr-2" /> Cập nhật
             </button>
+            <Link to="/admin/busType/getAll" className="bg-gray-400 text-white px-4 py-2 rounded">Hủy</Link>
           </div>
         </form>
       </div>
