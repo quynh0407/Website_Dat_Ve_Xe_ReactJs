@@ -4,7 +4,7 @@ function Blog () {
         <div className="bg-white rounded-lg p-3 mb-3">
             <div className="flex flex-col md:flex-row">
                 <aside className="w-full md:w-1/4 p-4 bg-gray-100 mr-5 mt-2">
-                    <h4 className="text-xl font-bold text-orange-500 border-b-4 border-orange-500 inline-block pb-1 mb-1">
+                    <h4 className="text-xl font-bold text-orange-500 border-b-4 border-orange-500 inline-block pb-1 mb-3">
                         Tin Tức Mới Nhất
                     </h4>
                     <ul className="space-y-3">
@@ -60,17 +60,17 @@ function Blog () {
                 </aside>
 
                 <section className="w-full md:w-3/4 p-4">
-                    <h2 className="text-3xl font-bold text-orange-500 border-b-4 border-orange-500 inline-block pb-1 mb-5">
+                    <h2 className="text-3xl font-bold text-orange-500 border-b-4 border-orange-500 inline-block pb-1 mb-3">
                         Tất cả tin Tức
                     </h2>
                     <div className="grid grid-cols-1 gap-6">
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-4 ">
                             <a href="#">
                                 <img src="/assets/images/main/tintuc2.jpg" alt="Sách Bán Chạy"
                                     className="w-80 h-32 object-cover rounded" width="350" />
                             </a>
                             <div>
-                                <h3 className="text-base font-semibold line-clamp-3">
+                                <h3 className="text-base font-semibold line-clamp-3 ">
                                     SIÊU ƯU ĐÃI ĐẶT VÉ XE KHÁCH TRÊN VÍ VNPAY - MUA NHIỀU TẶNG NHIỀU!
                                 </h3>
                                 <p className="text-gray-600 line-clamp-3">
