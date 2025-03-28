@@ -1,3 +1,4 @@
+import { Link, useLocation } from "react-router-dom";
 function Bus() {
     return (
         <main className="mx-auto w-full md:w-[80%] flex pb-3 " id="busDetail">
@@ -81,9 +82,9 @@ function Bus() {
                                 trống</span></td>
 
                             <td class="py-2">
-                                <button class="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
+                                <Link to="/bookingTickets" class="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
                                     Chọn chuyến
-                                </button>
+                                </Link>
                             </td>
                         </tr>
                     </table>

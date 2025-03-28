@@ -13,6 +13,7 @@ import BookingHistory from "./pages/client/BookingHistory";
 import Profile from "./pages/client/Profile";
 import Login from "./pages/client/Login";
 import Register from "./pages/client/Register";
+import BookingTickets from "./pages/client/BookingTickets";
 
 //------------ADMIN-------------
 import BusGetAll from "./pages/admin/bus/getAll";
@@ -61,7 +62,7 @@ const AppRoutes = () => {
         <Route path="/" element={<ClientLayout />}>
           <Route index element={<Home />} />
           <Route path="bus" element={<Bus />} />
-          <Route path="BusDetail" element={<BusDetail />} />
+          <Route path="bookingTickets" element={<BookingTickets />} />
           <Route path="about" element={<AboutUs />} />
           <Route path="blog" element={<Blog />} />
           <Route path="contact" element={<Contact />} />

@@ -1,4 +1,4 @@
-
+import { Link, useLocation } from "react-router-dom";
 function Header() {
 
     return (
@@ -15,20 +15,21 @@ function Header() {
                         <ul
                             className="flex flex-col md:flex-row gap-2 justify-between list-none items-center">
                             <li
-                                className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a
-                                href="/contact">Hỗ trợ</a></li>
+                                className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">
+                                    <Link to="/contact">Hỗ trợ</Link></li>
                             <li
-                                className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a
-                                    href="/bookingHistory">Đặt chỗ của
-                                    tôi</a></li>
+                                className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><Link
+                                    to="/bookingHistory">Đặt chỗ của
+                                    tôi</Link></li>
                             <li
-                                className="border border-white rounded-lg px-4 py-2 hover:bg-black/10 cursor-pointer"><a
-                                    href="/register" className="no-underline"><i
+                                className="border border-white rounded-lg px-4 py-2 hover:bg-black/10 cursor-pointer">
+                                    <Link
+                                    to="/register" className="no-underline"><i
                                         className="fas fa-user mr-2"></i> Đăng
-                                    ký</a></li>
+                                    ký</Link></li>
                             <li
                                 className="rounded-lg px-4 py-2 bg-sky-500 hover:text-white transition duration-300 font-bold hover:bg-sky-600/50">
-                                <a href="/login" className="no-underline">Đăng nhập</a>
+                                <Link to="/login" className="no-underline">Đăng nhập</Link>
                             </li>
                         </ul>
                     </div>
@@ -39,20 +40,20 @@ function Header() {
                     <ul
                         className="flex flex-wrap gap-1 justify-center md:justify-start list-none items-center font-bold">
                         <li
-                            className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="/">Đặt
-                            vé xe</a></li>
+                            className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><Link to="/">Đặt
+                            vé xe</Link></li>
                         <li
-                            className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="/about">Về
-                            chúng tôi</a></li>
+                            className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><Link to="/about">Về
+                            chúng tôi</Link></li>
                         <li
-                            class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a
-                                href="/bus">Lịch trình</a></li>
+                            class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><Link
+                                to="/bus">Lịch trình</Link></li>
                         <li
-                            class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="/blog">Tin
-                            tức</a></li>
+                            class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><Link to="/blog">Tin
+                            tức</Link></li>
                         <li
-                            class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="/contact">Liên
-                            hệ</a></li>
+                            class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><Link to="/contact">Liên
+                            hệ</Link></li>
                     </ul>
                 </div>
                 <hr className="border-gray-500 opacity-50" />
@@ -89,8 +90,8 @@ function Header() {
                             className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Về
                             chúng tôi</li>
                         <li
-                            className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a
-                                href="./bus.html">Lịch trình</a></li>
+                            className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><Link
+                                to="./bus.html">Lịch trình</Link></li>
                         <li
                             className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Tin
                             tức</li>
@@ -164,12 +165,12 @@ function Header() {
                     <div
                         className="w-full md:w-[80%] flex flex-wrap items-center gap-2 mt-4 text-white justify-start">
                         <span className="font-bold">Tìm kiếm</span>
-                        <a href="#"
+                        <Link to="#"
                             className="flex items-center gap-1 bg-gray-500 text-white px-3 py-1 rounded text-sm">Khám
-                            phá ý tưởng chuyến đi</a>
-                        <a href="#"
+                            phá ý tưởng chuyến đi</Link>
+                        <Link to="#"
                             className="flex items-center gap-1 bg-gray-500 text-white px-3 py-1 rounded text-sm">Tin
-                            tức</a>
+                            tức</Link>
                     </div>
                 </div>
             </div>

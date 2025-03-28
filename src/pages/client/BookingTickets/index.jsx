@@ -4,7 +4,7 @@ function BookingTickets (){
             <div className="w-[60%]">
                 <div
                     className="w-full bg-white p-4 rounded-t-lg rounded-b-none shadow-md flex gap-2">
-                    <table className="table table-borderless">
+                    <table className="table table-borderless max-w-[60%]">
                         <thead>
                             <tr>
                                 <th className="text-[20px] p-4" colspan="3">Tầng
@@ -409,18 +409,18 @@ function BookingTickets (){
                         </thead>
                     </table>
 
-                    <div className="ml-[5rem] mt-[5rem]">
-                        <div className="flex m-4">
+                    <div className="mt-[5rem]">
+                        <div className="flex">
                             <div
                                 className="w-[20px] h-[20px] bg-gray-200 mr-2 mt-1 border border-gray-600 rounded-[4px]"></div>
                             <span>Đã bán</span>
                         </div>
-                        <div className="flex m-4">
+                        <div className="flex">
                             <div
                                 className="w-[20px] h-[20px] bg-sky-100 mr-2 mt-1 border border-sky-600 rounded-[4px]"></div>
                             <span>Còn trống</span>
                         </div>
-                        <div className="flex m-4">
+                        <div className="flex">
                             <div
                                 className="w-[20px] h-[20px] bg-orange-100 mr-2 mt-1 border border-orange-600 rounded-[4px]"></div>
                             <span>Đang chọn</span>
