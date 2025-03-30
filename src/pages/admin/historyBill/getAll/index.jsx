@@ -1,92 +1,88 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-function HistoryBillGetAll(){
-    return(
-        <main className="p-10 bg-gray-100">
-  <div className="container mx-auto mt-5">
-    <h2 className="text-xl font-bold mb-3">Quản lý Hóa Đơn</h2>
-    <table className="table table-striped table-hover">
-      <thead className="table-dark">
-        <tr>
-          <th>#</th>
-          <th>Tên</th>
-          <th>Chuyến đi</th>
-          <th>Chỗ ngồi</th>
-          <th>Thời gian đặt</th>
-          <th>Trạng thái</th>
-          <th>Giá</th>
-          <th>Hành động</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Võ Ngọc A</td>
-          <td>201</td>
-          <td>5</td>
-          <td>2025-03-26 10:00:00</td>
-          <td>Chưa giải quyết</td>
-          <td>150.00</td>
-          <td>
-            <Link to="/admin/historyBill/edit/1" className="btn btn-primary btn-sm mr-2">Sửa</Link>
-            <button className="btn btn-danger btn-sm">Xóa</button>
-          </td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Võ Ngọc B</td>
-          <td>202</td>
-          <td>10</td>
-          <td>2025-03-26 11:00:00</td>
-          <td>Đã xác nhận</td>
-          <td>100.00</td>
-          <td>
-            <Link to="/admin/historyBill/edit/2" className="btn btn-primary btn-sm mr-2">Sửa</Link>
-            <button className="btn btn-danger btn-sm">Xóa</button>
-          </td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Võ Ngọc C</td>
-          <td>203</td>
-          <td>15</td>
-          <td>2025-03-26 12:00:00</td>
-          <td>Đã hủy bỏ</td>
-          <td>50.00</td>
-          <td>
-            <Link to="/admin/historyBill/edit/3" className="btn btn-primary btn-sm mr-2">Sửa</Link>
-            <button className="btn btn-danger btn-sm">Xóa</button>
-          </td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Võ Ngọc D</td>
-          <td>204</td>
-          <td>20</td>
-          <td>2025-03-26 13:00:00</td>
-          <td>Đã xác nhận</td>
-          <td>200.00</td>
-          <td>
-            <Link to="/admin/historyBill/edit/4" className="btn btn-primary btn-sm mr-2">Sửa</Link>
-            <button className="btn btn-danger btn-sm">Xóa</button>
-          </td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>Võ Ngọc E</td>
-          <td>205</td>
-          <td>25</td>
-          <td>2025-03-26 14:00:00</td>
-          <td>Chưa giải quyết</td>
-          <td>120.00</td>
-          <td>
-            <Link to="/admin/historyBill/edit/5" className="btn btn-primary btn-sm mr-2">Sửa</Link>
-            <button className="btn btn-danger btn-sm">Xóa</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</main>
-    )
+import FormDelete from "../../../../components/formDelete";
+
+const historyBillData = [
+  { id: "1", name: "Võ Ngọc A", trip: "201", seat: "5", bookingTime: "2025-03-26 10:00:00", status: "Chưa giải quyết", price: "150.00" },
+  { id: "2", name: "Võ Ngọc B", trip: "202", seat: "10", bookingTime: "2025-03-26 11:00:00", status: "Đã xác nhận", price: "100.00" },
+  { id: "3", name: "Võ Ngọc C", trip: "203", seat: "15", bookingTime: "2025-03-26 12:00:00", status: "Đã hủy bỏ", price: "50.00" },
+  { id: "4", name: "Võ Ngọc D", trip: "204", seat: "20", bookingTime: "2025-03-26 13:00:00", status: "Đã xác nhận", price: "200.00" },
+  { id: "5", name: "Võ Ngọc E", trip: "205", seat: "25", bookingTime: "2025-03-26 14:00:00", status: "Chưa giải quyết", price: "120.00" },
+];
+
+function HistoryBillGetAll() {
+  const [selectedBill, setSelectedBill] = useState(null);
+
+  return (
+    <div className="container mx-auto p-2">
+      <div className="bg-white p-4 shadow rounded-md">
+        <h2 className="text-xl font-bold mb-3">Quản lý Hóa Đơn</h2>
+        <table className="w-full border-collapse border border-gray-300 mt-3">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="p-2 border">#</th>
+              <th className="p-2 border">Tên</th>
+              <th className="p-2 border">Chuyến đi</th>
+              <th className="p-2 border">Chỗ ngồi</th>
+              <th className="p-2 border">Thời gian đặt</th>
+              <th className="p-2 border">Trạng thái</th>
+              <th className="p-2 border">Giá</th>
+              <th className="p-2 border">Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            {historyBillData.map((bill) => (
+              <tr key={bill.id} className="border-b">
+                <td className="p-2 border">{bill.id}</td>
+                <td className="p-2 border">{bill.name}</td>
+                <td className="p-2 border">{bill.trip}</td>
+                <td className="p-2 border">{bill.seat}</td>
+                <td className="p-2 border">{bill.bookingTime}</td>
+                <td className="p-2 border">
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs ${
+                      bill.status === "Đã xác nhận"
+                        ? "bg-green-100 text-green-800"
+                        : bill.status === "Chưa giải quyết"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : "bg-red-100 text-red-800"
+                    }`}
+                  >
+                    {bill.status}
+                  </span>
+                </td>
+                <td className="p-2 border">{bill.price}</td>
+                <td className="p-2 border flex gap-2">
+                  <Link
+                    to={`/admin/historyBill/edit/${bill.id}`}
+                    className="bg-yellow-500 text-white py-2 px-3 rounded"
+                  >
+                    <i className="fa-solid fa-pen-to-square text-md"></i>
+                  </Link>
+                  <button
+                    onClick={() => setSelectedBill(bill)}
+                    className="bg-red-500 text-white py-2 px-3 rounded"
+                  >
+                    <i className="fa-solid fa-trash text-md"></i>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <FormDelete
+        isOpen={!!selectedBill}
+        onClose={() => setSelectedBill(null)}
+        onConfirm={() => {
+          console.log(`Đã xóa hóa đơn: ${selectedBill?.name}`);
+          setSelectedBill(null);
+        }}
+        message={`Bạn có chắc chắn muốn xóa hóa đơn của "${selectedBill?.name}" không?`}
+      />
+    </div>
+  );
 }
+
 export default HistoryBillGetAll;

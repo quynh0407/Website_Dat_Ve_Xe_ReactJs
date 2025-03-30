@@ -1,85 +1,89 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import FormDelete from "../../../../components/formDelete";
+
+const busData = [
+  { id: "1", licensePlate: "51A-12345", busType: "Xe giường nằm", driver: "Nguyễn Văn A", status: "Hoạt động" },
+  { id: "2", licensePlate: "51B-67890", busType: "Xe ghế ngồi", driver: "Trần Văn B", status: "Bảo trì" },
+  { id: "3", licensePlate: "79C-11223", busType: "Xe giường nằm", driver: "Phạm Văn C", status: "Hoạt động" },
+  { id: "4", licensePlate: "30D-44556", busType: "Xe limousine", driver: "Lê Văn D", status: "Đang sửa chữa" },
+  { id: "5", licensePlate: "60E-77889", busType: "Xe ghế ngồi", driver: "Đặng Văn E", status: "Hoạt động" },
+];
+
 function BusGetAll() {
-    return (
-        <main className="p-10 bg-gray-100">
-            <div className="container mx-auto mt-5">
-                <div className="d-flex justify-content-between align-items-center">
-                    <h2 className="text-xl font-bold mb-3">Quản lý xe khách</h2>
-                    <Link to="/admin/bus/create" className="btn btn-primary mb-3">
-                        + Thêm xe mới
-                    </Link>
-                </div>
-                <table className="table table-striped table-hover">
-                    <thead className="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Biển số</th>
-                            <th>Loại xe</th>
-                            <th>Tài xế</th>
-                            <th>Trạng thái</th>
-                            <th>Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>51A-12345</td>
-                            <td>Giường nằm</td>
-                            <td>Nguyễn Văn A</td>
-                            <td><span className="badge bg-success">Hoạt động</span></td>
-                            <td>
-                                <Link to="/admin/bus/edit/1" className="btn btn-primary btn-sm mr-2">Sửa</Link>
-                                <button className="btn btn-danger btn-sm">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>51B-67890</td>
-                            <td>Ghế ngồi</td>
-                            <td>Trần Văn B</td>
-                            <td><span className="badge bg-danger">Bảo trì</span></td>
-                            <td>
-                                <Link to="/admin/bus/edit/1" className="btn btn-primary btn-sm mr-2">Sửa</Link>
-                                <button className="btn btn-danger btn-sm">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>79C-11223</td>
-                            <td>Giường nằm</td>
-                            <td>Phạm Văn C</td>
-                            <td><span className="badge bg-success">Hoạt động</span></td>
-                            <td>
-                                <Link to="/admin/bus/edit/1" className="btn btn-primary btn-sm mr-2">Sửa</Link>
-                                <button className="btn btn-danger btn-sm">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>30D-44556</td>
-                            <td>Giường nằm</td>
-                            <td>Lê Văn D</td>
-                            <td><span className="badge bg-warning">Đang sửa chữa</span></td>
-                            <td>
-                                <Link to="/admin/bus/edit/1" className="btn btn-primary btn-sm mr-2">Sửa</Link>
-                                <button className="btn btn-danger btn-sm">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>60E-77889</td>
-                            <td>Ghế ngồi</td>
-                            <td>Đặng Văn E</td>
-                            <td><span className="badge bg-success">Hoạt động</span></td>
-                            <td>
-                                <Link to="/admin/bus/edit/1" className="btn btn-primary btn-sm mr-2">Sửa</Link>
-                                <button className="btn btn-danger btn-sm">Xóa</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </main>
-    )
+  const [selectedBus, setSelectedBus] = useState(null);
+
+  return (
+    <div className="container mx-auto p-2">
+      <div className="bg-white p-4 shadow rounded-md">
+        <Link
+          to="/admin/bus/create"
+          className="inline-block bg-[#073272] text-white px-4 py-2 rounded"
+        >
+          + Thêm xe mới
+        </Link>
+        <table className="w-full border-collapse border border-gray-300 mt-3">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="p-2 border">#</th>
+              <th className="p-2 border">Biển số</th>
+              <th className="p-2 border">Loại xe</th>
+              <th className="p-2 border">Tài xế</th>
+              <th className="p-2 border">Trạng thái</th>
+              <th className="p-2 border">Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            {busData.map((bus) => (
+              <tr key={bus.id} className="border-b">
+                <td className="p-2 border">{bus.id}</td>
+                <td className="p-2 border">{bus.licensePlate}</td>
+                <td className="p-2 border">{bus.busType}</td>
+                <td className="p-2 border">{bus.driver}</td>
+                <td className="p-2 border">
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs ${
+                      bus.status === "Hoạt động"
+                        ? "bg-green-100 text-green-800"
+                        : bus.status === "Bảo trì"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : "bg-orange-100 text-orange-800"
+                    }`}
+                  >
+                    {bus.status}
+                  </span>
+                </td>
+                <td className="p-2 border flex gap-2">
+                  <Link
+                    to={`/admin/bus/edit/${bus.id}`}
+                    className="bg-yellow-500 text-white py-2 px-3 rounded"
+                  >
+                    <i className="fa-solid fa-pen-to-square text-md"></i>
+                  </Link>
+                  <button
+                    onClick={() => setSelectedBus(bus)}
+                    className="bg-red-500 text-white py-2 px-3 rounded"
+                  >
+                    <i className="fa-solid fa-trash text-md"></i>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <FormDelete
+        isOpen={!!selectedBus}
+        onClose={() => setSelectedBus(null)}
+        onConfirm={() => {
+          console.log(`Đã xóa xe: ${selectedBus?.licensePlate}`);
+          setSelectedBus(null);
+        }}
+        message={`Bạn có chắc chắn muốn xóa xe "${selectedBus?.licensePlate}" không?`}
+      />
+    </div>
+  );
 }
+
 export default BusGetAll;
