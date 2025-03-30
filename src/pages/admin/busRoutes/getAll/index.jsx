@@ -16,7 +16,7 @@ function BusRoutesGetAll(){
                             to="/admin/busRoutes/create"
                             className=" inline-block bg-[#073272] text-white px-4 py-2 rounded"
                         >
-                            Thêm tuyến đường
+                            Thêm tuyến xe
                         </Link>
                         <table className="w-full border-collapse border border-gray-300 mt-4">
                             <thead>

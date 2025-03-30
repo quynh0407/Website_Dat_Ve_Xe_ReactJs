@@ -81,7 +81,8 @@ function BusRoutesEdit(){
                             required
                         />
                     </div>
-                    <button type="submit" className="px-4 py-2 bg-[#073272] text-white rounded">Cập nhật tuyến đường</button>
+                    <button type="submit" className="px-4 py-2 bg-[#073272] text-white rounded">
+                        Cập nhật tuyến xe</button>
                 </form>
             </div>
             </div>
