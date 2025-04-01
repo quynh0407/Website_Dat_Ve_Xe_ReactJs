@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const blogData = [
     {
@@ -46,6 +47,16 @@ const blogData = [
 
 
 function BlogEdit() {
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        trigger,
+        formState: { errors }
+    } = useForm({
+        mode: "onChange"
+    });
+
     const { id } = useParams();
     const [formData, setFormData] = useState({ title: "", content: "", image: "" });
     const [previewImage, setPreviewImage] = useState("");
@@ -54,15 +65,18 @@ function BlogEdit() {
         const blogToEdit = blogData.find(blog => blog.id === id);
         if (blogToEdit) {
             setFormData(blogToEdit);
+            setValue("title", blogToEdit.title);
+            setValue("content", blogToEdit.content);
+            setValue("image", blogToEdit.image);
             setPreviewImage(blogToEdit.image);
         }
-    }, [id]);
+    }, [id, setValue]);
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
+    const onSubmit = (data) => console.log("Cập nhật dữ liệu", data);
+
+    const handleChange = async (fieldName) => {
+        await trigger(fieldName);
+
     };
 
     const handleFileChange = (e) => {
@@ -73,9 +87,6 @@ function BlogEdit() {
         }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    };
 
     return (
         <div className="container mx-auto p-4">
@@ -85,28 +96,33 @@ function BlogEdit() {
                     <div className="mb-4">
                         <label className="block text-sm font-medium mb-2">Tiêu đề bài viết</label>
                         <input
-                            name="title"
-                            value={formData.title}
-                            onChange={handleChange}
                             type="text"
-                            className="w-full p-2 border rounded"
+                            className={`w-full p-2 border rounded ${errors.title ? '!border-red-500' : 'border-gray-300'}`}
+                            {...register("title", { required: "Vui lòng nhập tiêu đề bài viết" })}
                             placeholder="Vui lòng nhập tiêu đề bài viết"
-                            required
+                            onChange={(e) => {
+                                setValue("title", e.target.value);
+                                handleChange("title");
+                            }}
                         />
+                        {errors.title && <p className="text-red-700">{errors.title.message}</p>}
                     </div>
                     <div className="">
                         <div className="mb-4">
                             <label className="block text-sm font-medium mb-2">Nội dung</label>
                             <textarea
-                                name="content"
-                                value={formData.content}
-                                onChange={handleChange}
                                 rows={10}
-                                className="w-full p-2 border rounded"
+                                className={`w-full p-2 border rounded ${errors.content ? '!border-red-500' : 'border-gray-300'}`}
+                                {...register("content", {required: "Vui lòng nhập nội dung bài viết" })}
                                 placeholder="Vui lòng nhập nội dung bài viết"
-                                required
+                                onChange={(e) => {
+                                    setValue("content", e.target.value);
+                                    handleChange("content");
+                                }}
                             />
+                            {errors.content && <p className="text-red-700">{errors.content.message}</p>}
                         </div>
+                        
 
                         {previewImage && (
                             <div className="mb-4">
