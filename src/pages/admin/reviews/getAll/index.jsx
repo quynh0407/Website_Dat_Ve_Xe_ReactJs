@@ -10,7 +10,7 @@ const reviewData = [
         rating: "3",
         comment: "120",
         createAt: "28/03/2025",
-        status: "Hiển thị",
+        status: 1,
     },
     {
         id: "2",
@@ -19,7 +19,7 @@ const reviewData = [
         rating: "5",
         comment: "1800000",
         createAt: "28/03/2025",
-        status: "Ẩn",
+        status: 0,
     },
 ];
 
@@ -50,11 +50,11 @@ function ReviewGetAll() {
                                 <td className="p-2 border">{review.comment}</td>
                                 <td className="p-2 border">{review.createAt}</td>
                                 <td className="p-2 border">
-                                    <span className={`py-1 px-4 rounded-full 
-                                        ${review.status === "Hiển thị" ? "bg-gradient-to-b from-cyan-100 to-indigo-200 text-blue-950" 
-                                                                        : "bg-gradient-to-b from-yellow-100 to-rose-300 text-red-950" }`}
-                                    >
-                                    {review.status}
+                                <span className={`px-2 py-1 rounded-full text-xs ${review.status === 1
+                                        ? "bg-green-100 text-green-800"
+                                        : "bg-red-100 text-red-800"
+                                        }`}>
+                                        {review.status === 1 ? "Hiển thị" : "Ẩn bài viết"}
                                     </span>
                                 </td>
                                 <td className="p-2 border flex gap-2">
