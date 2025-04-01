@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import FormDelete from "../../../../components/formDelete";
 
 const reviewData = [
     {
@@ -22,6 +24,8 @@ const reviewData = [
 ];
 
 function ReviewGetAll() {
+      const [selectedReview, setSelectedReview] = useState(null);
+    
     return (
         <div className="container mx-auto p-2">
             <div className="bg-white p-4 shadow rounded-md">
@@ -60,7 +64,7 @@ function ReviewGetAll() {
                                     >
                                         <i className="fa-solid fa-pen-to-square text-md"></i>
                                     </Link>
-                                    <button className="bg-red-500 text-white py-2 px-3 rounded">
+                                    <button onClick={() => setSelectedReview(review)} className="bg-red-500 text-white py-2 px-3 rounded">
                                         <i className="fa-solid fa-trash text-md"></i>
                                     </button>
                                 </td>
@@ -70,6 +74,16 @@ function ReviewGetAll() {
                     </tbody>
                 </table>
             </div>
+             <FormDelete
+                    isOpen={!!selectedReview}
+                    onClose={() => setSelectedReview(null)}
+                    onConfirm={() => {
+                      setSelectedReview(null);
+                    }}
+                    Id={selectedReview?.id}
+                    action={`/admin/review/delete/${selectedReview?.id}`}
+                    message={`Bạn có chắc chắn muốn xóa đánh giá"${selectedReview?.comment}" không?`}
+                  />
         </div>
     )
 }

@@ -20,8 +20,7 @@ function BusRoutesCreate() {
                         <select
                             className={`w-full p-2 border rounded ${errors.route ? '!border-red-500' : 'border-gray-300'}`}
                             {...register("route", { required: "Vui lòng chọn tuyến đường" })}
-                            aria-invalid={errors.route ? "true" : "false"}
-                        >
+                            aria-invalid={errors.route ? "true" : "false"}>
                             <option value="">Chọn tuyến đường</option>
                             <option value="route1">Tuyến A</option>
                             <option value="route2">Tuyến B</option>
@@ -60,7 +59,7 @@ function BusRoutesCreate() {
                                 }`}
                             {...register("ticketPrice", {
                                 required: "Vui lòng nhập giá vé",
-                                min: { value: 0, message: "Giá vé phải là lớn hơn 0" }
+                                minLenght: { value: 0, message: "Giá vé phải là lớn hơn 0" }
                             })}
                         />
                         {errors.ticketPrice && <p className="text-red-700">{errors.ticketPrice.message}</p>}

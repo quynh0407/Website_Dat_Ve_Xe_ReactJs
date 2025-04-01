@@ -65,9 +65,12 @@ export default function RoutesGetAll() {
                     isOpen={!!selectedRoute}
                     onClose={() => setSelectedRoute(null)}
                     onConfirm={handleDelete}
+                    Id={selectedRoute?.id}
+                    action={`/admin/route/delete/${selectedRoute?.id}`}
                     message={`Bạn có chắc chắn muốn xóa tuyến đường từ "${selectedRoute.start}" đến "${selectedRoute.end}" không?`}
                 />
             )}
+
         </div>
     );
 }

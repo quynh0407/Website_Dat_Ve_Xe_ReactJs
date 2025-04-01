@@ -70,10 +70,9 @@ function BusTypeGetAll() {
             <FormDelete
                 isOpen={!!selectedBusType}
                 onClose={() => setSelectedBusType(null)}
-                onConfirm={() => {
-                    console.log(`Đã xóa loại xe: ${selectedBusType?.name}`);
-                    setSelectedBusType(null);
-                }}
+                onConfirm={() => {setSelectedBusType(null);}}
+                Id={selectedBusType?.id}
+                action={`/admin/busType/delete/${selectedBusType?.id}`}
                 message={`Bạn có chắc chắn muốn xóa loại xe "${selectedBusType?.name}" không?`}
             />
         </div>

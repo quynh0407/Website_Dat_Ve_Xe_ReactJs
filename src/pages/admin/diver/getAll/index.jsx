@@ -87,9 +87,9 @@ export default function DriverGetAll() {
             <FormDelete
                 isOpen={!!selectedDriver}
                 onClose={() => setSelectedDriver(null)}
-                onConfirm={() => {
-                    setSelectedDriver(null);
-                }}
+                onConfirm={() => {setSelectedDriver(null);}}
+                Id={selectedDriver?.id}
+                action={`/admin/driver/delete/${selectedDriver?.id}`}   
                 message={`Bạn có chắc chắn muốn xóa tài xế "${selectedDriver?.fullName}" không?`}
             />
         </div>
