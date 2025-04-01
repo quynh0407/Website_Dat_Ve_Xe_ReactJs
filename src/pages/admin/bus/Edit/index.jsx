@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const busData = [
     { id: "1", licensePlate: "51A-12345", busType: "Xe giường nằm", driver: "Nguyễn Văn A", status: "Hoạt động" },
@@ -11,81 +12,55 @@ const busData = [
 
 function BusEdit() {
     const { id } = useParams();
-    const [formData, setFormData] = useState({ licensePlate: "", busType: "", driver: "", status: "" });
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
     useEffect(() => {
         const busToEdit = busData.find((bus) => bus.id === id);
         if (busToEdit) {
-            setFormData(busToEdit);
+            Object.keys(busToEdit).forEach((key) => setValue(key, busToEdit[key]));
         }
-    }, [id]);
+    }, [id, setValue]);
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    };
+    const onSubmit = (data) => console.log(data);
 
     return (
         <div className="container mx-auto p-4">
             <div className="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
-                <h3 className="text-2xl font-bold mb-4">Sửa xe Khách</h3>
-                <form onSubmit={handleSubmit} className="p-4 border rounded-md shadow-lg">
+                <h3 className="text-2xl font-bold mb-4">Sửa xe khách</h3>
+                <form onSubmit={handleSubmit(onSubmit)} className="p-4 border rounded-md shadow-lg">
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Biển số</label>
-                        <input
-                            type="text"
-                            name="licensePlate"
-                            value={formData.licensePlate}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded"
-                            required
-                        />
+                        <input type="text" className="w-full p-2 border rounded"
+                            {...register("licensePlate", { required: "Biển số không được để trống" })} />
+                        {errors.licensePlate && <span className="text-red-500">{errors.licensePlate.message}</span>}
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Loại xe</label>
-                        <select
-                            name="busType"
-                            value={formData.busType}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded"
-                            required
-                        >
+                        <select className="w-full p-2 border rounded"
+                            {...register("busType", { required: "Loại xe không được để trống" })}>
                             <option value="">Chọn loại xe</option>
-                            <option value="1">Giường nằm</option>
-                            <option value="2">Ghế ngồi</option>
+                            <option value="Xe giường nằm">Giường nằm</option>
+                            <option value="Xe ghế ngồi">Ghế ngồi</option>
+                            <option value="Xe limousine">Limousine</option>
                         </select>
+                        {errors.busType && <span className="text-red-500">{errors.busType.message}</span>}
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Tài xế</label>
-                        <input
-                            type="text"
-                            name="driver"
-                            value={formData.driver}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded"
-                            required
-                        />
+                        <input type="text" className="w-full p-2 border rounded"
+                            {...register("driver", { required: "Tài xế không được để trống" })} />
+                        {errors.driver && <span className="text-red-500">{errors.driver.message}</span>}
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Trạng thái</label>
-                        <select
-                            name="status"
-                            value={formData.status}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded"
-                            required
-                        >
+                        <select className="w-full p-2 border rounded"
+                            {...register("status", { required: "Trạng thái không được để trống" })}>
                             <option value="">Chọn trạng thái</option>
-                            <option value="active">Hoạt động</option>
-                            <option value="maintenance">Bảo trì</option>
-                            <option value="repairing">Đang sửa chữa</option>
+                            <option value="Hoạt động">Hoạt động</option>
+                            <option value="Bảo trì">Bảo trì</option>
+                            <option value="Đang sửa chữa">Đang sửa chữa</option>
                         </select>
+                        {errors.status && <span className="text-red-500">{errors.status.message}</span>}
                     </div>
                     <button type="submit" className="px-4 py-2 bg-[#073272] text-white rounded">Cập nhật xe</button>
                 </form>
