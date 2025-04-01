@@ -23,7 +23,7 @@ function BusCreate() {
                             placeholder="Vui lòng nhập biển số" id="plateNumber"
                             required
                             {...register("plateNumber", {
-                                required: "Biển số không được để trống",
+                                required: {value: true, message: "Biển số không được để trống"},
                             })}
                         />
                         {errors.plateNumber && <span className="text-danger">{errors.plateNumber.message}</span>}
@@ -32,7 +32,7 @@ function BusCreate() {
                         <label className="block text-sm font-medium mb-2">Loại xe</label>
                         <select className="w-full p-2 border rounded" id="busTypeID " required
                             {...register("busTypeID", {
-                                required: "Loại xe không được để trống",
+                                required: {value: true, message: "Loại xe không được để trống"},
                             })}>
                             <option value="">Chọn loại xe</option>
                             <option value="1">Giường nằm</option>
@@ -48,7 +48,7 @@ function BusCreate() {
                             placeholder="Vui lòng nhập tên tài xế" id="driverId"
                             required
                             {...register("driverId", {
-                                required: "Tài xế không được để trống",
+                                required: {value: true, message: "Tài xế không được để trống"},
                             })} />
                         {errors.driverId && <span className="text-danger">{errors.driverId.message}</span>}
                     </div>
@@ -56,7 +56,7 @@ function BusCreate() {
                         <label className="block text-sm font-medium mb-2">Trạng thái</label>
                         <select className="w-full p-2 border rounded" id="status" required
                             {...register("status", {
-                                required: "Trạng thái không được để trống",
+                                required: {value: true, message: "Trạng thái không được để trống"},
                             })}>
                             <option value="">Chọn trạng thái</option>
                             <option value="active">Hoạt động</option>

@@ -23,7 +23,7 @@ function RoutesCreate() {
                                 className="w-full p-2 border rounded" id="starting"
                                 required 
                                 {...register("starting", {
-                                    required: "Điểm bắt đầu không được để trống", 
+                                    required: {value: true, message: "Điểm bắt đầu không được để trống"}, 
                                 })}
                             />
                             {errors.starting && <span className="text-danger">{errors.starting.message}</span>}
@@ -35,7 +35,7 @@ function RoutesCreate() {
                                 className="w-full p-2 border rounded" id="end"
                                 required
                                 {...register("end", {
-                                    required: "Điểm kết thúc không được để trống", 
+                                    required: {value: true, message: "Điểm kết thúc không được để trống"}, 
                                 })}
                             />
                             {errors.end && <span className="text-danger">{errors.end.message}</span>}
@@ -47,7 +47,7 @@ function RoutesCreate() {
                                 className="w-full p-2 border rounded" id="distance"
                                 required 
                                 {...register("distance", {
-                                    required: "Khoảng cách không được để trống", 
+                                    required: {value: true, message: "Khoảng cách không được để trống"}, 
                                 })}
                             />
                             {errors.distance && <span className="text-danger">{errors.distance.message}</span>}

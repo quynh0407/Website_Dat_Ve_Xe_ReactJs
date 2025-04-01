@@ -23,7 +23,7 @@ function DiverCreate() {
                                 <label className="block mb-1 font-medium">Họ và tên</label>
                                 <input type="text" className="w-full p-2 border rounded" id="username"
                                     {...register("username", {
-                                        required: "Họ và tên không được để trống",
+                                        required: { value: true, message: "Họ và tên không được để trống" },
                                     })} />
                                 {errors.username && <span className="text-danger">{errors.username.message}</span>}
                             </div>
@@ -31,7 +31,7 @@ function DiverCreate() {
                                 <label className="block mb-1 font-medium">Số điện thoại</label>
                                 <input type="text" className="w-full p-2 border rounded" id="phone"
                                     {...register("phone", {
-                                        required: "Số điện thoại không được để trống",
+                                        required: { value: true, message: "Số điện thoại không được để trống" },
                                     })} />
                                 {errors.phone && <span className="text-danger">{errors.phone.message}</span>}
                             </div>
@@ -39,7 +39,7 @@ function DiverCreate() {
                                 <label className="block mb-1 font-medium">Số GPLX</label>
                                 <input type="text" className="w-full p-2 border rounded" id="licenseNumber"
                                     {...register("licenseNumber", {
-                                        required: "Số GPLX không được để trống",
+                                        required: { value: true, message: "Số GPLX không được để trống" },
                                     })} />
                                 {errors.licenseNumber && <span className="text-danger">{errors.licenseNumber.message}</span>}
                             </div>
@@ -47,7 +47,7 @@ function DiverCreate() {
                                 <label className="block mb-1 font-medium">Loại GPLX</label>
                                 <select className="w-full p-2 border rounded" defaultValue="" id="licenseType"
                                     {...register("licenseType", {
-                                        required: "Loại GPLX không được để trống",
+                                        required: { value: true, message: "Loại GPLX không được để trống" },
                                     })}>
                                     <option value="">Vui lòng chọn lại GPLX</option>
                                     <option value="B1">B1</option>
@@ -62,7 +62,7 @@ function DiverCreate() {
                                 <label className="block mb-1 font-medium">Kinh nghiệm (năm)</label>
                                 <input type="number" className="w-full p-2 border rounded" id="experienceYears"
                                     {...register("experienceYears", {
-                                        required: "Kinh nghiệm (năm) không được để trống",
+                                        required: { value: true, message: "Kinh nghiệm (năm) không được để trống" },
                                     })} />
                                 {errors.experienceYears && <span className="text-danger">{errors.experienceYears.message}</span>}
                             </div>
@@ -70,9 +70,9 @@ function DiverCreate() {
                                 <label className="block mb-1 font-medium">Ngày sinh</label>
                                 <select className="w-full p-2 border rounded" defaultValue="" id="birthDate"
                                     {...register("birthDate", {
-                                        required: "Ngày sinh không được để trống",
+                                        required: { value: true, message: "Ngày sinh không được để trống" },
                                     })}>
-                                        <option value="">Chọn ngày sinh</option>
+                                    <option value="">Chọn ngày sinh</option>
                                     {Array.from({ length: 100 }, (_, i) => (
                                         <option key={i} value={new Date().getFullYear() - i}>
                                             {new Date().getFullYear() - i}
@@ -85,7 +85,7 @@ function DiverCreate() {
                                 <label className="block mb-1 font-medium">Ngày thuê</label>
                                 <input type="date" className="w-full p-2 border rounded" id="hireDate"
                                     {...register("hireDate", {
-                                        required: "Ngày thuê không được để trống",
+                                        required: { value: true, message: "Ngày thuê không được để trống" },
                                     })} />
                                 {errors.hireDate && <span className="text-danger">{errors.hireDate.message}</span>}
                             </div>
@@ -93,7 +93,7 @@ function DiverCreate() {
                                 <label className="block mb-1 font-medium">Trạng thái</label>
                                 <select className="w-full p-2 border rounded" defaultValue="" id="status"
                                     {...register("status", {
-                                        required: "Trạng thái không được để trống",
+                                        required: { value: true, message: "Trạng thái không được để trống" },
                                     })}>
                                     <option value="">Vui lòng chọn trạng thái</option>
                                     <option value="active" >Đang làm việc</option>
@@ -105,7 +105,7 @@ function DiverCreate() {
                                 <label className="block mb-1 font-medium">Ảnh</label>
                                 <input type="file" className="w-full p-2 border rounded" id="image"
                                     {...register("image", {
-                                        required: "Ảnh không được để trống",
+                                        required: { value: true, message: "Ảnh không được để trống" },
                                     })} />
                                 {errors.image && <span className="text-danger">{errors.image.message}</span>}
                             </div>
