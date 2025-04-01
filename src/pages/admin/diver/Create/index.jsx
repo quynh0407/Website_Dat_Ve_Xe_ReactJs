@@ -1,73 +1,122 @@
-import {Link } from "react-router";
+import { Link } from "react-router";
 import { FaSave, FaTimes } from 'react-icons/fa';
+import { useForm } from "react-hook-form";
 
-function DiverCreate(){
-    return(
+function DiverCreate() {
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
+
+    const onSubmit = (data) => console.log(data)
+
+    return (
         <>
-         <div className="container mx-auto p-4">
-            <div className="bg-white p-6 shadow rounded-md">
-                <h2 className="text-xl font-bold mb-4">Thêm tài xế</h2>
-                <form>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <label className="block mb-1 font-medium">Họ và tên</label>
-                            <input type="text" className="w-full p-2 border rounded" />
+            <div className="container mx-auto p-4">
+                <div className="bg-white p-6 shadow rounded-md">
+                    <h2 className="text-xl font-bold mb-4">Thêm tài xế</h2>
+                    <form>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block mb-1 font-medium">Họ và tên</label>
+                                <input type="text" className="w-full p-2 border rounded" id="username"
+                                    {...register("username", {
+                                        required: "Họ và tên không được để trống",
+                                    })} />
+                                {errors.username && <span className="text-danger">{errors.username.message}</span>}
+                            </div>
+                            <div>
+                                <label className="block mb-1 font-medium">Số điện thoại</label>
+                                <input type="text" className="w-full p-2 border rounded" id="phone"
+                                    {...register("phone", {
+                                        required: "Số điện thoại không được để trống",
+                                    })} />
+                                {errors.phone && <span className="text-danger">{errors.phone.message}</span>}
+                            </div>
+                            <div>
+                                <label className="block mb-1 font-medium">Số GPLX</label>
+                                <input type="text" className="w-full p-2 border rounded" id="licenseNumber"
+                                    {...register("licenseNumber", {
+                                        required: "Số GPLX không được để trống",
+                                    })} />
+                                {errors.licenseNumber && <span className="text-danger">{errors.licenseNumber.message}</span>}
+                            </div>
+                            <div>
+                                <label className="block mb-1 font-medium">Loại GPLX</label>
+                                <select className="w-full p-2 border rounded" defaultValue="" id="licenseType"
+                                    {...register("licenseType", {
+                                        required: "Loại GPLX không được để trống",
+                                    })}>
+                                    <option value="">Vui lòng chọn lại GPLX</option>
+                                    <option value="B1">B1</option>
+                                    <option value="B2" selected>B2</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                    <option value="E">E</option>
+                                </select>
+                                {errors.licenseType && <span className="text-danger">{errors.licenseType.message}</span>}
+                            </div>
+                            <div>
+                                <label className="block mb-1 font-medium">Kinh nghiệm (năm)</label>
+                                <input type="number" className="w-full p-2 border rounded" id="experienceYears"
+                                    {...register("experienceYears", {
+                                        required: "Kinh nghiệm (năm) không được để trống",
+                                    })} />
+                                {errors.experienceYears && <span className="text-danger">{errors.experienceYears.message}</span>}
+                            </div>
+                            <div>
+                                <label className="block mb-1 font-medium">Ngày sinh</label>
+                                <select className="w-full p-2 border rounded" defaultValue="" id="birthDate"
+                                    {...register("birthDate", {
+                                        required: "Ngày sinh không được để trống",
+                                    })}>
+                                        <option value="">Chọn ngày sinh</option>
+                                    {Array.from({ length: 100 }, (_, i) => (
+                                        <option key={i} value={new Date().getFullYear() - i}>
+                                            {new Date().getFullYear() - i}
+                                        </option>
+                                    ))}
+                                </select>
+                                {errors.birthDate && <span className="text-danger">{errors.birthDate.message}</span>}
+                            </div>
+                            <div>
+                                <label className="block mb-1 font-medium">Ngày thuê</label>
+                                <input type="date" className="w-full p-2 border rounded" id="hireDate"
+                                    {...register("hireDate", {
+                                        required: "Ngày thuê không được để trống",
+                                    })} />
+                                {errors.hireDate && <span className="text-danger">{errors.hireDate.message}</span>}
+                            </div>
+                            <div>
+                                <label className="block mb-1 font-medium">Trạng thái</label>
+                                <select className="w-full p-2 border rounded" defaultValue="" id="status"
+                                    {...register("status", {
+                                        required: "Trạng thái không được để trống",
+                                    })}>
+                                    <option value="">Vui lòng chọn trạng thái</option>
+                                    <option value="active" >Đang làm việc</option>
+                                    <option value="inactive">Tạm nghỉ</option>
+                                </select>
+                                {errors.status && <span className="text-danger">{errors.status.message}</span>}
+                            </div>
+                            <div>
+                                <label className="block mb-1 font-medium">Ảnh</label>
+                                <input type="file" className="w-full p-2 border rounded" id="image"
+                                    {...register("image", {
+                                        required: "Ảnh không được để trống",
+                                    })} />
+                                {errors.image && <span className="text-danger">{errors.image.message}</span>}
+                            </div>
                         </div>
-                        <div>
-                            <label className="block mb-1 font-medium">Số điện thoại</label>
-                            <input type="text" className="w-full p-2 border rounded" />
+                        <div className="mt-4 flex gap-2 justify-end">
+                            <button type="submit" onClick={handleSubmit(onSubmit)} className="bg-[#073272] hover:bg-blue-950 text-white px-4 py-2 rounded flex justify-center align-items-center"> <FaSave className="mr-2" /> Thêm tài xế</button>
+                            <Link to="/admin/driver/getAll" className="bg-gray-400 text-white px-4 py-2 rounded">Hủy</Link>
                         </div>
-                        <div>
-                            <label className="block mb-1 font-medium">Số GPLX</label>
-                            <input type="text" className="w-full p-2 border rounded" />
-                        </div>
-                        <div>
-                            <label className="block mb-1 font-medium">Loại GPLX</label>
-                            <select className="w-full p-2 border rounded">
-                                <option value="B1">B1</option>
-                                <option value="B2" selected>B2</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                                <option value="E">E</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label className="block mb-1 font-medium">Kinh nghiệm (năm)</label>
-                            <input type="number" className="w-full p-2 border rounded" />
-                        </div>
-                        <div>
-                            <label className="block mb-1 font-medium">Ngày sinh</label>
-                            <select className="w-full p-2 border rounded">
-                                {Array.from({ length: 100 }, (_, i) => (
-                                    <option key={i} value={new Date().getFullYear() - i}>
-                                        {new Date().getFullYear() - i}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                        <div>
-                            <label className="block mb-1 font-medium">Ngày thuê</label>
-                            <input type="date" className="w-full p-2 border rounded" />
-                        </div>
-                        <div>
-                            <label className="block mb-1 font-medium">Trạng thái</label>
-                            <select className="w-full p-2 border rounded">
-                                <option value="active" >Đang làm việc</option>
-                                <option value="inactive">Tạm nghỉ</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label className="block mb-1 font-medium">Ảnh</label>
-                            <input type="file" className="w-full p-2 border rounded" />
-                        </div>
-                    </div>
-                    <div className="mt-4 flex gap-2 justify-end">
-                        <button type="submit" className="bg-[#073272] hover:bg-blue-950 text-white px-4 py-2 rounded flex justify-center align-items-center"> <FaSave className="mr-2" /> Thêm tài xế</button>
-                        <Link to="/admin/driver/getAll" className="bg-gray-400 text-white px-4 py-2 rounded">Hủy</Link>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
         </>
     )
 }
