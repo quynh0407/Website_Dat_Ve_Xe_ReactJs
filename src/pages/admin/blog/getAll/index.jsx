@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import FormDelete from "../../../../components/formDelete";
+
 
 const blogData = [
     {
@@ -34,7 +37,10 @@ const blogData = [
 ];
 
 function BlogGetAll() {
+    const [selectedBlog, setSelectedBlog] = useState(null);
+
     return (
+
         <>
             <div className="container mx-auto p-2">
                 <div className="bg-white p-4 shadow rounded-md">
@@ -69,7 +75,7 @@ function BlogGetAll() {
                                         >
                                             <i className="fa-solid fa-pen-to-square text-md"></i>
                                         </Link>
-                                        <button className="bg-red-500 text-white py-2 px-3 rounded">
+                                        <button onClick={() => setSelectedBlog(blog)} className="bg-red-500 text-white py-2 px-3 rounded">
                                             <i className="fa-solid fa-trash text-md"></i>
                                         </button>
                                     </td>
@@ -78,6 +84,16 @@ function BlogGetAll() {
                             ))}
                         </tbody>
                     </table>
+                    <FormDelete
+                        isOpen={!!selectedBlog}
+                        onClose={() => setSelectedBlog(null)}
+                        onConfirm={() => {
+                            setSelectedBlog(null);
+                        }}
+                        Id={selectedBlog?.id}
+                        action={`/admin/Blog/delete/${selectedBlog?.id}`}
+                        message={`Bạn có chắc chắn muốn xóa xe "${selectedBlog?.title}" không?`}
+                    />
                 </div>
             </div >
         </>

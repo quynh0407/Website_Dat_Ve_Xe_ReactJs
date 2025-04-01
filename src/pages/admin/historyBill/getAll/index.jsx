@@ -75,10 +75,9 @@ function HistoryBillGetAll() {
       <FormDelete
         isOpen={!!selectedBill}
         onClose={() => setSelectedBill(null)}
-        onConfirm={() => {
-          console.log(`Đã xóa hóa đơn: ${selectedBill?.name}`);
-          setSelectedBill(null);
-        }}
+        onConfirm={() => {setSelectedBill(null);}}
+        Id={selectedBill?.id}
+        action={`/admin/bus/delete/${selectedBill?.id}`}
         message={`Bạn có chắc chắn muốn xóa hóa đơn của "${selectedBill?.name}" không?`}
       />
     </div>

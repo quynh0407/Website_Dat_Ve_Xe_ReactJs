@@ -54,8 +54,7 @@ function BusRoutesGetAll() {
                                     </Link>
                                     <button 
                                         onClick={() => setSelectedRoute(busroute)} 
-                                        className="bg-red-500 text-white py-2 px-3 rounded"
-                                    >
+                                        className="bg-red-500 text-white py-2 px-3 rounded">
                                         <i className="fa-solid fa-trash text-md"></i>
                                     </button>
                                 </td>
@@ -69,6 +68,8 @@ function BusRoutesGetAll() {
                     isOpen={!!selectedRoute}
                     onClose={() => setSelectedRoute(null)}
                     onConfirm={handleDelete}
+                    Id={selectedRoute?.id}
+                        action={`/admin/busRoute/delete/${selectedRoute?.id}`}
                     message={`Bạn có chắc chắn muốn xóa tuyến xe "${selectedRoute.routes}" không?`}
                 />
             )}

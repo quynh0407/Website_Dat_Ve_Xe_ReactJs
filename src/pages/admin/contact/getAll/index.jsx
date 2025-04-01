@@ -71,10 +71,9 @@ function ContactGetAll() {
       <FormDelete
         isOpen={!!selectedContact}
         onClose={() => setSelectedContact(null)}
-        onConfirm={() => {
-          console.log(`Đã xóa liên hệ của: ${selectedContact?.name}`);
-          setSelectedContact(null);
-        }}
+        onConfirm={() => { setSelectedContact(null);}}
+        Id={selectedContact?.id}
+        action={`/admin/contact/delete/${selectedContact?.id}`}
         message={`Bạn có chắc chắn muốn xóa liên hệ của "${selectedContact?.name}" không?`}
       />
     </div>

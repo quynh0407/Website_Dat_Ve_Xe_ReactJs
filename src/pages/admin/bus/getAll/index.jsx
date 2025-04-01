@@ -42,13 +42,12 @@ function BusGetAll() {
                 <td className="p-2 border">{bus.driver}</td>
                 <td className="p-2 border">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs ${
-                      bus.status === "Hoạt động"
+                    className={`px-2 py-1 rounded-full text-xs ${bus.status === "Hoạt động"
                         ? "bg-green-100 text-green-800"
                         : bus.status === "Bảo trì"
-                        ? "bg-yellow-100 text-yellow-800"
-                        : "bg-orange-100 text-orange-800"
-                    }`}
+                          ? "bg-yellow-100 text-yellow-800"
+                          : "bg-orange-100 text-orange-800"
+                      }`}
                   >
                     {bus.status}
                   </span>
@@ -80,6 +79,8 @@ function BusGetAll() {
           console.log(`Đã xóa xe: ${selectedBus?.licensePlate}`);
           setSelectedBus(null);
         }}
+        Id={selectedBus?.id}
+        action={`/admin/bus/delete/${selectedBus?.id}`}
         message={`Bạn có chắc chắn muốn xóa xe "${selectedBus?.licensePlate}" không?`}
       />
     </div>

@@ -16,6 +16,7 @@
     "@types/jquery": "^3.5.32",
     "apexcharts": "^4.5.0",
     "es6-promise": "^4.2.8",
+    "formik": "^2.4.6",
     "intersection-observer": "^0.12.2",
     "jquery": "^3.7.1",
     "lucide-react": "^0.484.0",
@@ -30,7 +31,8 @@
     "simplebar": "^6.3.0",
     "simplebar-react": "^3.3.0",
     "swiper": "^11.2.6",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.6.1"
   },
   "scripts": {
     "start": "react-scripts start",
