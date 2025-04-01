@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import { useForm } from "react-hook-form";
 const contactData = [
     { id: "1", name: "Nguyễn Văn A", email: "a@gmail.com", phone: "0901234567", content: "Tôi muốn đặt câu hỏi về sản phẩm của bạn.", status: "Đang chờ" },
     { id: "2", name: "Trần Thị B", email: "b@gmail.com", phone: "0912345678", content: "Tôi muốn báo cáo một vấn đề với đơn hàng của mình.", status: "Đã xử lý" },
@@ -11,37 +11,31 @@ const contactData = [
 
 function ContactEdit() {
     const { id } = useParams();
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        phone: "",
-        content: "",
-        status: "Đang chờ",
+    const contactToEdit = contactData.find((contact) => contact.id === id);
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors }
+    } = useForm({
+        defaultValues: contactToEdit || { name: "", email: "", phone: "", content: "", status: "Đang chờ" }
     });
 
     useEffect(() => {
-        const contactToEdit = contactData.find((contact) => contact.id === id);
         if (contactToEdit) {
-            setFormData(contactToEdit);
+            Object.keys(contactToEdit).forEach((key) => {
+                setValue(key, contactToEdit[key]);
+            });
         }
-    }, [id]);
+    }, [contactToEdit, setValue]);
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    };
+    const onSubmit = (data) => console.log("Dữ liệu cập nhật:", data);
 
     return (
         <div className="container mx-auto p-4">
             <div className="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
                 <h3 className="text-2xl font-bold">Sửa Liên Hệ</h3>
-                <form onSubmit={handleSubmit} className="p-4 border rounded-md shadow-lg">
+                <form onSubmit={handleSubmit(onSubmit)} className="p-4 border rounded-md shadow-lg">
                     <div className="mb-4">
                         <label className="block text-sm font-medium">ID</label>
                         <input type="text" value={id} disabled className="w-full p-2 border rounded" />
@@ -50,47 +44,53 @@ function ContactEdit() {
                         <label className="block text-sm font-medium">Tên</label>
                         <input
                             type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
+                            {...register("name", { required: "Tên không được để trống" })}
                             className="w-full p-2 border rounded"
                         />
+                        {errors.name && <small className="text-red-500">{errors.name.message}</small>}
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Email</label>
                         <input
                             type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
+                            {...register("email", {
+                                required: "Email không được để trống",
+                                pattern: {
+                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                    message: "Email không hợp lệ",
+                                },
+                            })}
                             className="w-full p-2 border rounded"
                         />
+                        {errors.email && <small className="text-red-500">{errors.email.message}</small>}
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Số điện thoại</label>
                         <input
                             type="tel"
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
+                            {...register("phone", {
+                                required: "Số điện thoại không được để trống",
+                                pattern: {
+                                    value: /^[0-9]{10}$/,
+                                    message: "Số điện thoại không hợp lệ, chỉ được nhập 10 chữ số",
+                                },
+                            })}
                             className="w-full p-2 border rounded"
                         />
+                        {errors.phone && <small className="text-red-500">{errors.phone.message}</small>}
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Nội dung</label>
                         <textarea
-                            name="content"
-                            value={formData.content}
-                            onChange={handleChange}
+                            {...register("content", { required: "Nội dung không được để trống" })}
                             className="w-full p-2 border rounded"
                         />
+                        {errors.content && <small className="text-red-500">{errors.content.message}</small>}
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Trạng thái</label>
                         <select
-                            name="status"
-                            value={formData.status}
-                            onChange={handleChange}
+                            {...register("status")}
                             className="w-full p-2 border rounded"
                         >
                             <option value="Đang chờ">Đang chờ</option>
@@ -106,5 +106,6 @@ function ContactEdit() {
         </div>
     );
 }
+
 
 export default ContactEdit;
