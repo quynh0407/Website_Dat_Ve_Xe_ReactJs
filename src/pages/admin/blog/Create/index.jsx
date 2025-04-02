@@ -1,4 +1,13 @@
+import { useForm } from "react-hook-form";
+
 function BlogCreate(){
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
+
+    const onSubmit = (data) => console.log(data);
     return(
         <>
             <div className="container mx-auto p-4">
@@ -9,20 +18,22 @@ function BlogCreate(){
                             <label className="block text-sm font-medium mb-2">Tiêu đề bài viết</label>
                             <input
                                 type="text"
-                                className="w-full p-2 border rounded"
+                                className={`w-full p-2 border rounded ${errors.title ? '!border-red-500' : 'border-gray-300'}`}
+                                {...register("title", {required: "Vui lòng nhập tiêu đề bài viết" })}
                                 placeholder="Vui lòng nhập tiêu đề bài viết"
-                                required
                             />
+                            {errors.title && <p className="text-red-700">{errors.title.message}</p>}
                         </div>
                         <div className="mb-4">
                             <label className="block text-sm font-medium mb-2">Nội dung</label>
                             <textarea
                                 type="text"
                                 rows={10}
-                                className="w-full p-2 border rounded"
+                                className={`w-full p-2 border rounded ${errors.content ? '!border-red-500' : 'border-gray-300'}`}
+                                {...register("content", {required: "Vui lòng nhập nội dung bài viết" })}
                                 placeholder="Vui lòng nhập nội dung bài viết"
-                                required
                             />
+                            {errors.content && <p className="text-red-700">{errors.content.message}</p>}
                         </div>
                         <div className="mb-4">
                             <label className="block text-sm font-medium mb-2">Hình ảnh</label>
@@ -33,7 +44,7 @@ function BlogCreate(){
                                 required
                             />
                         </div>
-                        <button type="submit" className="px-4 py-2 bg-[#073272] text-white rounded">
+                        <button type="submit" onClick={handleSubmit(onSubmit)} className="px-4 py-2 bg-[#073272] text-white rounded">
                             Thêm bài viết</button>
                     </form>
                 </div>
