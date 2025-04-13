@@ -10,6 +10,7 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+require('./models/connectModel');
 
 const port = 3000;
 

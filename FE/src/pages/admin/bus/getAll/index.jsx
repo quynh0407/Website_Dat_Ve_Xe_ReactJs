@@ -1,17 +1,75 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import FormDelete from "../../../../components/formDelete";
-
-const busData = [
-  { id: "1", licensePlate: "51A-12345", busType: "Xe giường nằm", driver: "Nguyễn Văn A", status: "Hoạt động" },
-  { id: "2", licensePlate: "51B-67890", busType: "Xe ghế ngồi", driver: "Trần Văn B", status: "Bảo trì" },
-  { id: "3", licensePlate: "79C-11223", busType: "Xe giường nằm", driver: "Phạm Văn C", status: "Hoạt động" },
-  { id: "4", licensePlate: "30D-44556", busType: "Xe limousine", driver: "Lê Văn D", status: "Đang sửa chữa" },
-  { id: "5", licensePlate: "60E-77889", busType: "Xe ghế ngồi", driver: "Đặng Văn E", status: "Hoạt động" },
-];
+import axios from "axios";
+import { useState, useEffect } from "react";
+import Constants from "../../../../Constants.jsx";
 
 function BusGetAll() {
   const [selectedBus, setSelectedBus] = useState(null);
+
+  const [busTypes, setBusTypes] = useState([]);
+  const [drivers, setDrivers] = useState([]);
+
+  useEffect(() => {
+    getData();
+    getBusTypes();
+    getDrivers();
+  }, []);
+
+  const getBusTypes = async () => {
+    try {
+      const res = await axios.get(`${Constants.DOMAIN_API}/admin/busType/list`);
+      setBusTypes(res.data.data);
+    } catch (err) {
+      console.log("Lỗi khi lấy loại xe", err);
+    }
+  };
+
+  const getDrivers = async () => {
+    try {
+      const res = await axios.get(`${Constants.DOMAIN_API}/admin/driver/list`);
+      setDrivers(res.data.data);
+    } catch (err) {
+      console.log("Lỗi khi lấy tài xế", err);
+    }
+  };
+
+  const getBusTypeName = (id) => {
+    const type = busTypes.find(bt => bt.id === id);
+    return type ? type.typeName : "Không xác định";
+  };
+
+  const getDriverName = (id) => {
+    const driver = drivers.find(d => d.id === id);
+    return driver ? driver.fullName : "Không xác định";
+  };
+
+
+  const [busData, setBussData] = useState([]);
+
+  const deleteBus = async () => {
+    if (!selectedBus) return;
+    try {
+      await axios.delete(`${Constants.DOMAIN_API}/admin/bus/delete/${selectedBus.id}`);
+      alert("Xóa thành công");
+      setSelectedBus(null);
+      getData();
+    } catch (error) {
+      console.error("Lỗi khi xóa:", error);
+      alert("Xóa thất bại");
+    }
+  };
+  
+  const getData = async () => {
+    try {
+      const res = await axios.get(`${Constants.DOMAIN_API}/admin/bus/list`);
+      console.log('Response', res.data.data);
+
+      setBussData(res.data.data);
+    } catch (err) {
+      console.log("Error", err);
+    }
+  }
 
   return (
     <div className="container mx-auto p-2">
@@ -30,37 +88,39 @@ function BusGetAll() {
               <th className="p-2 border">Loại xe</th>
               <th className="p-2 border">Tài xế</th>
               <th className="p-2 border">Trạng thái</th>
+              <th className="p-2 border">Sô ghế</th>
               <th className="p-2 border">Hành động</th>
             </tr>
           </thead>
           <tbody>
-            {busData.map((bus) => (
-              <tr key={bus.id} className="border-b">
-                <td className="p-2 border">{bus.id}</td>
-                <td className="p-2 border">{bus.licensePlate}</td>
-                <td className="p-2 border">{bus.busType}</td>
-                <td className="p-2 border">{bus.driver}</td>
+            {busData.map((value, index) => (
+              <tr key={index} className="border-b">
+                <td className="p-2 border">{value.id}</td>
+                <td className="p-2 border">{value.plateNumber}</td>
+                <td className="p-2 border">{getBusTypeName(value.busTypeId)}</td>
+                <td className="p-2 border">{getDriverName(value.driverId)}</td>
                 <td className="p-2 border">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs ${bus.status === "Hoạt động"
-                        ? "bg-green-100 text-green-800"
-                        : bus.status === "Bảo trì"
-                          ? "bg-yellow-100 text-yellow-800"
-                          : "bg-orange-100 text-orange-800"
+                    className={`px-2 py-1 rounded-full text-xs ${value.status === "Hoạt động"
+                      ? "bg-green-100 text-green-800"
+                      : value.status === "Bảo trì"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : "bg-orange-100 text-orange-800"
                       }`}
                   >
-                    {bus.status}
+                    {value.status}
                   </span>
                 </td>
+                <td className="p-2 border">{value.totalSeats}</td>
                 <td className="p-2 border flex gap-2">
                   <Link
-                    to={`/admin/bus/edit/${bus.id}`}
+                    to={`/admin/bus/edit/${value.id}`}
                     className="bg-yellow-500 text-white py-2 px-3 rounded"
                   >
                     <i className="fa-solid fa-pen-to-square text-md"></i>
                   </Link>
                   <button
-                    onClick={() => setSelectedBus(bus)}
+                    onClick={() => setSelectedBus(value)}
                     className="bg-red-500 text-white py-2 px-3 rounded"
                   >
                     <i className="fa-solid fa-trash text-md"></i>
@@ -72,17 +132,14 @@ function BusGetAll() {
         </table>
       </div>
 
-      <FormDelete
-        isOpen={!!selectedBus}
-        onClose={() => setSelectedBus(null)}
-        onConfirm={() => {
-          console.log(`Đã xóa xe: ${selectedBus?.licensePlate}`);
-          setSelectedBus(null);
-        }}
-        Id={selectedBus?.id}
-        action={`/admin/bus/delete/${selectedBus?.id}`}
-        message={`Bạn có chắc chắn muốn xóa xe "${selectedBus?.licensePlate}" không?`}
-      />
+      {selectedBus && (
+        <FormDelete
+          isOpen={true}
+          onClose={() => setSelectedBus(null)}
+          onConfirm={deleteBus}
+          message={`Bạn có chắc chắn muốn xóa loại xe "${selectedBus.fullName}" không?`}
+        />
+      )}
     </div>
   );
 }

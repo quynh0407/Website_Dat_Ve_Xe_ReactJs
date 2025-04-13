@@ -1,5 +1,6 @@
 const connection = require('../config/database');
 const { DataTypes } = require('sequelize');
+const BusesModel = require('./busesModel');
 
 const SeatsModel = connection.define('Seats', {
     id: {

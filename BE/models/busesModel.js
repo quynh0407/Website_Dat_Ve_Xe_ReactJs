@@ -1,5 +1,7 @@
+const flash = require('express-flash');
 const connection = require('../config/database');
 const { DataTypes } = require('sequelize');
+const SeatsModel = require('./seatsModel');
 
 const BusesModel = connection.define('Buses',{
     id: {
@@ -9,11 +11,11 @@ const BusesModel = connection.define('Buses',{
     },
     plateNumber: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
     },
     busTypeId: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
     },
     driverId: {
         type: DataTypes.INTEGER,
@@ -21,7 +23,7 @@ const BusesModel = connection.define('Buses',{
     },
     status: {
         type: DataTypes.ENUM('active', 'inactive'),
-        allowNull: true,
+        allowNull: false,
     },
     totalSeats: {
         type: DataTypes.INTEGER,
@@ -35,4 +37,5 @@ const BusesModel = connection.define('Buses',{
     tableName: 'buses',
     timestamps: false,
 });
+
 module.exports = BusesModel;

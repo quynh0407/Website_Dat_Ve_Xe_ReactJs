@@ -85,7 +85,7 @@ const AppRoutes = () => {
           <Route path="busType">
             <Route path="getAll" element={<BusTypeGetAll />} />
             <Route path="create" element={<BusTypeCreate />} />
-            <Route path="edit/:id" element={<BusTypeEdit />} />
+            <Route path="update/:id" element={<BusTypeEdit />} />
           </Route>
 
           <Route path="routes">

@@ -1,21 +1,47 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import FormDelete from "../../../../components/formDelete";
-
-const busTypesData = [
-    { id: "1", name: "Xe giường nằm", status: "Hoạt động", total: "15" },
-    { id: "2", name: "Xe ghế ngồi", status: "Hoạt động", total: "20" },
-    { id: "3", name: "Xe limousine", status: "Bảo trì", total: "5" },
-];
+import axios from "axios";
+import { useState, useEffect } from "react";
+import Constants from "../../../../Constants.jsx";
 
 function BusTypeGetAll() {
     const [selectedBusType, setSelectedBusType] = useState(null);
+
+    const [busTypesData, setBusTypesData] = useState([]);
+
+    const deleteBusTypes = async () => {
+        if (!selectedBusType) return;
+        try {
+            await axios.delete(`${Constants.DOMAIN_API}/admin/busType/delete/${selectedBusType.id}`);
+            alert("Xóa thành công");
+            setSelectedBusType(null);
+            getData();
+        } catch (error) {
+            console.log("Lỗi khi xóa:", error);
+        }
+    };
+
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    const getData = async () => {
+        try {
+            const res = await axios.get(`${Constants.DOMAIN_API}/admin/busType/list`);
+            console.log('Response', res.data.data);
+
+            setBusTypesData(res.data.data);
+        } catch (err) {
+            console.log("Error", err);
+        }
+    }
 
     return (
         <div className="container mx-auto p-2">
             <div className="bg-white p-4 shadow rounded-md">
                 <Link
-                    to="/admin/bustype/create"
+                    to="/admin/busType/create"
                     className="inline-block bg-[#073272] text-white px-4 py-2 rounded"
                 >
                     Thêm loại xe
@@ -25,37 +51,23 @@ function BusTypeGetAll() {
                         <tr className="bg-gray-200">
                             <th className="p-2 border">ID</th>
                             <th className="p-2 border">Tên loại xe</th>
-                            <th className="p-2 border">Trạng thái</th>
-                            <th className="p-2 border">Tổng số</th>
                             <th className="p-2 border">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {busTypesData.map((type) => (
-                            <tr key={type.id} className="border-b">
-                                <td className="p-2 border">{type.id}</td>
-                                <td className="p-2 border">{type.name}</td>
-                                <td className="p-2 border">
-                                    <span
-                                        className={`px-2 py-1 rounded-full text-xs ${
-                                            type.status === "Hoạt động"
-                                                ? "bg-green-100 text-green-800"
-                                                : "bg-yellow-100 text-yellow-800"
-                                        }`}
-                                    >
-                                        {type.status}
-                                    </span>
-                                </td>
-                                <td className="p-2 border">{type.total} xe</td>
+                        {busTypesData.map((value, index) => (
+                            <tr key={index} className="border-b">
+                                <td className="p-2 border">{value.id}</td>
+                                <td className="p-2 border">{value.typeName}</td>
                                 <td className="p-2 border flex gap-2">
                                     <Link
-                                        to={`/admin/busType/edit/${type.id}`}
+                                        to={`/admin/busType/update/${value.id}`}
                                         className="bg-yellow-500 text-white py-2 px-3 rounded"
                                     >
                                         <i className="fa-solid fa-pen-to-square text-md"></i>
                                     </Link>
                                     <button
-                                        onClick={() => setSelectedBusType(type)}
+                                        onClick={() => setSelectedBusType(value)}
                                         className="bg-red-500 text-white py-2 px-3 rounded"
                                     >
                                         <i className="fa-solid fa-trash text-md"></i>
@@ -67,14 +79,14 @@ function BusTypeGetAll() {
                 </table>
             </div>
 
-            <FormDelete
-                isOpen={!!selectedBusType}
-                onClose={() => setSelectedBusType(null)}
-                onConfirm={() => {setSelectedBusType(null);}}
-                Id={selectedBusType?.id}
-                action={`/admin/busType/delete/${selectedBusType?.id}`}
-                message={`Bạn có chắc chắn muốn xóa loại xe "${selectedBusType?.name}" không?`}
-            />
+            {selectedBusType && (
+                <FormDelete
+                    isOpen={true}
+                    onClose={() => setSelectedBusType(null)}
+                    onConfirm={deleteBusTypes} 
+                    message={`Bạn có chắc chắn muốn xóa loại xe "${selectedBusType.typeName}" không?`}
+                />
+            )}
         </div>
     );
 }
