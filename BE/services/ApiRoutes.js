@@ -27,7 +27,7 @@ exports.getProvinces = async (req, res) => {
 };
 
 exports.getDistricts = async (req, res) => {
-  const provinceID = req.query.province_id;
+  const provinceID = req.query.provinceId;
   if (!provinceID) {
     return res.status(400).json({
       message: 'ProvinceID là bắt buộc!',
@@ -62,7 +62,7 @@ exports.getDistricts = async (req, res) => {
 
 exports.getWards = async (req, res) => {
   try {
-    const districtID = req.query.district_id;  
+    const districtID = req.query.districtId;  
     if (!districtID) {
       return res.status(400).json({ message: 'Thiếu district_id' });
     }

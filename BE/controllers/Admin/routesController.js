@@ -19,7 +19,7 @@ class RoutesController {
     //------------------[ GET BY ID ]------------------
     static async getById(req, res) {
         try {
-            const { id } = req.params;
+            const { id } = req.query;
             const routes = await RoutesModel.findByPk(id);
 
             if (!routes) {

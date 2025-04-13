@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+
 const cors = require("cors");
 const session = require("express-session");
 const clientRoutes = require('./routes/clientRoutes');
@@ -12,6 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 require('./models/connectModel');
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 const port = 3000;
 
 app.use(express.json());

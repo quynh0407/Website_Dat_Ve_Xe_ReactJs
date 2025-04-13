@@ -25,9 +25,8 @@ import BusTypeCreate from "./pages/admin/busType/Create";
 import BusTypeEdit from "./pages/admin/busType/Edit";
 
 import RoutesGetAll from "./pages/admin/routes/getAll";
-import RoutesCreate from "./pages/admin/routes/Create";
-import RoutesEdit from "./pages/admin/routes/Edit";
-
+import RoutesForm from "./pages/admin/routes/Form";
+ 
 import BusRoutesGetAll from "./pages/admin/busRoutes/getAll";
 import BusRoutesCreate from "./pages/admin/busRoutes/Create";
 import BusRoutesEdit from "./pages/admin/busRoutes/Edit";
@@ -90,8 +89,8 @@ const AppRoutes = () => {
 
           <Route path="routes">
             <Route path="getAll" element={<RoutesGetAll />} />
-            <Route path="create" element={<RoutesCreate />} />
-            <Route path="edit/:id" element={<RoutesEdit />} />
+            <Route path="create" element={<RoutesForm />} />
+            <Route path="edit" element={<RoutesForm />} />
           </Route>
 
           <Route path="busRoutes">

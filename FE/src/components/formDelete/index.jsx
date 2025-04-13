@@ -1,10 +1,15 @@
 import { FaExclamationTriangle } from "react-icons/fa";
 
-export default function FormDelete({ isOpen, onClose, onConfirm, message, action, Id }) {
+export default function FormDelete({ isOpen, onClose, onConfirm, message, Id }) {
     if (!isOpen) return null;
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onConfirm({ id: Id });
+    };
+
     return (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+        <form onSubmit={handleSubmit} className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg text-center max-w-sm w-full">
                 <FaExclamationTriangle className="text-red-600 text-4xl mx-auto mb-3" />
                 <h3 className="text-lg font-semibold mb-2">Xác nhận xóa</h3>

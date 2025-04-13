@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require("multer");
 const router = express.Router();
 const RoutesController = require('../controllers/Admin/routesController');
 const { checkJWT, isAdmin } = require('../services/authCheck');
@@ -11,7 +12,7 @@ const DriverController = require('../controllers/Admin/driverController');
 
 //------------------[ ROUTES ]------------
 router.get('/routes/list',RoutesController.get);
-router.get('/routes/getId/:id',RoutesController.getById);
+router.get('/routes/getId',RoutesController.getById);
 router.post('/routes/add',RoutesController.create);
 router.patch('/routes/update/:id',RoutesController.update);
 router.delete('/routes/delete/:id',RoutesController.delete);
