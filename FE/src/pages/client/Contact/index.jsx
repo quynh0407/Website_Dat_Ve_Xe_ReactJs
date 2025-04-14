@@ -7,7 +7,7 @@ import axios from "axios";
 
 const URL = Constants.DOMAIN_API;
 function Contact() {
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register,reset, handleSubmit, formState: { errors } } = useForm({
         mode: "onTouched",
     });
 
@@ -20,8 +20,10 @@ function Contact() {
         }    
         try{
             const res = await axios.post(`${URL}/contact/question`, formdata);
+            if(res.status === 200 || res.status === 201){
             toast.success("Yêu cầu hỗ trợ của bạn đã được gửi thành công!");
-
+            reset();
+            }
         }catch(err){
             console.log(err);
             if (err.response) {
@@ -124,10 +126,7 @@ function Contact() {
             ${errors.message ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'}`}
                                 {...register("question", {
                                     required: "Vui lòng nhập nội dung",
-                                    minLength: {
-                                        value: 10,
-                                        question: "Nội dung phải có ít nhất 10 ký tự",
-                                    },
+                
                                 })}
                             />
                             {errors.question && (
