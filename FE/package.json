@@ -20,6 +20,7 @@
     "@types/jquery": "^3.5.32",
     "apexcharts": "^4.5.0",
     "axios": "^1.8.4",
+    "dayjs": "^1.11.13",
     "es6-promise": "^4.2.8",
     "formik": "^2.4.6",
     "intersection-observer": "^0.12.2",

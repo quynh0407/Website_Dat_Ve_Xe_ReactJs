@@ -1,23 +1,50 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import FormDelete from "../../../../components/formDelete";
-
-const busRouteData = [
-    { id: "1", routes: "Hà Nội-TP. HCM", departure: "13h30", arrival: "23h30", price: "120" },
-    { id: "2", routes: "Hà Nội-TP. HCM", departure: "13h30", arrival: "23h30", price: "1800000" },
-];
+import axios from "axios";
+import { useState, useEffect } from "react";
+import Constants from "../../../../Constants.jsx";
+import { toast } from 'react-toastify';
+import dayjs from "dayjs";
 
 function BusRoutesGetAll() {
     const formatPrice = (price) => {
         return price.toLocaleString('vi-VN') + 'vnd';
     };
-    const [selectedRoute, setSelectedRoute] = useState(null);
-    const [routes, setRoutes] = useState(busRouteData);
-    
-    const handleDelete = () => {
-        setRoutes(routes.filter((route) => route.id !== selectedRoute.id));
-        setSelectedRoute(null);
+    const formatDate = (dateStr) => {
+        return dayjs(dateStr).format("DD/MM/YYYY HH:mm");
     };
+
+    const [selectedRoute, setSelectedRoute] = useState(null);
+    const [routes, setRoutes] = useState([]);
+
+    const deleteBusTypes = async () => {
+        if (!selectedRoute) return;
+        try {
+            await axios.delete(`${Constants.DOMAIN_API}/admin/trips/${selectedRoute.id}`);
+            toast.success("Xóa thành công!");
+            setSelectedRoute(null);
+            getData();
+        } catch (error) {
+            console.log("Lỗi khi xóa:", error);
+            toast.error("Xóa thất bại!");
+        }
+    };
+
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    const getData = async () => {
+        try {
+            const res = await axios.get(`${Constants.DOMAIN_API}/admin/trips/list`);
+            console.log('Response', res.data.data);
+            setRoutes(res.data.data);
+        } catch (err) {
+            console.log("Error", err);
+        }
+    }
+    
 
     return (
         <div className="container mx-auto p-2">
@@ -32,6 +59,8 @@ function BusRoutesGetAll() {
                     <thead>
                         <tr className="bg-gray-200">
                             <th className="p-2 border">Tuyến đường</th>
+                            <th className="p-2 border">Mã xe</th>
+                            <th className="p-2 border">Tài xế</th>
                             <th className="p-2 border">Giờ bắt đầu</th>
                             <th className="p-2 border">Giờ kết thúc</th>
                             <th className="p-2 border">Giá vé</th>
@@ -39,21 +68,23 @@ function BusRoutesGetAll() {
                         </tr>
                     </thead>
                     <tbody>
-                        {busRouteData.map((busroute) => (
-                            <tr key={busroute.id} className="border-b">
-                                <td className="p-2 border">{busroute.routes}</td>
-                                <td className="p-2 border">{busroute.departure}</td>
-                                <td className="p-2 border">{busroute.arrival}</td>
-                                <td className="p-2 border">{formatPrice(busroute.price)}</td>
+                        {routes.map((value) => (
+                            <tr key={value.id} className="border-b">
+                                <td className="p-2 border">{value.routes.startPoint} - {value.routes.endPoint}</td>
+                                <td className="p-2 border">{value.buses.plateNumber}</td>
+                                <td className="p-2 border">{value.drivers.fullName}</td>
+                                <td className="p-2 border">{formatDate(value.departureTime) }</td>
+                                <td className="p-2 border">{formatDate(value.arrivalTime)}</td>
+                                <td className="p-2 border">{formatPrice(value.price)}</td>
                                 <td className="p-2 border flex gap-2">
                                     <Link
-                                        to={`/admin/busRoutes/edit/${busroute.id}`}
+                                        to={`/admin/busRoutes/edit/${value.id}`}
                                         className="bg-yellow-500 text-white py-2 px-3 rounded"
                                     >
                                         <i className="fa-solid fa-pen-to-square text-md"></i>
                                     </Link>
                                     <button 
-                                        onClick={() => setSelectedRoute(busroute)} 
+                                        onClick={() => setSelectedRoute(value)} 
                                         className="bg-red-500 text-white py-2 px-3 rounded">
                                         <i className="fa-solid fa-trash text-md"></i>
                                     </button>
@@ -63,14 +94,13 @@ function BusRoutesGetAll() {
                     </tbody>
                 </table>
             </div>
+
             {selectedRoute && (
                 <FormDelete
-                    isOpen={!!selectedRoute}
+                    isOpen={true}
                     onClose={() => setSelectedRoute(null)}
-                    onConfirm={handleDelete}
-                    Id={selectedRoute?.id}
-                        action={`/admin/busRoute/delete/${selectedRoute?.id}`}
-                    message={`Bạn có chắc chắn muốn xóa tuyến xe "${selectedRoute.routes}" không?`}
+                    onConfirm={deleteBusTypes} 
+                    message={`Bạn có chắc chắn muốn xóa loại xe  không?`}
                 />
             )}
         </div>

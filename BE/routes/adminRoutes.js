@@ -8,7 +8,7 @@ const ContacController = require('../controllers/Admin/contactController');
 const TripsController = require('../controllers/Admin/tripsController');
 const BusTypeController = require('../controllers/Admin/busTypeController');
 const BusController = require('../controllers/Admin/busController');
-// const DriverController = require('../controllers/Admin/driverController');
+const DriversController = require('../controllers/Admin/driversController');
 
 //------------------[ ROUTES ]------------
 router.get('/routes/list',RoutesController.get);
@@ -46,5 +46,7 @@ router.post('/bus/add',BusController.create);
 router.patch('/bus/update/:id',BusController.update);
 router.delete('/bus/delete/:id',BusController.delete);
 
+//-----------------[ DRIVERs ]-----------------
+router.get('/drivers/list', DriversController.get);
 
 module.exports = router;
