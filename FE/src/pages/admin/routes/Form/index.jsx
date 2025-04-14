@@ -60,6 +60,7 @@ function RoutesCreate() {
             try {
                 const res = await axios.get(`${URL}/apiRoutes/provinces`);
                 setProvinces(res.data);
+            
 
                 if (id) {
                     await getUseInfo(res.data);

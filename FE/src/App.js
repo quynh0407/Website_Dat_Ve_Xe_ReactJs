@@ -11,8 +11,8 @@ import Contact from "./pages/client/Contact";
 import BusDetail from "./pages/client/BusDetail";
 import BookingHistory from "./pages/client/BookingHistory";
 import Profile from "./pages/client/Profile";
-import Login from "./pages/client/Login";
-import Register from "./pages/client/Register";
+import Login from "./pages/authenticator/Login";
+import Register from "./pages/authenticator/Register";
 import BookingTickets from "./pages/client/BookingTickets";
 
 //------------ADMIN-------------
@@ -51,12 +51,14 @@ import ReviewEdit from "./pages/admin/reviews/Edit";
 
 import ContactGetAll from "./pages/admin/contact/getAll";
 import ContactEdit from "./pages/admin/contact/Edit";
+import ResetForm from "./pages/authenticator/resetForm";
+import ResetPassword from "./pages/authenticator/resetPassword";
 
+import PrivateRoute from "./components/AuthCheck";
 
 
 const AppRoutes = () => {
   return (
-    <Router>
       <Routes>
         <Route path="/" element={<ClientLayout />}>
           <Route index element={<Home />} />
@@ -71,8 +73,11 @@ const AppRoutes = () => {
 
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="resetForm" element={<ResetForm />} />
+        <Route path="resetPassword/:token" element={<ResetPassword />} />
 
-        <Route path="/admin" element={<AdminLayout />}>
+
+        <Route path="/admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
           <Route index element={<Dashboard />} />
 
           <Route path="bus">
@@ -134,10 +139,7 @@ const AppRoutes = () => {
 
 
         </Route>
-
-
       </Routes>
-    </Router>
   );
 };
 

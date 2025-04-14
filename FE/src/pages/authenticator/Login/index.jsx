@@ -1,9 +1,52 @@
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useNavigate } from "react-router";
+import { useCookies } from "react-cookie";
+import constants from "../../../Constants.jsx";
+import { Link } from "react-router";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const URL = constants.DOMAIN_API;
 function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = (data) => {
-        console.log(data);
-    };
+    const [cookies, setCookie] = useCookies(["token", "fullName", "role"]);
+    const navigate = useNavigate();
+
+    const handleLogin = async (props) => {
+        try {
+            const formData = {
+                email: props.email,
+                password: props.password,
+            };
+            const res = await axios.post(`${URL}/login`, formData);
+            console.log(res.data);
+    
+            let expiresDate = new Date();
+            expiresDate.setHours(expiresDate.getHours() + 10);
+            setCookie("token", res.data.token, {
+                path: "/",
+                expires: expiresDate,
+            });
+    
+            if (res.data.role === 0) {
+                navigate('/admin');
+            } else {
+                navigate('/');
+            }
+    
+            toast.success(res.data.message);
+
+        } catch (err) {
+            if (err.response) {
+                const errorMessage = err.response.data.message;
+                toast.error(errorMessage);
+            } else {
+                toast.error("Lỗi kết nối đến server!");
+            }
+        }
+    }
     return (
         <main className="flex items-center justify-center h-screen">
             <div className="w-full max-w-md bg-white p-6 my-[50px] rounded-lg shadow-lg">
@@ -37,10 +80,13 @@ function Login() {
                         {errors.password && <small className="text-red-600">{errors.password.message}</small>}
                     </div>
 
-                    <button onClick={handleSubmit(onSubmit)} type="submit" className="w-full bg-[#043175] text-white py-2 rounded-lg mt-4 hover:bg-blue-700">Đăng nhập</button>
+                    <button onClick={handleSubmit(handleLogin)} type="submit" className="w-full bg-[#043175] text-white py-2 rounded-lg mt-4 hover:bg-blue-700">Đăng nhập</button>
 
                     <p className="text-center text-sm mt-3">
-                        Chưa có tài khoản? <a href="/register" className="text-blue-600 hover:underline">Đăng ký</a>
+                        Chưa có tài khoản? <Link to="/register" className="text-blue-600 hover:underline">Đăng ký</Link>
+                    </p>
+                    <p className="text-center text-sm mt-3">
+                        Quên mật khẩu? <Link to="/resetForm" className="text-blue-600 hover:underline">Đặt lại mật khẩu</Link>
                     </p>
                 </form>
             </div>

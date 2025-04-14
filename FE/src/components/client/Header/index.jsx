@@ -1,8 +1,53 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import { useCookies } from "react-cookie";
+import React from "react";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
+import Cookies from "js-cookie";
+
+
 function Header() {
 
+    const [user, setUser] = useState(null);
+    const [cookies] = useCookies(["token"]);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const navigator = useNavigate();
+    useEffect(() => {
+        const token = cookies.token;
+        if (token) {
+            try {
+                const decode = jwtDecode(token);
+                setUser(decode);
+            } catch (err) {
+                console.error("Lỗi giải mã token:", err);
+            }
+        }
+    }, [])
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleProfile = () => {
+        navigator("/profile");
+    };
+    const handleHistory = () => {
+        navigator("/bookingHistory");
+    };
+    const logout = () => {
+        setUser(null);
+        navigator("/login");
+        Cookies.remove("token", { path: "/" });
+    };
     return (
-        
+
         <header className="p-0 mb-3">
             <div className="menu fixed top-0 left-0 w-full z-50" id="menu">
                 <div
@@ -16,21 +61,53 @@ function Header() {
                             className="flex flex-col md:flex-row gap-2 justify-between list-none items-center">
                             <li
                                 className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">
-                                    <Link to="/contact">Hỗ trợ</Link></li>
+                                <Link to="/contact">Hỗ trợ</Link></li>
                             <li
                                 className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><Link
                                     to="/bookingHistory">Đặt chỗ của
                                     tôi</Link></li>
-                            <li
-                                className="border border-white rounded-lg px-4 py-2 hover:bg-black/10 cursor-pointer">
-                                    <Link
-                                    to="/register" className="no-underline"><i
-                                        className="fas fa-user mr-2"></i> Đăng
-                                    ký</Link></li>
-                            <li
-                                className="rounded-lg px-4 py-2 bg-sky-500 hover:text-white transition duration-300 font-bold hover:bg-sky-600/50">
-                                <Link to="/login" className="no-underline">Đăng nhập</Link>
-                            </li>
+                            {
+                                user ? (
+                                    <div>
+                                        <Button
+                                            id="basic-button"
+                                            aria-controls={open ? 'basic-menu' : undefined}
+                                            aria-haspopup="true"
+                                            aria-expanded={open ? 'true' : undefined}
+                                            onClick={handleClick}
+                                        >
+                                            {user.fullName}
+                                            <i className="fas fa-angle-down ml-2"></i>
+                                        </Button>
+                                        <Menu
+                                            id="basic-menu"
+                                            anchorEl={anchorEl}
+                                            open={open}
+                                            onClose={handleClose}
+                                            MenuListProps={{
+                                                'aria-labelledby': 'basic-button',
+                                            }}
+                                        >
+                                            <MenuItem onClick={() => { handleProfile(); handleClose(); }}>Tài khoản của tôi</MenuItem>
+                                            <MenuItem onClick={() => { handleHistory(); handleClose(); }}>Lịch sử mua vé</MenuItem>
+                                            <MenuItem onClick={() => { logout(); handleClose(); }}>Đăng xuất</MenuItem>
+
+                                        </Menu>
+                                    </div>) : (
+                                    <>
+                                        <li
+                                            className="border border-white rounded-lg px-4 py-2 hover:bg-black/10 cursor-pointer">
+                                            <Link
+                                                to="/register" className="no-underline"><i
+                                                    className="fas fa-user mr-2"></i> Đăng
+                                                ký</Link></li>
+                                        <li
+                                            className="rounded-lg px-4 py-2 bg-sky-500 hover:text-white transition duration-300 font-bold hover:bg-sky-600/50">
+                                            <Link to="/login" className="no-underline">Đăng nhập</Link>
+                                        </li>
+                                    </>
+                                )
+                            }
                         </ul>
                     </div>
                 </div>
@@ -41,19 +118,19 @@ function Header() {
                         className="flex flex-wrap gap-1 justify-center md:justify-start list-none items-center font-bold">
                         <li
                             className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><Link to="/">Đặt
-                            vé xe</Link></li>
+                                vé xe</Link></li>
                         <li
                             className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><Link to="/about">Về
-                            chúng tôi</Link></li>
+                                chúng tôi</Link></li>
                         <li
                             class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><Link
                                 to="/bus">Lịch trình</Link></li>
                         <li
                             class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><Link to="/blog">Tin
-                            tức</Link></li>
+                                tức</Link></li>
                         <li
                             class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><Link to="/contact">Liên
-                            hệ</Link></li>
+                                hệ</Link></li>
                     </ul>
                 </div>
                 <hr className="border-gray-500 opacity-50" />
