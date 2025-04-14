@@ -9,6 +9,7 @@ const TripsController = require('../controllers/Admin/tripsController');
 const BusTypeController = require('../controllers/Admin/busTypeController');
 const BusController = require('../controllers/Admin/busController');
 const DriversController = require('../controllers/Admin/driversController');
+const SeatsController = require('../controllers/Admin/seatsController');
 
 //------------------[ ROUTES ]------------
 router.get('/routes/list',RoutesController.get);
@@ -48,5 +49,9 @@ router.delete('/bus/delete/:id',BusController.delete);
 
 //-----------------[ DRIVERs ]-----------------
 router.get('/drivers/list', DriversController.get);
+
+//-----------------[ SEATS ]-------------------
+router.get('/seats/:busID', SeatsController.get);
+router.put('/seats/:id', SeatsController.update);
 
 module.exports = router;
