@@ -3,6 +3,7 @@ import FormDelete from "../../../../components/formDelete";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Constants from "../../../../Constants.jsx";
+import { toast } from 'react-toastify';
 
 function BusTypeGetAll() {
     const [selectedBusType, setSelectedBusType] = useState(null);
@@ -13,11 +14,14 @@ function BusTypeGetAll() {
         if (!selectedBusType) return;
         try {
             await axios.delete(`${Constants.DOMAIN_API}/admin/busType/delete/${selectedBusType.id}`);
-            alert("Xóa thành công");
+            // alert("Xóa thành công");
+            toast.success("Xóa thành công!");
             setSelectedBusType(null);
             getData();
         } catch (error) {
             console.log("Lỗi khi xóa:", error);
+            // alert("Xóa thất bại");
+            toast.error("Xóa thất bại!");
         }
     };
 

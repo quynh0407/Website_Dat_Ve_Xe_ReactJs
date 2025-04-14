@@ -5,5 +5,4 @@ BE/.env
 FE/node_modules
 FE/.env
 
-BE/config/database.js
-FE/.env
+BE/.env

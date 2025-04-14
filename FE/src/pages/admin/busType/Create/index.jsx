@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import Constants from "../../../../Constants.jsx";
+import { toast } from 'react-toastify';
 
 function BusTypeCreate() {
   const {
@@ -28,9 +29,10 @@ function BusTypeCreate() {
       console.log("Success", res);
 
       navigate('/admin/busType/getAll');
-      alert("Thêm thành công");
+      toast.success("Thêm loại xe thành công!");
     } catch (e) {
       console.log("Error", e);
+      toast.error("Thêm loại xe thất bại!");
     }
   };
 

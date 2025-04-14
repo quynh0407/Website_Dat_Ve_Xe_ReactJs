@@ -8,7 +8,7 @@ const ContacController = require('../controllers/Admin/contactController');
 const TripsController = require('../controllers/Admin/tripsController');
 const BusTypeController = require('../controllers/Admin/busTypeController');
 const BusController = require('../controllers/Admin/busController');
-const DriverController = require('../controllers/Admin/driverController');
+// const DriverController = require('../controllers/Admin/driverController');
 
 //------------------[ ROUTES ]------------
 router.get('/routes/list',RoutesController.get);

@@ -16,7 +16,7 @@ export default function FormDelete({ isOpen, onClose, onConfirm, message, Id }) 
                 <p className="text-gray-600 mb-6">{message || "Bạn có chắc chắn muốn xóa không?"}</p>
 
                 <div className="flex justify-center gap-4">
-                    <button onClick={onConfirm} className="bg-red-600 hover:bg-red-800 text-white px-4 py-2 rounded-md">
+                    <button className="bg-red-600 hover:bg-red-800 text-white px-4 py-2 rounded-md">
                         Xóa 
                     </button>
                     <button onClick={onClose} className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-md">
@@ -24,6 +24,6 @@ export default function FormDelete({ isOpen, onClose, onConfirm, message, Id }) 
                     </button>
                 </div>
             </div>
-        </div>
+        </form>
     );
 }

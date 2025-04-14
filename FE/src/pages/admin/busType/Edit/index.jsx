@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import Constants from "../../../../Constants";
+import { toast } from 'react-toastify';
 
 function BusTypeEdit() {
   const {
@@ -51,11 +52,14 @@ function BusTypeEdit() {
         });
 
         navigate('/admin/busType/getAll');
-        alert("Cập nhật thành công");
+        // alert("Cập nhật thành công");
+        toast.success("Cập nhật thành công!");
         return;
       }
     } catch (e) {
       console.log("Error", e);
+      // alert("Cập nhật thất bại");
+      toast.error("Cập nhật thất bại!");
     }
   };
 
