@@ -1,4 +1,39 @@
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Constants from "../../../Constants";
+import axios from "axios";
+
+const URL = Constants.DOMAIN_API;
 function Contact() {
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        mode: "onTouched",
+    });
+
+    const hadleConrtact = async (data) => {
+        console.log("Form data:", data);
+        const formdata ={
+            fullName: data.fullName,
+            email: data.email,
+            question: data.question,
+        }    
+        try{
+            const res = await axios.post(`${URL}/contact/question`, formdata);
+            toast.success("Yêu cầu hỗ trợ của bạn đã được gửi thành công!");
+
+        }catch(err){
+            console.log(err);
+            if (err.response) {
+                const errorMessage = err.response.data.message;
+                toast.error(errorMessage);
+            } else {
+                toast.error("Lỗi kết nối đến server!");
+            }
+        }
+
+    }
+
     return (
         <main class="max-w-6xl mx-auto p-8 bg-white shadow-lg rounded-lg my-[20px] mt-[11%]" >
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -39,28 +74,73 @@ function Contact() {
 
                 <section class="py-3">
                     <h2 class="text-3xl font-bold text-blue-950 mb-6 border-b border-gray-300 pb-2">Liên hệ hỗ trợ</h2>
-                    <form class="space-y-6">
+                    <form onSubmit={handleSubmit(hadleConrtact)} className="space-y-6">
                         <div>
-                            <label class="block text-gray-800 font-semibold mb-2">Tên của bạn</label>
-                            <input type="text"
-                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                                required />
+                            <label className="block text-gray-800 font-semibold mb-2">Tên của bạn</label>
+                            <input
+                                type="text"
+                                placeholder="Nhập tên của bạn"
+                                className={`w-full p-2 border rounded-lg focus:ring-2 
+                             ${errors.fullName ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'}`}
+                                {...register("fullName", {
+                                    required: "Vui lòng nhập tên",
+                                    minLength: {
+                                        value: 2,
+                                        message: "Tên phải có ít nhất 2 ký tự",
+                                    },
+                                })}
+                            />
+                            {errors.fullName && (
+                                <span className="text-red-500 text-sm">{errors.fullName.message}</span>
+                            )}
                         </div>
-                        <div>
-                            <label class="block text-gray-800 font-semibold mb-2">Email</label>
-                            <input type="email"
-                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                                required />
 
-                        </div>
                         <div>
-                            <label class="block text-gray-800 font-semibold mb-2">Nội dung hỗ trợ</label>
-                            <textarea class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                                rows="4" required></textarea>
+                            <label className="block text-gray-800 font-semibold mb-2">Email</label>
+                            <input
+                                type="email"
+                                placeholder="Nhập email của bạn"
+                                className={`w-full p-2 border rounded-lg focus:ring-2 
+            ${errors.email ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'}`}
+                                {...register("email", {
+                                    required: "Vui lòng nhập email",
+                                    pattern: {
+                                        value: /^\S+@\S+$/i,
+                                        message: "Email không hợp lệ",
+                                    },
+                                })}
+                            />
+                            {errors.email && (
+                                <span className="text-red-500 text-sm">{errors.email.message}</span>
+                            )}
                         </div>
-                        <button class="w-full bg-[#043175] text-white py-3 rounded-lg hover:bg-blue-950 font-semibold">Gửi
-                            yêu
-                            cầu</button>
+
+                        <div>
+                            <label className="block text-gray-800 font-semibold mb-2">Nội dung hỗ trợ</label>
+                            <textarea
+                                rows="4"
+                                placeholder="Nhập nội dung cần hỗ trợ..."
+                                className={`w-full p-2 border rounded-lg focus:ring-2 
+            ${errors.message ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'}`}
+                                {...register("question", {
+                                    required: "Vui lòng nhập nội dung",
+                                    minLength: {
+                                        value: 10,
+                                        question: "Nội dung phải có ít nhất 10 ký tự",
+                                    },
+                                })}
+                            />
+                            {errors.question && (
+                                <span className="text-red-500 text-sm">{errors.question.message}</span>
+                            )}
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="w-full bg-[#043175] text-white py-3 rounded-lg hover:bg-blue-950 font-semibold"
+                        >
+                            Gửi yêu cầu
+                        </button>
                     </form>
                 </section>
             </div>
