@@ -1,31 +1,71 @@
 import { Link } from "react-router";
 import { FaSave, FaTimes } from 'react-icons/fa';
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import Constants from "../../../../Constants";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-function DiverCreate() {
 
+const DiverCreate = () => {
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
 
-    const onSubmit = (data) => console.log(data)
+    const [errorMessage, setErrorMessage] = useState("");
+    const handleDriver = async (props) => {
+        try {
+            const formData = new FormData();
+            formData.append("fullName", props.fullName);
+            formData.append("phone", props.phone);
+            formData.append("licenseNumber", props.licenseNumber);
+            formData.append("licenseType", props.licenseType);
+            formData.append("experienceYears", props.experienceYears);
+            formData.append("birthDate", props.birthDate);
+            formData.append("hireDate", props.hireDate);
+            formData.append("status", props.status);
+            formData.append("image", props.image[0]);
+            const res = await axios.post(`${Constants.DOMAIN_API}/admin/driver/add`, formData);
+            console.log("Thành công === ", res);
+            navigate("/admin/driver/getAll");
+        } catch (error) {
+            console.error("Lỗi khi thêm tài xế === ", error);
+            setErrorMessage("Thêm tài xế thất bại. Vui lòng thử lại.");
+        }
+    };
+    const validateImage = (fileList) => {
+        if (fileList.length === 0) return "Ảnh là bắt buộc";
+        const file = fileList[0];
+        const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
+        if (!allowedTypes.includes(file.type)) return "Định dạng ảnh không hợp lệ";
+        if (file.size > 10 * 1024 * 1024) return "Kích thước ảnh không vượt quá 10MB";
+        return true;
+    };
+
 
     return (
         <>
             <div className="container mx-auto p-4">
                 <div className="bg-white p-6 shadow rounded-md">
                     <h2 className="text-xl font-bold mb-4">Thêm tài xế</h2>
-                    <form>
+                    {/* Hiển thị thông báo lỗi nếu có */}
+                    {errorMessage && (
+                        <div className="text-red-500 mb-4">
+                            <strong>{errorMessage}</strong>
+                        </div>
+                    )}
+                    <form onSubmit={handleSubmit(handleDriver)}>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className="block mb-1 font-medium">Họ và tên</label>
-                                <input type="text" className="w-full p-2 border rounded" id="username"
-                                    {...register("username", {
+                                <input type="text" className="w-full p-2 border rounded" id="fullName"
+                                    {...register("fullName", {
                                         required: "Họ và tên không được để trống",
                                     })} />
-                                {errors.username && <span className="text-danger">{errors.username.message}</span>}
+                                {errors.fullName && <span className="text-danger">{errors.fullName.message}</span>}
                             </div>
                             <div>
                                 <label className="block mb-1 font-medium">Số điện thoại</label>
@@ -51,7 +91,7 @@ function DiverCreate() {
                                     })}>
                                     <option value="">Vui lòng chọn lại GPLX</option>
                                     <option value="B1">B1</option>
-                                    <option value="B2" selected>B2</option>
+                                    <option value="B2" >B2</option>
                                     <option value="C">C</option>
                                     <option value="D">D</option>
                                     <option value="E">E</option>
@@ -72,7 +112,7 @@ function DiverCreate() {
                                     {...register("birthDate", {
                                         required: "Ngày sinh không được để trống",
                                     })}>
-                                        <option value="">Chọn ngày sinh</option>
+                                    <option value="">Chọn ngày sinh</option>
                                     {Array.from({ length: 100 }, (_, i) => (
                                         <option key={i} value={new Date().getFullYear() - i}>
                                             {new Date().getFullYear() - i}
@@ -104,14 +144,14 @@ function DiverCreate() {
                             <div>
                                 <label className="block mb-1 font-medium">Ảnh</label>
                                 <input type="file" className="w-full p-2 border rounded" id="image"
-                                    {...register("image", {
-                                        required: "Ảnh không được để trống",
-                                    })} />
+                                    {...register("image", { validate: validateImage })} />
                                 {errors.image && <span className="text-danger">{errors.image.message}</span>}
                             </div>
                         </div>
                         <div className="mt-4 flex gap-2 justify-end">
-                            <button type="submit" onClick={handleSubmit(onSubmit)} className="bg-[#073272] hover:bg-blue-950 text-white px-4 py-2 rounded flex justify-center align-items-center"> <FaSave className="mr-2" /> Thêm tài xế</button>
+                            <button type="submit" className="bg-[#073272] hover:bg-blue-950 text-white px-4 py-2 rounded flex justify-center align-items-center">
+                                <FaSave className="mr-2" /> Thêm tài xế
+                            </button>
                             <Link to="/admin/driver/getAll" className="bg-gray-400 text-white px-4 py-2 rounded">Hủy</Link>
                         </div>
                     </form>
