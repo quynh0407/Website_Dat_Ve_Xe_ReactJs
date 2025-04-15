@@ -142,7 +142,7 @@ class RoutesController {
             });
         } catch (error) {
             res.status(500).json({
-                status: status,
+                status: 500,
                 success: false,
                 message: "Xóa không thành công",
                 error: error.message
