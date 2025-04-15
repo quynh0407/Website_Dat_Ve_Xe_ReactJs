@@ -1,17 +1,76 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FormDelete from "../../../../components/formDelete";
+import axios from "axios";
+import Constants from "../../../../Constants";
 
-const historyBillData = [
-  { id: "1", name: "Võ Ngọc A", trip: "201", seat: "5", bookingTime: "2025-03-26 10:00:00", status: "Chưa giải quyết", price: "150.00" },
-  { id: "2", name: "Võ Ngọc B", trip: "202", seat: "10", bookingTime: "2025-03-26 11:00:00", status: "Đã xác nhận", price: "100.00" },
-  { id: "3", name: "Võ Ngọc C", trip: "203", seat: "15", bookingTime: "2025-03-26 12:00:00", status: "Đã hủy bỏ", price: "50.00" },
-  { id: "4", name: "Võ Ngọc D", trip: "204", seat: "20", bookingTime: "2025-03-26 13:00:00", status: "Đã xác nhận", price: "200.00" },
-  { id: "5", name: "Võ Ngọc E", trip: "205", seat: "25", bookingTime: "2025-03-26 14:00:00", status: "Chưa giải quyết", price: "120.00" },
-];
-
-function HistoryBillGetAll() {
+const HistoryBillGetAll = () => {
+  const [bills, setBills] = useState([]);
   const [selectedBill, setSelectedBill] = useState(null);
+
+  useEffect(() => {
+    getAllBills();
+  }, []);
+
+  const getAllBills = async () => {
+    try {
+      const res = await axios.get(`${Constants.DOMAIN_API}/admin/booking/list`);
+      setBills(res.data.data);
+    } catch (error) {
+      console.error("Lỗi khi lấy danh sách hóa đơn:", error);
+    }
+  };
+
+  const deleteBill = async () => {
+    if (!selectedBill) return;
+    try {
+      await axios.delete(`${Constants.DOMAIN_API}/admin/booking/${selectedBill.id}`);
+      setSelectedBill(null);
+      getAllBills();
+    } catch (error) {
+      console.error("Lỗi khi xóa hóa đơn:", error);
+    }
+  };
+
+  const renderBill = (bill, index) => {
+    return (
+      <tr key={bill.id} className="border-b">
+        <td className="p-2 border">{index + 1}</td>
+        <td className="p-2 border">{bill.userName}</td>
+        <td className="p-2 border">{bill.Trip?.id || bill.tripId}</td>
+        <td className="p-2 border">{bill.Seat?.seatNumber || bill.seatId}</td>
+        <td className="p-2 border">{new Date(bill.createdAt).toLocaleString("vi-VN")}</td>
+        <td className="p-2 border">
+          <span
+            className={`px-2 py-1 rounded-full text-xs ${
+              bill.status === "confirmed"
+                ? "bg-green-100 text-green-800"
+                : bill.status === "pending"
+                ? "bg-yellow-100 text-yellow-800"
+                : "bg-red-100 text-red-800"
+            }`}
+          >
+            {bill.status}
+          </span>
+        </td>
+        <td className="p-2 border">{bill.finalPrice?.toLocaleString("vi-VN")} ₫</td>
+        <td className="p-2 border flex gap-2 justify-center">
+          <Link
+            to={`/admin/historyBill/edit?id=${bill.id}`}
+            className="bg-yellow-500 text-white py-2 px-3 rounded"
+          >
+            <i className="fa-solid fa-pen-to-square text-md"></i>
+          </Link>
+          <button
+            onClick={() => setSelectedBill(bill)}
+            className="bg-red-500 text-white py-2 px-3 rounded"
+          >
+            <i className="fa-solid fa-trash text-md"></i>
+          </button>
+        </td>
+      </tr>
+    );
+  };
 
   return (
     <div className="container mx-auto p-2">
@@ -21,7 +80,7 @@ function HistoryBillGetAll() {
           <thead>
             <tr className="bg-gray-200">
               <th className="p-2 border">#</th>
-              <th className="p-2 border">Tên</th>
+              <th className="p-2 border">Tên khách</th>
               <th className="p-2 border">Chuyến đi</th>
               <th className="p-2 border">Chỗ ngồi</th>
               <th className="p-2 border">Thời gian đặt</th>
@@ -30,58 +89,20 @@ function HistoryBillGetAll() {
               <th className="p-2 border">Hành động</th>
             </tr>
           </thead>
-          <tbody>
-            {historyBillData.map((bill) => (
-              <tr key={bill.id} className="border-b">
-                <td className="p-2 border">{bill.id}</td>
-                <td className="p-2 border">{bill.name}</td>
-                <td className="p-2 border">{bill.trip}</td>
-                <td className="p-2 border">{bill.seat}</td>
-                <td className="p-2 border">{bill.bookingTime}</td>
-                <td className="p-2 border">
-                  <span
-                    className={`px-2 py-1 rounded-full text-xs ${
-                      bill.status === "Đã xác nhận"
-                        ? "bg-green-100 text-green-800"
-                        : bill.status === "Chưa giải quyết"
-                        ? "bg-yellow-100 text-yellow-800"
-                        : "bg-red-100 text-red-800"
-                    }`}
-                  >
-                    {bill.status}
-                  </span>
-                </td>
-                <td className="p-2 border">{bill.price}</td>
-                <td className="p-2 border flex gap-2">
-                  <Link
-                    to={`/admin/historyBill/edit/${bill.id}`}
-                    className="bg-yellow-500 text-white py-2 px-3 rounded"
-                  >
-                    <i className="fa-solid fa-pen-to-square text-md"></i>
-                  </Link>
-                  <button
-                    onClick={() => setSelectedBill(bill)}
-                    className="bg-red-500 text-white py-2 px-3 rounded"
-                  >
-                    <i className="fa-solid fa-trash text-md"></i>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+          <tbody>{bills.map(renderBill)}</tbody>
         </table>
       </div>
 
       <FormDelete
         isOpen={!!selectedBill}
         onClose={() => setSelectedBill(null)}
-        onConfirm={() => {setSelectedBill(null);}}
+        onConfirm={deleteBill}
         Id={selectedBill?.id}
-        action={`/admin/bus/delete/${selectedBill?.id}`}
-        message={`Bạn có chắc chắn muốn xóa hóa đơn của "${selectedBill?.name}" không?`}
+        action={`${Constants.DOMAIN_API}/admin/booking/${selectedBill?.id}`}
+        message={`Bạn có chắc chắn muốn xóa hóa đơn của "${selectedBill?.User?.fullName || selectedBill?.userName}" không?`}
       />
     </div>
   );
-}
+};
 
 export default HistoryBillGetAll;

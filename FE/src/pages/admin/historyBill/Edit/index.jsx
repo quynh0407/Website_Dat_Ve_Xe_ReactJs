@@ -1,99 +1,130 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
-
-const billData = [
-    { id: "1", name: "Võ Ngọc A", trip: "201", seat: "5", bookingTime: "2025-03-26T10:00", status: "Chưa giải quyết", price: "150.00" },
-    { id: "2", name: "Võ Ngọc B", trip: "202", seat: "10", bookingTime: "2025-03-26T11:00", status: "Đã xác nhận", price: "100.00" },
-    { id: "3", name: "Võ Ngọc C", trip: "203", seat: "15", bookingTime: "2025-03-26T12:00", status: "Đã hủy bỏ", price: "50.00" },
-    { id: "4", name: "Võ Ngọc D", trip: "204", seat: "20", bookingTime: "2025-03-26T13:00", status: "Đã xác nhận", price: "200.00" },
-    { id: "5", name: "Võ Ngọc E", trip: "205", seat: "25", bookingTime: "2025-03-26T14:00", status: "Chưa giải quyết", price: "120.00" },
-];
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
+import axios from "axios";
+import Constants from "../../../../Constants";
 
 function HistoryBillEdit() {
-    const { id } = useParams();
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        formState: { errors },
-    } = useForm({
-        defaultValues: {
-            name: "",
-            trip: "",
-            seat: "",
-            bookingTime: "",
-            status: "Chưa giải quyết",
-            price: "",
-        },
-    });
+    const [queryParams] = useSearchParams();
+    const navigate = useNavigate();
+    const [seatNumber, setSeatNumber] = useState("");
+    const [tripInfo, setTripInfo] = useState({});
+    const { register, control, handleSubmit, setValue, formState: { errors } } = useForm();
 
     useEffect(() => {
-        const billToEdit = billData.find((bill) => bill.id === id);
-        if (billToEdit) {
-            Object.keys(billToEdit).forEach((key) => setValue(key, billToEdit[key]));
+        if (queryParams.get("id")) {
+            fetchBillData();
         }
-    }, [id, setValue]);
+    }, []);
 
-    const onSubmit = (data) => {
-        console.log("Dữ liệu cập nhật:", data);
+    const fetchBillData = async () => {
+        try {
+            const res = await axios.get(
+                `${Constants.DOMAIN_API}/admin/booking/getById/${queryParams.get("id")}`
+            );
+            const data = res.data.data;
+            setValue("status", data.status);
+            setValue("userName", data.userName);
+            setValue("price", data.finalPrice);
+            setValue("bookingTime", data.createdAt.slice(0, 16));
+            setSeatNumber(data.Seat.seatNumber);
+            setTripInfo(data.Trip);
+        } catch (error) {
+            console.error("Lỗi khi lấy dữ liệu hóa đơn:", error);
+        }
+    };
+
+    const onSubmit = async (data) => {
+        try {
+            const formData = new FormData();
+            formData.append("status", data.status);
+            formData.append("userName", data.userName);
+            formData.append("finalPrice", data.price);
+
+            await axios.patch(
+                `${Constants.DOMAIN_API}/admin/booking/update/${queryParams.get("id")}`,
+                formData
+            );
+            navigate("/admin/historyBill/getAll");
+        } catch (error) {
+            console.error("Lỗi khi cập nhật hóa đơn:", error);
+        }
     };
 
     return (
         <div className="container mx-auto p-4">
             <div className="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
-                <h3 className="text-2xl font-bold mb-4">Sửa Hóa Đơn</h3>
-                <form onSubmit={handleSubmit(onSubmit)} className="p-4 border rounded-md shadow-lg">
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">ID</label>
-                        <input type="text" value={id} disabled className="w-full p-2 border rounded" />
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Tên</label>
+                <h3 className="text-2xl font-bold mb-4">Chỉnh sửa Hóa đơn</h3>
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                    {/* Tên khách */}
+                    <div>
+                        <label className="block font-medium">Tên khách</label>
                         <input
-                            type="text"
-                            {...register("name", { required: "Tên không được để trống" })}
+                            className="w-full p-2 border rounded"
+                            {...register("userName")}
+                        />
+                    </div>
+
+                    {/* Chuyến đi */}
+                    <div>
+                        <label className="block font-medium">Chuyến đi</label>
+                        <input
+                            value={`Đi lúc ${new Date(tripInfo.departureTime).toLocaleString("vi-VN", {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                            })} - Đến lúc ${new Date(tripInfo.arrivalTime).toLocaleString("vi-VN", {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                            })}`}
                             className="w-full p-2 border rounded"
                         />
-                        {errors.name && <small className="text-red-500">{errors.name.message}</small>}
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Chuyến đi</label>
+
+                    {/* Chỗ ngồi */}
+                    <div>
+                        <label className="block font-medium">Chỗ ngồi</label>
                         <input
-                            type="text"
-                            {...register("trip", { required: "Chuyến đi không được để trống" })}
+                            value={seatNumber}
                             className="w-full p-2 border rounded"
                         />
-                        {errors.trip && <small className="text-red-500">{errors.trip.message}</small>}
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Chỗ ngồi</label>
-                        <input
-                            type="text"
-                            {...register("seat", { required: "Chỗ ngồi không được để trống" })}
-                            className="w-full p-2 border rounded"
-                        />
-                        {errors.seat && <small className="text-red-500">{errors.seat.message}</small>}
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Thời gian đặt</label>
+
+                    {/* Thời gian đặt */}
+                    <div>
+                        <label className="block font-medium">Thời gian đặt</label>
                         <input
                             type="datetime-local"
-                            {...register("bookingTime", { required: "Thời gian đặt không được để trống" })}
+                            {...register("bookingTime")}
+                            defaultValue={
+                                tripInfo.bookingTime
+                                    ? new Date(tripInfo.bookingTime).toISOString().slice(0, 16)
+                                    : ""
+                            }
                             className="w-full p-2 border rounded"
                         />
-                        {errors.bookingTime && <small className="text-red-500">{errors.bookingTime.message}</small>}
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Trạng thái</label>
-                        <select {...register("status")} className="w-full p-2 border rounded">
-                            <option value="Chưa giải quyết">Chưa giải quyết</option>
-                            <option value="Đã xác nhận">Đã xác nhận</option>
-                            <option value="Đã hủy bỏ">Đã hủy bỏ</option>
+
+                    {/* Trạng thái */}
+                    <div>
+                        <label className="block font-medium">Trạng thái</label>
+                        <select
+                            {...register("status")}
+                            className="w-full p-2 border rounded"
+                        >
+                            <option value="pending">Chưa giải quyết</option>
+                            <option value="confirmed">Đã xác nhận</option>
+                            <option value="canceled">Đã hủy bỏ</option>
                         </select>
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Giá</label>
+                    {/* Giá */}
+                    <div>
+                        <label className="block font-medium">Giá</label>
                         <input
                             type="number"
                             {...register("price", {
@@ -101,10 +132,18 @@ function HistoryBillEdit() {
                                 min: { value: 1, message: "Giá phải lớn hơn 0" },
                             })}
                             className="w-full p-2 border rounded"
+                            defaultValue={tripInfo.finalPrice}
                         />
-                        {errors.price && <small className="text-red-500">{errors.price.message}</small>}
+                        {errors.price && (
+                            <span className="text-red-500">{errors.price.message}</span>
+                        )}
                     </div>
-                    <button type="submit" className="px-4 py-2 bg-[#073272] text-white rounded">
+
+                    {/* Nút Cập nhật */}
+                    <button
+                        type="submit"
+                        className="px-4 py-2 bg-[#073272] text-white rounded"
+                    >
                         Cập nhật hóa đơn
                     </button>
                 </form>
