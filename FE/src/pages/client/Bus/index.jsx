@@ -1,5 +1,90 @@
 import { Link, useLocation } from "react-router-dom";
+
+
 function Bus() {
+    const location = useLocation();
+    const tripsData = location.state?.tripsData || [];
+
+    const renderTrips = () => {
+        if (!Array.isArray(tripsData) ) {
+            return (
+                <div className="bg-white rounded p-3 w-full my-3">
+                    Không có chuyến nào phù hợp với yêu cầu của bạn.
+                </div>
+            );
+        }
+
+        const hasNoTrips = tripsData.every(route => !Array.isArray(route.trips) || route.trips.length === 0);
+
+        if (hasNoTrips) {
+            return (
+                <div className="bg-white rounded p-3 w-full my-3">
+                    Không có chuyến nào phù hợp với yêu cầu của bạn.
+                </div>
+            );
+        }
+    
+        return tripsData.map((route) =>
+            route.trips.map((trip) => {
+                const departure = new Date(trip.departureTime);
+                const arrivalTime = new Date(trip.arrivalTime);
+                const startHours = departure.getHours().toString().padStart(2, "0");
+                const startMinutes = departure.getMinutes().toString().padStart(2, "0");
+                const endHours = arrivalTime.getHours().toString().padStart(2, "0");
+                const endMinutes = arrivalTime.getMinutes().toString().padStart(2, "0");
+                const formattedPrice = new Intl.NumberFormat("vi-VN").format(trip.price);
+    
+                return (
+                    <div key={trip.tripId} className="bg-white rounded p-3 w-full my-3">
+                        <table className="w-full p-2">
+                            <tbody>
+                                <tr className="text-center">
+                                    <td><span className="font-bold text-4xl">{`${startHours}:${startMinutes}`}</span></td>
+                                    <td className="py-2 w-[25%]">
+                                        <div className="flex items-center justify-center space-x-2">
+                                            <i className="fas fa-dot-circle text-green-700"></i>
+                                            <div className="flex-grow border-t-2 border-dashed border-gray-500"></div>
+                                            <span className="text-gray-600 text-sm font-mono font-bold">{route.time} giờ</span>
+                                            <div className="flex-grow border-t-2 border-dashed border-gray-500"></div>
+                                            <i className="fa-solid fa-location-dot text-orange-600 text-xl"></i>
+                                        </div>
+                                    </td>
+                                    <td><span className="font-bold text-4xl">{`${endHours}:${endMinutes}`}</span></td>
+                                    <td className="w-[20%]"></td>
+                                </tr>
+    
+                                <tr className="border-b-2 mb-1">
+                                    <td className="py-2 text-center">
+                                        <span className="text-[15px] text-center">{route.startPoint}</span>
+                                    </td>
+                                    <td></td>
+                                    <td className="py-2 text-center">
+                                        <span className="text-[15px] text-center">{route.endPoint}</span>
+                                    </td>
+                                    <td className="py-2 text-center">
+                                        <p className="text-2xl text-center text-orange-600 font-bold">{formattedPrice}đ</p>
+                                    </td>
+                                </tr>
+    
+                                <tr className="py-2">
+                                    <td className="py-2 text-gray-400 text-sm" colSpan="3">
+                                        • {trip.bus.busType} <span className="text-green-600">• {trip.bus.totalSeats} chỗ trống</span>
+                                    </td>
+                                    <td className="py-2">
+                                        <Link to="/bookingTickets" className="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
+                                            Chọn chuyến
+                                        </Link>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                );
+            })
+        );
+    };
+    
+
     return (
         <main className="mx-auto w-full md:w-[80%] flex pb-3 " id="busDetail">
             <div class="w-[40%] bg-white p-3 rounded-lg shadow-md">
@@ -49,85 +134,9 @@ function Bus() {
                     </div>
                 </div>
             </div>
-            <div className="w-[60%] p-4 w-full">
+            <div className="w-full p-4 ">
                 <h1 className="font-awesome text-[30px] font-bold pt-2">Điểm xuất phát - Điểm đến</h1>
-                <div class="bg-white rounded p-3 w-full my-3">
-                    <table class="w-full p-2">
-                        <tr class="text-center">
-                            <td class=" "><span class="font-bold text-4xl">13:25</span></td>
-                            <td class="py-2 w-[25%]">
-                                <div class="flex items-center justify-center space-x-2">
-                                    <i class="fas fa-dot-circle text-green-700"></i>
-                                    <div class="flex-grow border-t-2 border-dashed border-gray-500"></div>
-                                    <span class="text-gray-600 text-sm font-mono font-bold">13 giờ</span>
-                                    <div class="flex-grow border-t-2 border-dashed border-gray-500"></div>
-                                    <i class="fa-solid fa-location-dot text-orange-600 text-xl"></i>
-                                </div>
-                            </td>
-                            <td class=" "><span class="font-bold text-4xl">17:30</span></td>
-                            <td class="py-2"></td>
-                        </tr>
-
-                        <tr class="border-b-2">
-                            <td class="py-2"> <span class="text-[15px]">An Khe - TP. Hồ Chí Minh</span></td>
-                            <td></td>
-                            <td class="py-2"><span class="text-[15px]">An Minh (Kiên Giang) - TP. Hồ Chí Minh</span></td>
-                            <td class="  py-2">
-                                <p class="text-2xl text-center text-orange-600 font-bold">200.000đ</p>
-                            </td>
-                        </tr>
-
-                        <tr class="py-2">
-                            <td class="py-2 text-gray-400 text-sm" colspan="3">• Limousine <span class="text-green-600">• 32 chỗ
-                                trống</span></td>
-
-                            <td class="py-2">
-                                <Link to="/bookingTickets" class="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
-                                    Chọn chuyến
-                                </Link>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="bg-white rounded p-3 w-full my-3">
-                    <table class="w-full p-2">
-                        <tr class="text-center">
-                            <td class=" "><span class="font-bold text-4xl">13:25</span></td>
-                            <td class="py-2 w-[25%]">
-                                <div class="flex items-center justify-center space-x-2">
-                                    <i class="fas fa-dot-circle text-green-700"></i>
-                                    <div class="flex-grow border-t-2 border-dashed border-gray-500"></div>
-                                    <span class="text-gray-600 text-sm font-mono font-bold">13 giờ</span>
-                                    <div class="flex-grow border-t-2 border-dashed border-gray-500"></div>
-                                    <i class="fa-solid fa-location-dot text-orange-600 text-xl"></i>
-                                </div>
-                            </td>
-                            <td class=" "><span class="font-bold text-4xl">17:30</span></td>
-                            <td class="py-2"></td>
-                        </tr>
-
-                        <tr class="border-b-2">
-                            <td class="py-2"> <span class="text-[15px]">An Khe - TP. Hồ Chí Minh</span></td>
-                            <td></td>
-                            <td class="py-2"><span class="text-[15px]">An Minh (Kiên Giang) - TP. Hồ Chí Minh</span></td>
-                            <td class="  py-2">
-                                <p class="text-2xl text-center text-orange-600 font-bold">200.000đ</p>
-                            </td>
-                        </tr>
-
-                        <tr class="py-2">
-                            <td class="py-2 text-gray-400 text-sm" colspan="3">• Limousine <span class="text-green-600">• 32 chỗ
-                                trống</span></td>
-
-                            <td class="py-2">
-                                <button class="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
-                                    Chọn chuyến
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                {renderTrips()}
             </div>
         </main>
     )

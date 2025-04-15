@@ -19,7 +19,6 @@ class ContacController {
                 error: error.message });
         }
     }
-
 }
 
 module.exports = ContacController;

@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useLocation } from "react-router";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useCookies } from "react-cookie";
@@ -9,16 +9,29 @@ import MenuItem from "@mui/material/MenuItem";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import Cookies from "js-cookie";
+import axios from "axios";
+import Select from "react-select";
+import { useNavigate } from 'react-router-dom';
+import Constants from "../../../Constants";
 
+const URL = Constants.DOMAIN_API;
+const ENDPOINT = "admin/routes";
 
 function Header() {
-
     const [user, setUser] = useState(null);
     const [cookies] = useCookies(["token"]);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const navigator = useNavigate();
+    const [selectedDate, setSelectedDate] = useState('');
+
+
     useEffect(() => {
+        checkCookie();
+        getDataOptions();
+    }, [])
+
+    const checkCookie = () => {
         const token = cookies.token;
         if (token) {
             try {
@@ -27,8 +40,11 @@ function Header() {
             } catch (err) {
                 console.error("Lỗi giải mã token:", err);
             }
+        } else {
+            setUser(null);
         }
-    }, [])
+    }
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -39,13 +55,97 @@ function Header() {
         navigator("/profile");
     };
     const handleHistory = () => {
-        navigator("/bookingHistory");
+        navigator("/bus");
     };
     const logout = () => {
         setUser(null);
         navigator("/login");
         Cookies.remove("token", { path: "/" });
     };
+
+
+
+    //----------------------[ SREACH OPTION ]---------------------//
+    const [startPointOptions, setStartPointOptions] = useState([]);
+    const [endPointOptions, setEndPointOptions] = useState([]);
+    const [selectedStartPoint, setSelectedStartPoint] = useState(null);
+    const [selectedEndPoint, setSelectedEndPoint] = useState(null);
+
+    const customStyles = {
+        control: (provided) => ({
+            ...provided,
+            boxShadow: "none",
+            border: "none",
+            width: "100%",
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            color: "gray",
+            textAlign: "left",
+            backgroundColor: state.isSelected
+                ? "#f0f0f0"
+                : state.isFocused
+                    ? "#f9f9f9"
+                    : "white",
+        }),
+        singleValue: (provided) => ({
+            ...provided,
+            color: "#0F3079",
+        }),
+    };
+
+    const getDataOptions = async () => {
+        try {
+            const response = await axios.get(`${URL}/${ENDPOINT}/list`);
+            const responseData = response.data;
+
+            if (responseData && responseData.data && Array.isArray(responseData.data)) {
+                const data = responseData.data;
+
+                const startOptions = data.map(item => ({
+                    value: item.startPoint,
+                    label: item.startPoint
+                }));
+
+                const endOptions = data.map(item => ({
+                    value: item.endPoint,
+                    label: item.endPoint
+                }));
+
+                setStartPointOptions(startOptions);
+                setEndPointOptions(endOptions);
+
+                return data;
+            }
+        } catch (error) {
+            console.error("Lỗi khi lấy dữ liệu:", error);
+            setStartPointOptions([]);
+            setEndPointOptions([]);
+            return [];
+        }
+    };
+
+    const handleSearch = async () => {
+        try {
+            const response = await axios.post('http://localhost:3000/bus/search', {
+                startPoint: selectedStartPoint?.value || '',
+                endPoint: selectedEndPoint?.value || '',
+                travelTime: selectedDate
+            });
+
+            if (response.data.success) {
+                console.log('Kết quả:', response.data.data);
+                navigator ('/bus', {
+                    state: { tripsData: response.data.data }
+                });
+            } else {
+                console.error('Lỗi từ server:', response.data.message);
+            }
+        } catch (err) {
+            console.error('Lỗi khi tìm kiếm:', err.response?.data || err.message);
+        }
+    };
+
     return (
 
         <header className="p-0 mb-3">
@@ -187,57 +287,71 @@ function Header() {
                         Việt Nam, Theo Cách Của Bạn</h1>
                     <div
                         className="w-full flex justify-center items-center rounded-[16px] border-[6px] border-gray-100/10">
-                        <form action method
-                            className="w-full bg-white shadow-md rounded-lg p-4 flex flex-col md:flex-row items-end gap-4">
-                            <div className="flex flex-col w-full md:w-[30%]">
-                                <label
-                                    className="text-blue-950 text-sm text-left px-2 font-semibold mb-1">Từ</label>
-                                <div className="flex items-center p-2 rounded">
-                                    <i
-                                        className="fas fa-bus text-lg text-sky-700"></i>
-                                    <input type="text"
-                                        placeholder="Nhập điểm đi"
-                                        className="outline-none w-full bg-transparent ml-2 py-1 text-blue-950" />
-                                </div>
-                            </div>
-                            <div
-                                className="flex items-center justify-center w-full md:w-[5%]">
-                                <i
-                                    className="fas fa-exchange-alt text-sky-700 text-lg cursor-pointer hover:text-gray-700"></i>
-                            </div>
-                            <div className="flex flex-col w-full md:w-[30%]">
-                                <label
-                                    className="text-blue-950 text-sm text-left px-2 font-semibold mb-1">Đến</label>
-                                <div
-                                    className="flex items-center bg-white p-2 rounded">
-                                    <i
-                                        className="fas fa-bus text-lg text-sky-700"></i>
-                                    <input type="text"
-                                        placeholder="Nhập điểm đến"
-                                        className="outline-none w-full bg-transparent ml-2 py-1 text-blue-950" />
-                                </div>
-                            </div>
-                            <div className="flex flex-col w-[30%]">
-                                <label
-                                    className="text-blue-950 text-sm text-left px-2 font-semibold mb-1">Ngày
-                                    khởi
-                                    hành</label>
-                                <div
-                                    className="flex items-center bg-white  p-2 rounded relative">
-                                    <i
-                                        className="fas fa-calendar-alt text-lg text-sky-700 cursor-pointer absolute left-2"
-                                        onclick="document.getElementById('departure-date').showPicker()"></i>
+                        <div className="flex flex-col md:flex-row bg-white shadow-md rounded-lg w-full gap-2 p-4 items-center">
+                            <div className="flex flex-col md:flex-row w-full md:w-[95%] items-center justify-between gap-4">
+                                <div className="flex flex-col w-full md:w-[30%]">
+                                    <label className="text-blue-950 text-sm text-left px-2 font-semibold mb-1">Từ</label>
+                                    <div className="flex justify-center items-center p-2 rounded">
+                                        <i className="fas fa-bus text-lg text-sky-700"></i>
+                                        <Select
+                                            options={startPointOptions}
+                                            value={selectedStartPoint}
+                                            onChange={(selectedOption) => setSelectedStartPoint(selectedOption)}
+                                            placeholder="Nhập điểm đi"
+                                            className="outline-none w-full bg-transparent ml-2 py-1 text-blue-950"
+                                            styles={customStyles}
 
-                                    <input type="date" id="departure-date"
-                                        className="outline-none w-full bg-transparent pl-8 text-blue-950 cursor-pointer 
-                                 appearance-none [&::-webkit-calendar-picker-indicator]:hidden"/>
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center justify-center md:w-[5%] h-full">
+                                    <i className="fas fa-exchange-alt text-sky-700 text-lg cursor-pointer hover:text-gray-700"></i>
+                                </div>
+
+                                <div className="flex flex-col w-full md:w-[30%]">
+                                    <label className="text-blue-950 text-sm text-left px-2 font-semibold mb-1">Đến</label>
+                                    <div className="flex items-center bg-white p-2 rounded">
+                                        <i className="fas fa-bus text-lg text-sky-700"></i>
+                                        <Select
+                                            options={endPointOptions}
+                                            value={selectedEndPoint}
+                                            onChange={(selectedOption) => setSelectedEndPoint(selectedOption)}
+                                            placeholder="Nhập điểm đến"
+                                            className="outline-none w-full bg-transparent ml-2 py-1 text-blue-950"
+                                            styles={customStyles}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col w-full md:w-[30%]">
+                                    <label className="text-blue-950 text-sm text-left px-2 font-semibold mb-1">Ngày khởi hành</label>
+                                    <div className="flex items-center bg-white p-2 rounded relative">
+                                        <i
+                                            className="fas fa-calendar-alt text-lg text-sky-700 absolute left-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                                            onClick={() => document.getElementById('departure-date').showPicker()}
+                                        ></i>
+                                        <input value={selectedDate}
+                                            onChange={(e) => setSelectedDate(e.target.value)}
+                                            type="date"
+                                            id="departure-date"
+                                            className="outline-none w-full bg-transparent pl-8 text-blue-950 cursor-pointer appearance-none [&::-webkit-calendar-picker-indicator]:hidden"
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                            <button
-                                className="bg-orange-500  hover:bg-orange-600 w-full md:w-[5%] text-white p-2 rounded transition duration-300">
-                                <i className="fas fa-search"></i>
-                            </button>
-                        </form>
+
+                            <div className="flex md:w-[5%] items-end h-full">
+                                <button
+                                    onClick={handleSearch}
+                                    className="bg-orange-500 hover:bg-orange-600 w-full text-white p-2 rounded transition duration-300"
+                                >
+                                    <i className="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+
                     </div>
                     <div
                         className="w-full md:w-[80%] flex flex-wrap items-center gap-2 mt-4 text-white justify-start">

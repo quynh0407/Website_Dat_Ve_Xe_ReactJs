@@ -17,10 +17,6 @@ const BusesModel = connection.define('Buses',{
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    driverId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-    },
     status: {
         type: DataTypes.ENUM('active', 'inactive'),
         allowNull: false,
@@ -29,10 +25,7 @@ const BusesModel = connection.define('Buses',{
         type: DataTypes.INTEGER,
         allowNull: true,
     },
-    seatsId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-    },
+ 
 }, {
     tableName: 'buses',
     timestamps: false,

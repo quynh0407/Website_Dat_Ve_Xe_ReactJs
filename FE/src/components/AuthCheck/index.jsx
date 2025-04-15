@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { jwtDecode } from 'jwt-decode';
@@ -7,9 +7,9 @@ import { toast } from 'react-toastify';
 const PrivateRoute = ({ children }) => {
     const [cookies] = useCookies(["token"]);
     const navigate = useNavigate();
-    const [isAllowed, setIsAllowed] = React.useState(null);
+    const [isAllowed, setIsAllowed] = useState(null);
 
-    useEffect(() => {
+    const checkLogin = () => {
         const token = cookies.token;
         if (!token) {
             navigate("/login");
@@ -26,16 +26,18 @@ const PrivateRoute = ({ children }) => {
                 setIsAllowed(true);
             }
         } catch (error) {
-          
-            navigate("/login"); 
-         toast.error("Token không hợp lệ!");
+            toast.error("Token không hợp lệ!");
+            navigate("/login");
         }
-    }, [cookies.token, navigate]);
+    };
 
-    if (isAllowed === null) return null; 
+    useEffect(() => {
+        checkLogin();
+    }, [cookies.token, navigate])
+
+    if (isAllowed === null) return null;
 
     return children;
 };
-
 
 export default PrivateRoute;

@@ -7,6 +7,11 @@ const ContacController = require('../controllers/Client/contactController');
 const ProfileController = require('../controllers/Client/profileController');
 const upload = require('../config/upload');
 
+const BusController = require('../controllers/Client/busController');
+const multer = require("multer");
+//------------------[ HOME ]------------------
+// router.post('/bus/search', busController.filterBuses);
+router.post('/bus/search', BusController.filterBuses);
 //------------------[ AUTH ]------------------
 router.post('/register',AuthController.register);
 router.post("/login", AuthController.login);

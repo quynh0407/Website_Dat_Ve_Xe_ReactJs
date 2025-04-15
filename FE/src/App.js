@@ -26,7 +26,7 @@ import BusTypeEdit from "./pages/admin/busType/Edit";
 
 import RoutesGetAll from "./pages/admin/routes/getAll";
 import RoutesForm from "./pages/admin/routes/Form";
- 
+
 import BusRoutesGetAll from "./pages/admin/busRoutes/getAll";
 import BusRoutesCreate from "./pages/admin/busRoutes/Create";
 import BusRoutesEdit from "./pages/admin/busRoutes/Edit";
@@ -59,87 +59,90 @@ import PrivateRoute from "./components/AuthCheck";
 
 const AppRoutes = () => {
   return (
-      <Routes>
-        <Route path="/" element={<ClientLayout />}>
-          <Route index element={<Home />} />
-          <Route path="bus" element={<Bus />} />
-          <Route path="bookingTickets" element={<BookingTickets />} />
-          <Route path="about" element={<AboutUs />} />
-          <Route path="blog" element={<Blog />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="bookingHistory" element={<BookingHistory />} />
-          <Route path="profile" element={<Profile />} />
+    <Routes>
+      <Route path="/" element={<ClientLayout />}>
+        <Route index element={<Home />} />
+        <Route path="bus" element={<Bus />} />
+        <Route path="about" element={<AboutUs />} />
+        <Route path="blog" element={<Blog />} />
+        <Route path="contact" element={<Contact />} />
+      </Route>
+
+      <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
+      <Route path="resetForm" element={<ResetForm />} />
+      <Route path="resetPassword/:token" element={<ResetPassword />} />
+
+
+      <Route path="/" element={<PrivateRoute><ClientLayout /></PrivateRoute>}>
+        <Route path="bookingHistory" element={<BookingHistory />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="bookingTickets" element={<BookingTickets />} />
+      </Route>
+
+
+      <Route path="/admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
+        <Route index element={<Dashboard />} />
+        <Route path="bus">
+          <Route path="getAll" element={<BusGetAll />} />
+          <Route path="create" element={<BusCreate />} />
+          <Route path="edit/:id" element={<BusEdit />} />
         </Route>
 
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route path="resetForm" element={<ResetForm />} />
-        <Route path="resetPassword/:token" element={<ResetPassword />} />
-
-
-        <Route path="/admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
-          <Route index element={<Dashboard />} />
-
-          <Route path="bus">
-            <Route path="getAll" element={<BusGetAll />} />
-            <Route path="create" element={<BusCreate />} />
-            <Route path="edit/:id" element={<BusEdit />} />
-          </Route>
-
-          <Route path="busType">
-            <Route path="getAll" element={<BusTypeGetAll />} />
-            <Route path="create" element={<BusTypeCreate />} />
-            <Route path="update/:id" element={<BusTypeEdit />} />
-          </Route>
-
-          <Route path="routes">
-            <Route path="getAll" element={<RoutesGetAll />} />
-            <Route path="create" element={<RoutesForm />} />
-            <Route path="edit" element={<RoutesForm />} />
-          </Route>
-
-          <Route path="busRoutes">
-            <Route path="getAll" element={<BusRoutesGetAll/>} />
-            <Route path="create" element={<BusRoutesCreate/>} />
-            <Route path="edit/:id" element={<BusRoutesEdit />} />
-          </Route>
-
-          <Route path="user">
-            <Route path="getAll" element={<UserGetAll />} />
-            <Route path="create" element={<UserCreate />} />
-            <Route path="edit" element={<UserEdit />} />
-          </Route>
-
-          <Route path="driver">
-            <Route path="getAll" element={<DiverGetAll />} />
-            <Route path="create" element={<DiverCreate />} />
-            <Route path="edit" element={<DiverEdit />} />
-          </Route>
-
-          <Route path="blog">
-            <Route path="getAll" element={<BlogGetAll />} />
-            <Route path="create" element={<BlogCreate />} />
-            <Route path="edit" element={<BlogEdit />} />
-          </Route>
-
-          <Route path="historyBill">
-            <Route path="getAll" element={<HistoryBillGetAll />} />
-            <Route path="edit" element={<HistoryBillEdit />} />
-          </Route>
-
-          <Route path="review">
-            <Route path="getAll" element={<ReviewGetAll />} />
-            <Route path="edit" element={<ReviewEdit />} />
-          </Route>
-
-          <Route path="contact">
-            <Route path="getAll" element={<ContactGetAll />} />
-            <Route path="edit/:id" element={<ContactEdit />} />
-          </Route>
-
-
+        <Route path="busType">
+          <Route path="getAll" element={<BusTypeGetAll />} />
+          <Route path="create" element={<BusTypeCreate />} />
+          <Route path="update/:id" element={<BusTypeEdit />} />
         </Route>
-      </Routes>
+
+        <Route path="routes">
+          <Route path="getAll" element={<RoutesGetAll />} />
+          <Route path="create" element={<RoutesForm />} />
+          <Route path="edit" element={<RoutesForm />} />
+        </Route>
+
+        <Route path="busRoutes">
+          <Route path="getAll" element={<BusRoutesGetAll />} />
+          <Route path="create" element={<BusRoutesCreate />} />
+          <Route path="edit/:id" element={<BusRoutesEdit />} />
+        </Route>
+
+        <Route path="user">
+          <Route path="getAll" element={<UserGetAll />} />
+          <Route path="create" element={<UserCreate />} />
+          <Route path="edit/:id" element={<UserEdit />} />
+        </Route>
+
+        <Route path="driver">
+          <Route path="getAll" element={<DiverGetAll />} />
+          <Route path="create" element={<DiverCreate />} />
+          <Route path="edit/:id" element={<DiverEdit />} />
+        </Route>
+
+        <Route path="blog">
+          <Route path="getAll" element={<BlogGetAll />} />
+          <Route path="create" element={<BlogCreate />} />
+          <Route path="edit/:id" element={<BlogEdit />} />
+        </Route>
+
+        <Route path="historyBill">
+          <Route path="getAll" element={<HistoryBillGetAll />} />
+          <Route path="edit/:id" element={<HistoryBillEdit />} />
+        </Route>
+
+        <Route path="review">
+          <Route path="getAll" element={<ReviewGetAll />} />
+          <Route path="edit/:id" element={<ReviewEdit />} />
+        </Route>
+
+        <Route path="contact">
+          <Route path="getAll" element={<ContactGetAll />} />
+          <Route path="edit/:id" element={<ContactEdit />} />
+        </Route>
+
+
+      </Route>
+    </Routes>
   );
 };
 
