@@ -107,29 +107,29 @@ const AppRoutes = () => {
           <Route path="user">
             <Route path="getAll" element={<UserGetAll />} />
             <Route path="create" element={<UserCreate />} />
-            <Route path="edit/:id" element={<UserEdit />} />
+            <Route path="edit" element={<UserEdit />} />
           </Route>
 
           <Route path="driver">
             <Route path="getAll" element={<DiverGetAll />} />
             <Route path="create" element={<DiverCreate />} />
-            <Route path="edit/:id" element={<DiverEdit />} />
+            <Route path="edit" element={<DiverEdit />} />
           </Route>
 
           <Route path="blog">
             <Route path="getAll" element={<BlogGetAll />} />
             <Route path="create" element={<BlogCreate />} />
-            <Route path="edit/:id" element={<BlogEdit />} />
+            <Route path="edit" element={<BlogEdit />} />
           </Route>
 
           <Route path="historyBill">
             <Route path="getAll" element={<HistoryBillGetAll />} />
-            <Route path="edit/:id" element={<HistoryBillEdit />} />
+            <Route path="edit" element={<HistoryBillEdit />} />
           </Route>
 
           <Route path="review">
             <Route path="getAll" element={<ReviewGetAll />} />
-            <Route path="edit/:id" element={<ReviewEdit />} />
+            <Route path="edit" element={<ReviewEdit />} />
           </Route>
 
           <Route path="contact">
