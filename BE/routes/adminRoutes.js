@@ -8,9 +8,15 @@ const ContacController = require('../controllers/Admin/contactController');
 const TripsController = require('../controllers/Admin/tripsController');
 const BusTypeController = require('../controllers/Admin/busTypeController');
 const BusController = require('../controllers/Admin/busController');
-const DriversController = require('../controllers/Admin/driversController');
+/* const DriversController = require('../controllers/Admin/driversController'); */
 const SeatsController = require('../controllers/Admin/seatsController');
 
+const DriverController = require('../controllers/Admin/driverController');
+const UserController = require('../controllers/Admin/userController');
+const BlogController = require('../controllers/Admin/blogController');
+const ReviewController = require('../controllers/Admin/reviewController');
+const BookingController = require('../controllers/Admin/bookingController');
+const upload = require('../config/upload');
 //------------------[ ROUTES ]------------
 router.get('/routes/list',RoutesController.get);
 router.get('/routes/getId',RoutesController.getById);
@@ -48,10 +54,42 @@ router.patch('/bus/update/:id',BusController.update);
 router.delete('/bus/delete/:id',BusController.delete);
 
 //-----------------[ DRIVERs ]-----------------
-router.get('/drivers/list', DriversController.get);
+/* router.get('/drivers/list', DriversController.get); */
 
 //-----------------[ SEATS ]-------------------
 router.get('/seats/:busID', SeatsController.get);
 router.put('/seats/:id', SeatsController.update);
+//------------------[ DRIVER]-------------
+router.get('/driver/list', DriverController.get);
+router.get('/driver/getById/:id', DriverController.getById);
+router.post('/driver/add', upload.single('image'), DriverController.create);
+router.patch('/driver/update/:id', upload.single('image'), DriverController.update);
+router.delete('/driver/:id', DriverController.delete);
+
+//------------------[ User]-------------
+router.get('/user/list', UserController.get);
+router.get('/user/getById/:id', UserController.getById);
+router.post('/user/add', upload.single('image'), UserController.create);
+router.patch('/user/update/:id', upload.single('image'), UserController.update);
+router.delete('/user/:id', UserController.delete);
+
+//------------------[ Blog ]-------------
+router.get('/blog/list', BlogController.get);
+router.get('/blog/getById/:id', BlogController.getById);
+router.post('/blog/add', upload.single('image'), BlogController.create);
+router.patch('/blog/update/:id', upload.single('image'), BlogController.update);
+router.delete('/blog/:id', BlogController.delete);
+
+//------------------[ Review ]-------------
+router.get('/review/list', ReviewController.get);
+router.get('/review/getById/:id', ReviewController.getById);
+router.patch('/review/update/:id', upload.single('image'), ReviewController.update);
+router.delete('/review/:id', ReviewController.delete);
+
+//------------------[ Booking ]-------------
+router.get('/booking/list', BookingController.get);
+router.get('/booking/getById/:id', BookingController.getById);
+router.patch('/booking/update/:id', upload.single('image'), BookingController.update);
+router.delete('/booking/:id', BookingController.delete);
 
 module.exports = router;

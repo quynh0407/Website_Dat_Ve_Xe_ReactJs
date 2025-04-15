@@ -1,7 +1,7 @@
 const connection = require('../config/database');
 const { DataTypes } = require('sequelize');
 
-const DriverModel = connection.define('Driver',{
+const DriverModel = connection.define('Driver', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -47,8 +47,19 @@ const DriverModel = connection.define('Driver',{
         type: DataTypes.JSON,
         allowNull: true,
     },
+
+    licenseType: {
+        type: DataTypes.STRING(50),
+        allowNull: true,
+    },
+    hireDate: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+
 }, {
     tableName: 'drivers',
     timestamps: false,
 });
+
 module.exports = DriverModel;

@@ -1,0 +1,74 @@
+const connection = require('../config/database');
+const { DataTypes } = require('sequelize');
+const UserModel = require('./userModel');
+const TripModel = require('./tripsModel'); 
+const SeatModel = require('./seatsModel'); 
+
+const BookingModel = connection.define('Booking', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: UserModel,
+            key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+    },
+    tripId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: TripModel,
+            key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+    },
+    seatId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: SeatModel,
+            key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        allowNull: true,
+    },
+    status: {
+        type: DataTypes.ENUM('pending', 'confirmed', 'canceled'),
+        allowNull: true,
+    },
+    finalPrice: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+    },
+    userName: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
+    },
+    phone: {
+        type: DataTypes.STRING(10),
+        allowNull: true,
+    }
+}, {
+    tableName: 'bookings',
+    timestamps: false,
+});
+
+// Associations (nếu cần)
+BookingModel.belongsTo(UserModel, { foreignKey: 'userId' });
+BookingModel.belongsTo(TripModel, { foreignKey: 'tripId' });
+BookingModel.belongsTo(SeatModel, { foreignKey: 'seatId' });
+
+module.exports = BookingModel;
