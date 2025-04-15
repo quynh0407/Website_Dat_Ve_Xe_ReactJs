@@ -1,37 +1,41 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import axios from "axios";
+import Constants from "../../../../Constants";
 
-const reviewData = [
-    {
-        id: "1",
-        userID: "Nguyễn Văn A",
-        tripID: "502",
-        rating: "3",
-        comment: "120",
-        createAt: "28/03/2025",
-        status: 1,
-    },
-    {
-        id: "2",
-        userID: "Nguyễn Văn B",
-        tripID: "501",
-        rating: "5",
-        comment: "1800000",
-        createAt: "28/03/2025",
-        status: 0,
-    },
-];
 function ReviewEdit() {
 
-    const { id } = useParams();
-    const [formData, setFormData] = useState({ userID: "", tripID: "", rating: "", comment: "", createAt: "", status: "" });
+     const [queryParams] = useSearchParams();
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        userID: "",
+        tripID: "",
+        rating: "",
+        comment: "",
+        createAt: "",
+        status: "1",
+    });
 
     useEffect(() => {
-        const reviewToEdit = reviewData.find(review => review.id === id);
-        if (reviewToEdit) {
-            setFormData(reviewToEdit);
+        getReview();
+    }, []);
+
+    const getReview = async () => {
+        try {
+            const res = await axios.get(`${Constants.DOMAIN_API}/admin/review/getById/${queryParams.get("id")}`);
+            const data = res.data.data;
+            setFormData({
+                userID: data.User.fullName,
+                tripID: data.tripId,
+                rating: data.rating,
+                comment: data.comment,
+                createAt: new Date(data.createdAt).toLocaleDateString("vi-VN"),
+                status: data.status.toString(),
+            });
+        } catch (error) {
+            console.error("Lỗi khi lấy dữ liệu đánh giá:", error);
         }
-    }, [id]);
+    };
 
     const handleChange = (e) => {
         setFormData({
@@ -40,9 +44,18 @@ function ReviewEdit() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            await axios.patch(`${Constants.DOMAIN_API}/admin/review/update/${queryParams.get("id")}`, {
+                status: formData.status,
+            });
+            navigate("/admin/review/getAll");
+        } catch (error) {
+            console.error("Lỗi khi cập nhật đánh giá:", error);
+        }
     };
+
     return (
         <div className="container mx-auto p-4">
             <div className="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
@@ -50,80 +63,44 @@ function ReviewEdit() {
                 <form onSubmit={handleSubmit} className="p-4 border rounded-md shadow-lg">
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Người dùng</label>
-                        <input
-                            type="text"
-                            name="userID"
-                            value={formData.userID}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded"
-                            disabled
-                        />
+                        <input type="text" name="userID" value={formData.userID} disabled className="w-full p-2 border rounded" />
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Mã chuyến xe</label>
-                        <input
-                            type="text"
-                            name="tripID"
-                            value={formData.tripID}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded"
-                            disabled
-                        />
+                        <input type="text" name="tripID" value={formData.tripID} disabled className="w-full p-2 border rounded" />
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Đánh giá</label>
                         <div className="flex items-center gap-2">
-                            <input
-                                type="text"
-                                name="rating"
-                                value={formData.rating}
-                                onChange={handleChange}
-                                className="w-[35px] p-2 rounded"
-                                disabled
-                            />
-                            <span>
-                                {Array.from({ length: formData.rating }, (_, i) => <span key={i}>⭐</span>)}
-                            </span>
+                            <input type="text" name="rating" value={formData.rating} disabled className="w-[35px] p-2 rounded" />
+                            <span>{Array.from({ length: formData.rating }, (_, i) =><span key={i} className="pr-1 text-yellow-500">★</span>)}</span>
                         </div>
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Bình luận</label>
-                        <input
-                            type="text"
-                            name="comment"
-                            value={formData.comment}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded"
-                            disabled
-                        />
+                        <input type="text" name="comment" value={formData.comment} disabled className="w-full p-2 border rounded" />
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Ngày đăng</label>
-                        <input
-                            type="text"
-                            name="createAt"
-                            value={formData.createAt}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded"
-                            disabled
-                        />
+                        <input type="text" name="createAt" value={formData.createAt} disabled className="w-full p-2 border rounded" />
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Trạng thái</label>
                         <select
-                            type="text"
                             name="status"
                             value={formData.status}
                             onChange={handleChange}
-                            className="w-full p-2 border rounded">
+                            className="w-full p-2 border rounded"
+                        >
                             <option value="1">Hiển thị</option>
                             <option value="0">Ẩn</option>
                         </select>
                     </div>
-                    <button type="submit" className="px-4 py-2 bg-[#073272] text-white rounded">Cập nhật đánh giá </button>
+                    <button type="submit" className="px-4 py-2 bg-[#073272] text-white rounded">Cập nhật đánh giá</button>
                 </form>
             </div>
         </div>
-    )
+    );
 }
+
 export default ReviewEdit;
