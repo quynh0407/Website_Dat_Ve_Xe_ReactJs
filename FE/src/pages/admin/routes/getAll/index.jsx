@@ -5,8 +5,9 @@ import FormDelete from "../../../../components/formDelete";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import ReactPaginate from "react-paginate";
+import Constants from '../../../../Constants';
 
-const URL = process.env.REACT_APP_URL;
+const URL = Constants.DOMAIN_API;
 const ENDPOIND = `admin/routes`;
 
 export default function RoutesGetAll() {

@@ -5,9 +5,10 @@ import axios from "axios";
 import useMapbox from "../../../../hooks/mapbox";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from 'react-toastify';
+import Constants from '../../../../Constants';
 
 
-const URL = process.env.REACT_APP_URL;
+const URL = Constants.DOMAIN_API;
 const ENDPOINT = `admin/routes`;
 
 function RoutesCreate() {
