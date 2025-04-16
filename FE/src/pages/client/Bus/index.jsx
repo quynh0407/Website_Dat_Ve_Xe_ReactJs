@@ -4,6 +4,8 @@ import { Link, useLocation } from "react-router-dom";
 function Bus() {
     const location = useLocation();
     const tripsData = location.state?.tripsData || [];
+    console.log(tripsData);
+    
 
     const renderTrips = () => {
         if (!Array.isArray(tripsData) ) {
@@ -26,6 +28,7 @@ function Bus() {
     
         return tripsData.map((route) =>
             route.trips.map((trip) => {
+                const id = trip.tripId;
                 const departure = new Date(trip.departureTime);
                 const arrivalTime = new Date(trip.arrivalTime);
                 const startHours = departure.getHours().toString().padStart(2, "0");
@@ -71,7 +74,7 @@ function Bus() {
                                         • {trip.bus.busType} <span className="text-green-600">• {trip.bus.totalSeats} chỗ trống</span>
                                     </td>
                                     <td className="py-2">
-                                        <Link to="/bookingTickets" className="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
+                                        <Link to={`/bookingTickets/${trip.tripId}`} className="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
                                             Chọn chuyến
                                         </Link>
                                     </td>

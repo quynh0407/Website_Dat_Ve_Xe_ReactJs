@@ -4,8 +4,19 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import Constants from "../../../../Constants.jsx";
 import { toast } from "react-toastify";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
 function BusRoutesEdit() {
+    dayjs.extend(utc);
+    dayjs.extend(timezone);
+
+    const convertUTCToVNInputFormat = (utcString) => {
+        return dayjs.utc(utcString).tz("Asia/Ho_Chi_Minh").format("YYYY-MM-DDTHH:mm");
+    };
+
+
     const {
         register,
         handleSubmit,
@@ -32,8 +43,8 @@ function BusRoutesEdit() {
                 setValue("routeId", trip.routeId);
                 setValue("busID", trip.busID);
                 setValue("driverId", trip.driverId);
-                setValue("departureTime", trip.departureTime.slice(0, 16));
-                setValue("arrivalTime", trip.arrivalTime.slice(0, 16));
+                setValue("departureTime", convertUTCToVNInputFormat(trip.departureTime.slice(0, 16)));
+                setValue("arrivalTime", convertUTCToVNInputFormat(trip.arrivalTime.slice(0, 16)));
                 setValue("price", trip.price);
 
                 const seatRes = await axios.get(`${Constants.DOMAIN_API}/admin/seats/${trip.busID}`);
@@ -65,6 +76,9 @@ function BusRoutesEdit() {
 
     const onSubmit = async (data) => {
         try {
+            data.departureTime = dayjs(data.departureTime).format("YYYY-MM-DDTHH:mm:ss");
+            data.arrivalTime = dayjs(data.arrivalTime).format("YYYY-MM-DDTHH:mm:ss");
+
             await axios.patch(`${Constants.DOMAIN_API}/admin/trips/update/${id}`, data);
 
             if (selectedSeatId && seatStatus) {
@@ -119,7 +133,7 @@ function BusRoutesEdit() {
                                 await trigger("busID");
                                 if (selectedBusId) {
                                     try {
-                                        const seatRes = await axios.get(`${Constants.DOMAIN_API}/seats/bus/${selectedBusId}`);
+                                        const seatRes = await axios.get(`${Constants.DOMAIN_API}/admin/seats/${selectedBusId}`);
                                         setSeats(seatRes.data.data);
                                         setSelectedSeatId("");
                                         setSeatStatus("");

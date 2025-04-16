@@ -30,6 +30,16 @@ const BookingModel = connection.define('Booking', {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
     },
+    busId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: TripModel,
+            key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+    },
     seatId: {
         type: DataTypes.INTEGER,
         allowNull: true,
@@ -59,6 +69,10 @@ const BookingModel = connection.define('Booking', {
     },
     phone: {
         type: DataTypes.STRING(10),
+        allowNull: true,
+    },
+    emailUser: {
+        type: DataTypes.STRING,
         allowNull: true,
     }
 }, {

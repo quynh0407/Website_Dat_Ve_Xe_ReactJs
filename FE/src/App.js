@@ -60,13 +60,50 @@ import PrivateRoute from "./components/AuthCheck";
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<ClientLayout />}>
+      {/* <Route path="/" element={<ClientLayout />}>
         <Route index element={<Home />} />
         <Route path="bus" element={<Bus />} />
         <Route path="about" element={<AboutUs />} />
         <Route path="blog" element={<Blog />} />
         <Route path="contact" element={<Contact />} />
       </Route>
+ */}
+
+      <Route path="/" element={<ClientLayout />}>
+        <Route index element={<Home />} />
+        <Route path="bus" element={<Bus />} />
+        <Route path="about" element={<AboutUs />} />
+        <Route path="blog" element={<Blog />} />
+        <Route path="contact" element={<Contact />} />
+
+        {/* Các route cần bảo vệ được bọc riêng lẻ bằng <PrivateRoute> */}
+        <Route
+          path="bookingHistory"
+          element={
+            <PrivateRoute>
+              <BookingHistory />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="bookingTickets/:tripId"
+          element={
+            <PrivateRoute>
+              <BookingTickets />
+            </PrivateRoute>
+          }
+        />
+      </Route>
+
+
 
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
@@ -74,11 +111,11 @@ const AppRoutes = () => {
       <Route path="resetPassword/:token" element={<ResetPassword />} />
 
 
-      <Route path="/" element={<PrivateRoute><ClientLayout /></PrivateRoute>}>
+      {/* <Route path="/" element={<PrivateRoute><ClientLayout /></PrivateRoute>}>
         <Route path="bookingHistory" element={<BookingHistory />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="bookingTickets" element={<BookingTickets />} />
-      </Route>
+        <Route path="bookingTickets/:tripId" element={<BookingTickets />} />
+      </Route> */}
 
 
       <Route path="/admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>

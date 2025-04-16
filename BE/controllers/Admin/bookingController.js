@@ -57,7 +57,7 @@ class BookingController {
 
     static async create(req, res) {
         try {
-            const { userId, tripId, seatId, status, finalPrice, userName, phone } = req.body;
+            const { userId, tripId, seatId, status, finalPrice, userName, phone, emailUser, } = req.body;
 
             const newBooking = await BookingModel.create({
                 userId,
@@ -66,7 +66,8 @@ class BookingController {
                 status,
                 finalPrice,
                 userName,
-                phone
+                phone,
+                emailUser,
             });
 
             res.status(201).json({
@@ -84,7 +85,7 @@ class BookingController {
     static async update(req, res) {
         try {
             const { id } = req.params;
-            const { userId, tripId, seatId, status, finalPrice, userName, phone } = req.body;
+            const { userId, tripId, seatId, status, finalPrice, userName, phone, emailUser, } = req.body;
 
             const booking = await BookingModel.findByPk(id);
             if (!booking) {
@@ -98,7 +99,8 @@ class BookingController {
                 status,
                 finalPrice,
                 userName,
-                phone
+                phone,
+                emailUser,
             });
 
             res.status(200).json({
