@@ -300,7 +300,6 @@ function Header() {
                                             placeholder="Nhập điểm đi"
                                             className="outline-none w-full bg-transparent ml-2 py-1 text-blue-950"
                                             styles={customStyles}
-
                                         />
                                     </div>
                                 </div>

@@ -5,7 +5,9 @@ class RoutesController {
     //------------------[ GET ]------------------
     static async get(req, res) {
         try {
-            const routes = await RoutesModel.findAll();
+            const routes = await RoutesModel.findAll({
+                order: [['id', 'DESC']]
+            });
             res.status(200).json({
                 "status": 200,
                 "message": "Lấy danh sách thành công",

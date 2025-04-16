@@ -72,15 +72,14 @@ function BusRoutesGetAll() {
                             <tr key={value.id} className="border-b">
                                 <td className="p-2 border">{value.routes.startPoint} - {value.routes.endPoint}</td>
                                 <td className="p-2 border">{value.buses.plateNumber}</td>
-                                <td className="p-2 border">{value.drivers.fullName}</td>
+                                <td className="p-2 border"> {value.drivers ? value.drivers.fullName : "Chưa có tài xế"}</td>
                                 <td className="p-2 border">{formatDate(value.departureTime) }</td>
                                 <td className="p-2 border">{formatDate(value.arrivalTime)}</td>
                                 <td className="p-2 border">{formatPrice(value.price)}</td>
                                 <td className="p-2 border flex gap-2">
                                     <Link
                                         to={`/admin/busRoutes/edit/${value.id}`}
-                                        className="bg-yellow-500 text-white py-2 px-3 rounded"
-                                    >
+                                        className="bg-yellow-500 text-white py-2 px-3 rounded" >
                                         <i className="fa-solid fa-pen-to-square text-md"></i>
                                     </Link>
                                     <button 
