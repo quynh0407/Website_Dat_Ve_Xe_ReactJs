@@ -4,6 +4,9 @@ const DriverModel = require('./driverModel');
 const RoutesModel = require('./routesModel');
 const SeatsModel = require('./seatsModel');
 const BusTypesModel = require('./busTypesModel');
+const BookingModel = require('./bookingModel');
+const UserModel = require('./userModel');
+
 
 //--------------------- [ Thiết lập quan hệ ]------------------------
 
@@ -31,6 +34,16 @@ BusTypesModel.hasMany(BusesModel, { foreignKey: 'busTypeId', as: 'buses' });
 DriverModel.hasOne(BusesModel, { foreignKey: 'driverId', as: 'bus'});
 BusesModel.belongsTo(DriverModel, { foreignKey: 'driverId', as: 'drivers'  });
   
+// Booking - Trip
+TripsModel.hasMany(BookingModel, { foreignKey: 'tripId', as: 'bookings' });
+BookingModel.belongsTo(TripsModel, { foreignKey: 'tripId', as: 'trips' });
 
+// Booking - Seat
+SeatsModel.hasMany(BookingModel, { foreignKey: 'seatID', as: 'bookings' });
+BookingModel.belongsTo(SeatsModel, { foreignKey: 'seatID', as: 'seat' });
+
+// Quan hệ User và Booking
+UserModel.hasMany(BookingModel, { foreignKey: 'userId', as: 'bookings' });
+BookingModel.belongsTo(UserModel, { foreignKey: 'userId', as: 'user' });
 
 module.exports = {TripsModel,BusTypesModel, BusesModel, DriverModel, RoutesModel, SeatsModel};

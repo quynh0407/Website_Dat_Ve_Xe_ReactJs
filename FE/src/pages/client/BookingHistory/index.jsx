@@ -1,213 +1,210 @@
 import Navbar from "../../../components/client/Navbar";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import Constants from "../../../Constants.jsx";
+
 function BookingHistory() {
+
+    const [busBookingData, setBusBookingData] = useState([]);
+    const [selectedBooking, setSelectedBooking] = useState(null);
+    const [showCancelModal, setShowCancelModal] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    const getData = async () => {
+        try {
+            const res = await axios.get(`${Constants.DOMAIN_API}/booking/list`);
+            console.log('Response', res.data.data);
+            setBusBookingData(res.data.data);
+            setErrorMessage(null);  // Xóa thông báo lỗi nếu có
+        } catch (err) {
+            console.log("Error", err);
+            setErrorMessage("Có lỗi xảy ra khi tải dữ liệu. Vui lòng thử lại.");
+        }
+    };
+
+    const deleteBooking = async () => {
+        if (!selectedBooking) return;
+        try {
+            await axios.delete(`${Constants.DOMAIN_API}/booking/delete/${selectedBooking.id}`);
+            alert("Hủy vé thành công");
+            setShowCancelModal(false);
+            setSelectedBooking(null);
+            getData();
+        } catch (error) {
+            console.log("Lỗi khi hủy vé:", error);
+            setErrorMessage("Không thể hủy vé, vui lòng thử lại.");
+        }
+    };
+
     return (
         <>
             <main className="history mb-4 mt-[11%]">
-                <div className="flex w-[80%]  mx-auto">
+                <div className="flex w-[80%] mx-auto">
                     <div className="w-[20%] bg-gray-100 p-3 rounded-md border border-gray-200">
                         <Navbar />
                     </div>
-                    <div className="w-[80%] bg-white p-3 rounded-md ml-4 ">
+                    <div className="w-[80%] bg-white p-3 rounded-md ml-4">
                         <h1 className="text-3xl font-bold">Lịch sử đặt vé</h1>
                         <p className="text-gray-600 mb-3">Theo dõi và quản lý quá trình lịch sử mua vé của bạn.</p>
 
+                        {errorMessage && (
+                            <div className="text-red-500 text-center mb-4">{errorMessage}</div>
+                        )}
 
-                        <div class="bg-white  mb-3 shadow-lg rounded-lg m-auto m-y-2  flex  border border-gray-300">
-                            <div class="w-2/3  border-r border-dashed border-gray-400">
-                                <div class="text-white font-mono rounded-tl-lg text-lg font-bold bg-[#043175] px-3 py-2">Mã vé:
-                                    098765
-                                </div>
-                                <div class="text-gray-800 font-mono text-lg font-bold px-3">PRICE <span
-                                    class="float-right">TRAIN</span>
-                                </div>
-                                <div class="text-xl font-bold text-gray-900 px-3">$100 <span class="float-right">1234</span>
-                                </div>
-
-                                <div class="mt-2 flex justify-between px-3">
-                                    <div>
-                                        <p class="text-gray-700 font-mono text-sm">FROM</p>
-                                        <p class="text-lg font-bold">NEW YORK</p>
+                        {busBookingData.map((item, index) => (
+                            <div key={index} className="bg-white mb-3 shadow-lg rounded-lg flex border border-gray-300">
+                                <div className="w-2/3 border-r border-dashed border-gray-400">
+                                    <div className="text-white font-mono rounded-tl-lg text-lg font-bold bg-[#043175] px-3 py-2">
+                                        Mã vé: {item.id}
                                     </div>
-                                    <div>
-                                        <p class="text-gray-700 font-mono text-sm">DEPARTURE</p>
-                                        <p class="text-lg font-bold">07:00AM</p>
+                                    <div className="text-gray-800 font-mono text-lg font-bold px-3">
+                                        Giá <span className="float-right">Chuyến xe</span>
                                     </div>
-                                </div>
-
-                                <div class="mt-2 flex justify-between px-3">
-                                    <div>
-                                        <p class="text-gray-700 font-mono text-sm">TO</p>
-                                        <p class="text-lg font-bold">LOS ANGELES</p>
+                                    <div className="text-xl font-bold text-gray-900 px-3">
+                                        {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.finalPrice)}
+                                        <span className="float-right">{item.tripId.id}</span>
                                     </div>
-                                    <div>
-                                        <p class="text-gray-700 font-mono text-sm">ARRIVE</p>
-                                        <p class="text-lg font-bold">10:00AM</p>
+
+                                    <div className="mt-2 flex justify-between px-3">
+                                        <div>
+                                            <p className="text-gray-700 font-mono text-sm">TỪ</p>
+                                            <p className="text-lg font-bold">{item.tripId.routeId.startPoint}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-gray-700 font-mono text-sm">GIỜ ĐI</p>
+                                            <p className="text-lg font-bold">
+                                                {item.tripId?.departureTime
+                                                    ? new Date(item.tripId.departureTime.replace('Z', '')).toLocaleString('vi-VN', {
+                                                        hour: '2-digit',
+                                                        minute: '2-digit',
+                                                        hour12: false,
+                                                    })
+                                                    : 'Thời gian không hợp lệ'}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class=" flex justify-between  p-3">
-                                    <div>
-                                        <p class="text-gray-700 font-mono text-sm">DATE</p>
-                                        <p class="text-lg font-bold">15 AUGUST 2022</p>
+                                    <div className="mt-2 flex justify-between px-3">
+                                        <div>
+                                            <p className="text-gray-700 font-mono text-sm">ĐẾN</p>
+                                            <p className="text-lg font-bold">{item.tripId.routeId.endPoint}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-gray-700 font-mono text-sm">GIỜ ĐẾN</p>
+                                            <p className="text-lg font-bold">
+                                                {item.tripId?.arrivalTime
+                                                    ? new Date(item.tripId.arrivalTime.replace('Z', '')).toLocaleString('vi-VN', {
+                                                        hour: '2-digit',
+                                                        minute: '2-digit',
+                                                        hour12: false,
+                                                    })
+                                                    : 'Thời gian không hợp lệ'}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p class="text-gray-700 font-mono text-sm">SEAT</p>
-                                        <p class="text-lg font-bold">A3</p>
-                                    </div>
-                                </div>
-                            </div>
 
-
-                            <div class="w-1/3 p-3 text-center">
-                                <div class="flex justify-between align-items-center ">
-                                    <b>Chưa khởi hành</b>
-                                    <button class="bg-red-400 text-white px-4 py-2 font-mono rounded-md hover:bg-red-600"
-                                        onclick="openCancelModal()">Hủy vé</button>
-                                </div>
-                                <div class="border-b border-gray-400 my-2"></div>
-
-                                <div class="flex justify-between">
-                                    <p class="text-gray-700 font-mono text-sm">NAME</p>
-                                    <p class="text-lg font-bold">BENJAMIN SHAH</p>
-                                </div>
-
-                                <div class="flex justify-between mt-2">
-                                    <p class="text-gray-700 font-mono text-sm">FROM</p>
-                                    <p class="text-lg font-bold">NEW YORK</p>
-                                </div>
-
-                                <div class="flex justify-between mt-2">
-                                    <p class="text-gray-700 font-mono text-sm">TO</p>
-                                    <p class="text-lg font-bold">LOS ANGELES</p>
-                                </div>
-
-                                <div class="flex justify-between mt-2">
-                                    <p class="text-gray-700 font-mono text-sm">TRAIN</p>
-                                    <p class="text-lg font-bold">1234</p>
-                                </div>
-
-                                <div class="flex justify-between mt-2">
-                                    <p class="text-gray-700 font-mono text-sm">SEAT</p>
-                                    <p class="text-lg font-bold">A3</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white  mb-3 shadow-lg rounded-lg m-auto m-y-2  flex  border border-gray-300">
-                            <div class="w-2/3  border-r border-dashed border-gray-400">
-                                <div class="text-white font-mono rounded-tl-lg text-lg font-bold bg-[#043175] px-3 py-3">Mã vé:
-                                    098765
-                                </div>
-                                <div class="text-gray-800 font-mono text-lg font-bold px-3">PRICE <span
-                                    class="float-right">TRAIN</span>
-                                </div>
-                                <div class="text-xl font-bold text-gray-900 px-3">$100 <span class="float-right">1234</span>
-                                </div>
-
-                                <div class="mt-2 flex justify-between px-3">
-                                    <div>
-                                        <p class="text-gray-700 font-mono text-sm">FROM</p>
-                                        <p class="text-lg font-bold">NEW YORK</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-700 font-mono text-sm">DEPARTURE</p>
-                                        <p class="text-lg font-bold">07:00AM</p>
+                                    <div className="flex justify-between p-3">
+                                        <div>
+                                            <p className="text-gray-700 font-mono text-sm">NGÀY</p>
+                                            <p className="text-lg font-bold">{new Date(item.tripId?.departureTime).toLocaleDateString('vi-VN')}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-gray-700 font-mono text-sm">GHẾ</p>
+                                            <p className="text-lg font-bold">{item.seatId?.seatNumber}</p>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="mt-2 flex justify-between px-3">
-                                    <div>
-                                        <p class="text-gray-700 font-mono text-sm">TO</p>
-                                        <p class="text-lg font-bold">LOS ANGELES</p>
+                                <div className="w-1/3 p-3 text-center">
+                                    <div className="flex justify-between align-items-center">
+                                        <b>
+                                            {item.status === 'pending'
+                                                ? 'Chưa khởi hành'
+                                                : item.status === 'confirmed'
+                                                    ? 'Đã khởi hành'
+                                                    : item.status === 'canceled'
+                                                        ? 'Đã hủy'
+                                                        : item.status}
+                                        </b>
+                                        {item.status === 'pending' && (
+                                            <button
+                                                className="bg-red-400 text-white px-4 py-2 font-mono rounded-md hover:bg-red-600"
+                                                onClick={() => {
+                                                    setSelectedBooking(item);
+                                                    setShowCancelModal(true);
+                                                }}
+                                            >
+                                                Hủy vé
+                                            </button>
+                                        )}
+                                        {item.status !== 'pending' && (
+                                            <p className="text-red-500">Không thể hủy vé</p>
+                                        )}
                                     </div>
-                                    <div>
-                                        <p class="text-gray-700 font-mono text-sm">ARRIVE</p>
-                                        <p class="text-lg font-bold">10:00AM</p>
-                                    </div>
-                                </div>
+                                    <div className="border-b border-gray-400 my-2"></div>
 
-                                <div class=" flex justify-between  p-3">
-                                    <div>
-                                        <p class="text-gray-700 font-mono text-sm">DATE</p>
-                                        <p class="text-lg font-bold">15 AUGUST 2022</p>
+                                    <div className="flex justify-between">
+                                        <p className="text-gray-700 font-mono text-sm">TÊN</p>
+                                        <p className="text-lg font-bold">{item.userName}</p>
                                     </div>
-                                    <div>
-                                        <p class="text-gray-700 font-mono text-sm">SEAT</p>
-                                        <p class="text-lg font-bold">A3</p>
+
+                                    <div className="flex justify-between mt-2">
+                                        <p className="text-gray-700 font-mono text-sm">TỪ</p>
+                                        <p className="text-lg font-bold">{item.tripId.routeId.startPoint}</p>
+                                    </div>
+
+                                    <div className="flex justify-between mt-2">
+                                        <p className="text-gray-700 font-mono text-sm">ĐẾN</p>
+                                        <p className="text-lg font-bold">{item.tripId.routeId.endPoint}</p>
+                                    </div>
+
+                                    <div className="flex justify-between mt-2">
+                                        <p className="text-gray-700 font-mono text-sm">CHUYẾN</p>
+                                        <p className="text-lg font-bold">{item.tripId.id}</p>
+                                    </div>
+
+                                    <div className="flex justify-between mt-2">
+                                        <p className="text-gray-700 font-mono text-sm">GHẾ</p>
+                                        <p className="text-lg font-bold">{item.seatId?.seatNumber}</p>
                                     </div>
                                 </div>
                             </div>
+                        ))}
 
-
-                            <div class="w-1/3 p-3 text-center">
-                                <div class="flex justify-between align-items-center py-1">
-                                    <b>Chưa khởi hành</b>
-
-                                </div>
-                                <div class="border-b border-gray-400 my-2"></div>
-
-                                <div class="flex justify-between">
-                                    <p class="text-gray-700 font-mono text-sm">NAME</p>
-                                    <p class="text-lg font-bold">BENJAMIN SHAH</p>
-                                </div>
-
-                                <div class="flex justify-between mt-2">
-                                    <p class="text-gray-700 font-mono text-sm">FROM</p>
-                                    <p class="text-lg font-bold">NEW YORK</p>
-                                </div>
-
-                                <div class="flex justify-between mt-2">
-                                    <p class="text-gray-700 font-mono text-sm">TO</p>
-                                    <p class="text-lg font-bold">LOS ANGELES</p>
-                                </div>
-
-                                <div class="flex justify-between mt-2">
-                                    <p class="text-gray-700 font-mono text-sm">TRAIN</p>
-                                    <p class="text-lg font-bold">1234</p>
-                                </div>
-
-                                <div class="flex justify-between mt-2">
-                                    <p class="text-gray-700 font-mono text-sm">SEAT</p>
-                                    <p class="text-lg font-bold">A3</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </main>
-            {/* <!-- Modal Hủy Vé --> */}
-            <div id="cancelModal" className="fixed inset-0 flex items-center justify-center z-50 hidden">
-                <div className="absolute inset-0 bg-black opacity-50"></div>
 
-                <div className="relative bg-white p-6 rounded-lg shadow-lg w-96 z-10">
-                    <h2 className="text-lg font-bold mb-4 text-center">Xác nhận hủy vé</h2>
+            {showCancelModal && (
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                    <div className="absolute inset-0 bg-black opacity-50"></div>
 
-                    <p className="font-medium mb-2">Chọn lý do hủy:</p>
-                    <div className="space-y-2">
-                        <label className="flex items-center space-x-2">
-                            <input type="radio" name="cancel_reason" value="Không thể đi" onclick="toggleTextarea(true)" />
-                            <span>Không thể đi</span>
-                        </label>
-                        <label className="flex items-center space-x-2">
-                            <input type="radio" name="cancel_reason" value="Đổi kế hoạch" onclick="toggleTextarea(false)" />
-                            <span>Đổi kế hoạch</span>
-                        </label>
-                        <label className="flex items-center space-x-2">
-                            <input type="radio" name="cancel_reason" value="Khác" id="otherReasonRadio"
-                                onclick="toggleTextarea(false)" />
-                            <span>Khác</span>
-                        </label>
-                    </div>
+                    <div className="relative bg-white p-6 rounded-lg shadow-lg w-96 z-10">
+                        <h2 className="text-lg font-bold mb-4 text-center">Xác nhận hủy vé</h2>
 
-                    <textarea id="otherReason" className="w-full p-2 mt-3 border border-gray-300 rounded-md hidden"
-                        placeholder="Nhập lý do khác..."></textarea>
+                        <p className="font-medium mb-2">Bạn có chắc chắn muốn hủy vé này không?</p>
 
-                    <div className="flex justify-end mt-4">
-                        <button className="bg-gray-300 text-black px-4 py-2 rounded-md mr-2" onclick="closeCancelModal()">Hủy</button>
-                        <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700">Xác nhận</button>
+                        <div className="flex justify-end mt-4">
+                            <button
+                                className="bg-gray-300 text-black px-4 py-2 rounded-md mr-2"
+                                onClick={() => setShowCancelModal(false)}
+                            >
+                                Hủy
+                            </button>
+                            <button
+                                className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700"
+                                onClick={deleteBooking}
+                            >
+                                Xác nhận
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
 
             <div className="bg-gray-100 text-center py-4 text-sm text-gray-600 mb-0">
                 <div className="space-x-4">
@@ -224,9 +221,8 @@ function BookingHistory() {
                 <p className="mt-2">&copy; 2025 Công ty của bạn. Bảo lưu mọi quyền.</p>
             </div>
 
-            {/* <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-            <script src="../js/main.js"></script> */}
         </>
-    )
+    );
 }
+
 export default BookingHistory;

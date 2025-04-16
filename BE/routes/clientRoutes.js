@@ -5,6 +5,7 @@ const AuthController = require('../controllers/Client/authController');
 const { checkJWT, isAdmin } = require('../services/authCheck');
 const ContacController = require('../controllers/Client/contactController');
 const ProfileController = require('../controllers/Client/profileController');
+const BookingController = require('../controllers/Client/bookingController');
 const upload = require('../config/upload');
 
 const BusController = require('../controllers/Client/busController');
@@ -27,5 +28,10 @@ router.post('/contact/question', ContacController.create);
 router.get('/profile/list',ProfileController.get);
 router.get('/profile/getId/:id',ProfileController.getById);
 router.patch('/profile/update/:id', upload.single('image'), ProfileController.update);
+
+//------------------[ BOOKING ]------------------
+router.get('/booking/list',BookingController.get);
+router.get('/booking/getId/:id',BookingController.getById);
+router.delete('/booking/delete/:id',BookingController.delete);
 
 module.exports = router;
