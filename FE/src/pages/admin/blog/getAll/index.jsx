@@ -37,7 +37,7 @@ const BlogGetAll = () => {
             <tr key={blog.id} className="border-b">
                 <td className="p-2 border">{blog.title}</td>
                 <td className="p-2 border">
-                    <img className="w-[50px] h-[50px]" src={`${Constants.DOMAIN_API}/uploads/${blog.image}`} alt="blog" />
+                    <img className="w-[50px] h-[50px]" src={`${Constants.DOMAIN_API}/public/images/${blog.image}`} alt="blog" />
                 </td>
                 <td className="p-2 border max-w-[200px]">
                     <div className="line-clamp-2" dangerouslySetInnerHTML={{ __html: blog.content }} />

@@ -66,7 +66,7 @@ class BusController {
                     });
                     trip.dataValues.totalSeats = emptySeatsCount;
 
-                    const time = route.time;
+                    const time = String(route.time);
                     const [hours, minutes] = time.split('.').map(Number);
                     // Tính thời gian đến
                     const arrivalTime = add(new Date(trip.departureTime), {

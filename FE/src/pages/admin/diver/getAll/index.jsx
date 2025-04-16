@@ -40,7 +40,7 @@ const DriverGetAll = () => {
                 <td className="p-2 border text-center">{index + 1}</td>
                 <td className="p-2 border text-center">
                     <img
-                        src={driver?.image ? `${Constants.DOMAIN_API}/uploads/${driver.image}` : "https://media-public.canva.com/mDo-I/MAGCJcmDo-I/1/t.png"}
+                        src={driver?.image ? `${Constants.DOMAIN_API}/public/images/${driver.image}` : "https://media-public.canva.com/mDo-I/MAGCJcmDo-I/1/t.png"}
                         className="w-10 h-10 rounded-full"
                         alt="Driver"
                     />

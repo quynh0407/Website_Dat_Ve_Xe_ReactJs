@@ -82,7 +82,7 @@ const DriverEditForm = () => {
                             src={
                                 imagePreview.startsWith("blob:")
                                     ? imagePreview
-                                    : `${Constants.DOMAIN_API}/uploads/${imagePreview}`
+                                    : `${Constants.DOMAIN_API}/public/images/${imagePreview}`
                             }
                             className="w-full h-full object-cover border rounded-full"
                             alt="Avatar"

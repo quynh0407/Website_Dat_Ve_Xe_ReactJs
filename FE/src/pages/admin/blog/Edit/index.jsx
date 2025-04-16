@@ -97,7 +97,7 @@ const BlogEdit = () => {
                         />
                         {
                             <img
-                                src={`${Constants.DOMAIN_API}/uploads/${previewImage}`}
+                                src={`${Constants.DOMAIN_API}/public/images/${previewImage}`}
                                 alt="Ảnh hiện tại"
                                 className="mt-2 w-[100px] h-[100px] object-cover rounded"
                             />
