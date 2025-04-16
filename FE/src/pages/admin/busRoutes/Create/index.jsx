@@ -26,8 +26,8 @@ function BusRoutesCreate() {
     try {
       const [routesRes, busesRes, driversRes] = await Promise.all([
         axios.get(`${Constants.DOMAIN_API}/admin/routes/list`),
-        axios.get(`${Constants.DOMAIN_API}/admin/bus/list`),
-        axios.get(`${Constants.DOMAIN_API}/admin/driver/list`)
+        axios.get(`${Constants.DOMAIN_API}/admin/bus/getAllBusByStatusCreate`),
+        axios.get(`${Constants.DOMAIN_API}/admin/driver/getByStatusCreate`)
       ]);
 
       setRoutes(routesRes.data.data);

@@ -1,5 +1,7 @@
 const DriverModel = require('../../models/driverModel');
 const calculateAge = require('../../utils/calculateAge');
+const { Op } = require('sequelize');
+const TripsModel = require('../../models/tripsModel');
 
 class DriverController {
     static async get(req, res) {
@@ -150,6 +152,47 @@ class DriverController {
                 message: "Xóa không thành công",
                 error: error.message
             });
+        }
+    }
+
+    static async getAllByStatusCreate(req, res) {
+        try {
+            const drivers = await DriverModel.findAll({
+                where: {
+                    status: "inactive"
+                }
+            });
+            res.status(200).json({
+                "status": 200,
+                "message": "Lấy danh sách thành công",
+                "data": drivers
+            });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    static async getAllByStatusEdit(req, res) {
+        try {
+            const { tripId } = req.params; 
+            const trip = await TripsModel.findOne({ where: { id: tripId } });
+
+            const drivers = await DriverModel.findAll({
+                where: {
+                    [Op.or]: [
+                        { status: 'inactive' },
+                        { id: trip.driverId } 
+                    ]
+                }
+            });
+    
+            res.status(200).json({
+                status: 200,
+                message: "Lấy danh sách tài xế cho chỉnh sửa thành công!",
+                data: drivers
+            });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
         }
     }
 }

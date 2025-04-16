@@ -1,6 +1,7 @@
 const BusModel = require('../../models/busesModel');
 const SeatModel = require('../../models/seatsModel');
-
+const { Op } = require('sequelize');
+const TripsModel = require('../../models/tripsModel');
 class BusController {
 
     //------------------[ GET ]------------------
@@ -194,6 +195,52 @@ class BusController {
             });
         }
     }
+
+
+    // ------------------[ GET BY STATUS ]------------------
+    static async getAllBusByStatusCreate(req, res) {
+        try {
+            const buses = await BusModel.findAll({
+                where: {
+                    status: "inactive"
+                }
+            });
+    
+            res.status(200).json({
+                status: 200,
+                success: true,
+                message: "Lấy danh sách xe có trạng thái inactive thành công",
+                data: buses
+            });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    static async getAllByStatusEdit(req, res) {
+        try {
+            const { tripId } = req.params; 
+            const trip = await TripsModel.findOne({ where: { id: tripId } });
+
+            const bus = await BusModel.findAll({
+                where: {
+                    [Op.or]: [
+                        { status: 'inactive' },
+                        { id: trip.busID } 
+                    ]
+                }
+            });
+    
+            res.status(200).json({
+                status: 200,
+                message: "Lấy danh sách tài xế cho chỉnh sửa thành công!",
+                data: bus
+            });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+    
     
 }    
 

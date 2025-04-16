@@ -71,7 +71,7 @@ function BookingTickets() {
                     userName,
                     phone,
                     emailUser,
-                    seatIds,
+                    seatIds: [seatId],
                     tripId,
                     status: "confirmed",
                     finalPrice: pricePerTicket,

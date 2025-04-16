@@ -59,8 +59,8 @@ function BusRoutesEdit() {
             try {
                 const [routeRes, busRes, driverRes] = await Promise.all([
                     axios.get(`${Constants.DOMAIN_API}/admin/routes/list`),
-                    axios.get(`${Constants.DOMAIN_API}/admin/bus/list`),
-                    axios.get(`${Constants.DOMAIN_API}/admin/driver/list`)
+                    axios.get(`${Constants.DOMAIN_API}/admin/bus/getAllByStatusEdit/${id}`),
+                    axios.get(`${Constants.DOMAIN_API}/admin/driver/getByStatusEdit/${id}`)
                 ]);
                 setRoutes(routeRes.data.data);
                 setBuses(busRes.data.data);

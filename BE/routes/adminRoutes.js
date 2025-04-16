@@ -52,6 +52,8 @@ router.get('/bus/getId/:id',BusController.getById);
 router.post('/bus/add',BusController.create);
 router.patch('/bus/update/:id',BusController.update);
 router.delete('/bus/delete/:id',BusController.delete);
+router.get('/bus/getAllBusByStatusCreate', BusController.getAllBusByStatusCreate);
+router.get('/bus/getAllByStatusEdit/:tripId', BusController.getAllByStatusEdit);
 
 //-----------------[ DRIVERs ]-----------------
 /* router.get('/drivers/list', DriversController.get); */
@@ -65,6 +67,8 @@ router.get('/driver/getById/:id', DriverController.getById);
 router.post('/driver/add', upload.single('image'), DriverController.create);
 router.patch('/driver/update/:id', upload.single('image'), DriverController.update);
 router.delete('/driver/:id', DriverController.delete);
+router.get('/driver/getByStatusCreate', DriverController.getAllByStatusCreate);
+router.get('/driver/getByStatusEdit/:tripId', DriverController.getAllByStatusEdit);
 
 //------------------[ User]-------------
 router.get('/user/list', UserController.get);
