@@ -37,7 +37,7 @@ const DriverModel = connection.define('Driver', {
     },
     age: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
     },
     image: {
         type: DataTypes.STRING,

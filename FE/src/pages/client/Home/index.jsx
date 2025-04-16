@@ -1,4 +1,39 @@
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import Constants from "../../../Constants";
+
+const URL = Constants.DOMAIN_API;
+const ENDPOINT = "admin/routes"
 function Home() {
+    const [startPointOptions, setStartPointOptions] = useState([]);
+    const [endPointOptions, setEndPointOptions] = useState([]);
+    const [selectedStartPoint, setSelectedStartPoint] = useState(null);
+    const [selectedEndPoint, setSelectedEndPoint] = useState(null);
+    const navigator = useNavigate();
+
+
+
+    const handleSearch = async (props) => {
+        try {
+            const response = await axios.post('http://localhost:3000/bus/search', {
+                startPoint: props.startPoint,
+                endPoint: props.endPoint,
+            });
+    
+            if (response.data.success) {
+                console.log('Kết quả:', response.data.data);
+                navigator('/bus', {
+                    state: { tripsData: response.data.data }
+                });
+            } else {
+                console.error('Lỗi từ server:', response.data.message);
+            }
+        } catch (err) {
+            console.error('Lỗi khi tìm kiếm:', err.response?.data || err.message);
+        }
+    };
+    
     return (
         <main class="home mx-auto w-full md:w-[80%] mb-5 px-4" id="home">
             <div
@@ -43,53 +78,59 @@ function Home() {
                 <div
                     class="flex flex-nowrap gap-4 p-2 justify-center overflow-x-auto md:overflow-visible">
 
-                    <div
-                        class="max-w-sm mx-auto p-3 rounded-xl shadow-md w-full md:w-1/3">
+                    <div class="max-w-sm mx-auto p-3 rounded-xl shadow-md w-full md:w-1/3">
                         <div class="relative rounded-xl overflow-hidden">
                             <img
                                 src="/assets/images/main/Rectangle 23 (2).png"
                                 class="w-full" />
                             <div
-                                class="absolute inset-0 bg-black/40 flex items-end p-4">
-                                <p
-                                    class="text-white text-lg font-semibold">Tuyến
-                                    xe từ <br /> <span class="text-2xl">Tp Hồ
+                                class="absolute inset-0 bg-black/40 text-left flex items-end p-4">
+                                <p class="text-white text-lg font-semibold">Tuyến xe từ <br /> <span class="text-2xl">Tp Hồ
                                         Chí Minh</span></p>
                             </div>
                         </div>
                         <div class="mt-4 space-y-3">
                             <div class="flex justify-between border-b pb-2">
-                                <a href="#" class="hover:text-sky-700">
+                                <button class="hover:text-sky-700" 
+                                  onClick={() => handleSearch({
+                                    startPoint:'Hồ Chí Minh',
+                                    endPoint:'Thành phố Đà Lạt'
+                                  })}>
                                     <p class="font-bold text-lg text-left">Đà
                                         Lạt</p>
-                                    <p class="text-gray-500 text-sm">305km - 8
-                                        giờ - 13/03/2025</p>
-                                </a>
+                                    <p class="text-gray-500 text-sm">160km - 4.23 giờ</p>
+                                </button>
                                 <p
-                                    class="text-lg font-semibold text-gray-700">290.000đ</p>
+                                    class="text-lg font-semibold text-gray-700">200.000đ</p>
                             </div>
                             <div class="flex justify-between border-b pb-2">
-                                <a href="#" class="hover:text-sky-700">
-                                    <p class="font-bold text-lg text-left">Cần
+                                <button  class="text-left hover:text-sky-700"
+                                 onClick={() => handleSearch({
+                                    startPoint:'Hồ Chí Minh',
+                                    endPoint:'Cần Thơ'
+                                  })}>
+                                    <p class="font-bold text-lg ">Cần
                                         Thơ</p>
-                                    <p class="text-gray-500 text-sm">166km - 5
-                                        giờ 30 phút - 13/03/2025</p>
-                                </a>
+                                    <p class="text-gray-500 text-sm">189km - 2.71 giờ</p>
+                                </button>
                                 <p
                                     class="text-lg font-semibold text-gray-700">165.000đ</p>
                             </div>
                             <div class="flex justify-between">
-                                <a href="#" class="hover:text-sky-700">
-                                    <p class="font-bold text-lg text-left">Long
+                                <button class="text-left hover:text-sky-700"  onClick={() => handleSearch({
+                                    startPoint:'Hồ Chí Minh',
+                                    endPoint:'Long Xuyên'
+                                  })}>
+                                    <p class="font-bold text-lg ">Long 
                                         Xuyên</p>
-                                    <p class="text-gray-500 text-sm">203km - 5
-                                        giờ - 13/03/2025</p>
-                                </a>
+                                    <p class="text-gray-500 text-sm">184.26km - 3.48giờ</p>
+                                </button>
                                 <p
                                     class="text-lg font-semibold text-gray-700">190.000đ</p>
                             </div>
                         </div>
                     </div>
+
                     <div
                         class="max-w-sm mx-auto p-3 rounded-xl shadow-md w-full md:w-1/3">
                         <div class="relative rounded-xl overflow-hidden">
@@ -97,7 +138,7 @@ function Home() {
                                 src="/assets/images/main/Rectangle 23 (3).png"
                                 alt="Đà Lạt" class="w-full" />
                             <div
-                                class="absolute inset-0 bg-black/40 flex items-end p-4">
+                                class="absolute inset-0 text-left bg-black/40 flex items-end p-4">
                                 <p
                                     class="text-white text-lg font-semibold">Tuyến
                                     xe từ <br /> <span class="text-2xl">Đà
@@ -106,37 +147,51 @@ function Home() {
                         </div>
                         <div class="mt-4 space-y-3">
                             <div class="flex justify-between border-b pb-2">
-                                <a href="#" class="hover:text-sky-700">
+                                <button  class="hover:text-sky-700" 
+                                 onClick={() => handleSearch({
+                                    startPoint:'Đà Lạt',
+                                    endPoint:'Hồ Chí Minh'
+                                  })}
+                                  >
                                     <p class="font-bold text-lg text-left">TP.
                                         Hồ Chí Minh</p>
                                     <p class="text-gray-500 text-sm">310km - 8
                                         giờ - 13/03/2025</p>
-                                </a>
+                                </button>
                                 <p
                                     class="text-lg font-semibold text-gray-700">290.000đ</p>
                             </div>
                             <div class="flex justify-between border-b pb-2">
-                                <a href="#" class="hover:text-sky-700">
+                                <button  class="hover:text-sky-700"
+                                onClick={() => handleSearch({
+                                    startPoint:'Đà Lạt',
+                                    endPoint:'Đà Nắng'
+                                  })}>
                                     <p class="font-bold text-lg text-left">Đà
                                         Nẵng</p>
                                     <p class="text-gray-500 text-sm">757km - 17
                                         giờ - 13/03/2025</p>
-                                </a>
+                                </button>
                                 <p
                                     class="text-lg font-semibold text-gray-700">410.000đ</p>
                             </div>
                             <div class="flex justify-between">
-                                <a href="#" class="hover:text-sky-700">
+                                <button  class="hover:text-sky-700"
+                                  onClick={() => handleSearch({
+                                    startPoint:'Đà Lạt',
+                                    endPoint:'Cần Thơ'
+                                  })}>
                                     <p class="font-bold text-lg text-left">Cần
                                         Thơ</p>
                                     <p class="text-gray-500 text-sm">457km - 11
                                         giờ - 13/03/2025</p>
-                                </a>
+                                </button>
                                 <p
                                     class="text-lg font-semibold text-gray-700">435.000đ</p>
                             </div>
                         </div>
                     </div>
+
                     <div
                         class="max-w-sm mx-auto p-3 rounded-xl shadow-md w-full md:w-1/3">
                         <div class="relative rounded-xl overflow-hidden">
@@ -153,32 +208,43 @@ function Home() {
                         </div>
                         <div class="mt-4 space-y-3">
                             <div class="flex justify-between border-b pb-2">
-                                <a href="#" class="hover:text-sky-700">
+                                <button class="hover:text-sky-700" 
+                                onClick={() => handleSearch({
+                                    startPoint:'Đà Nẵng',
+                                    endPoint:'Đà Lạt'
+                                  })}>
                                     <p class="font-bold text-lg text-left">Đà
                                         Lạt</p>
                                     <p class="text-gray-500 text-sm">666km - 17
                                         giờ - 13/03/2025</p>
-                                </a>
+                                </button>
                                 <p
                                     class="text-lg font-semibold text-gray-700">410.000đ</p>
                             </div>
                             <div class="flex justify-between border-b pb-2">
-                                <a href="#" class="hover:text-sky-700">
-                                    <p class="font-bold text-lg text-left">BX An
-                                        Sương</p>
+                                <button class="hover:text-sky-700" 
+                                onClick={() => handleSearch({
+                                    startPoint:'Đà Nẵng',
+                                    endPoint:'Hà Nội'
+                                  })}>
+                                    <p class="font-bold text-lg text-left">Hà Nội</p>
                                     <p class="text-gray-500 text-sm">966km - 20
                                         giờ - 13/03/2025</p>
-                                </a>
+                                </button>
                                 <p
                                     class="text-lg font-semibold text-gray-700">470.000đ</p>
                             </div>
                             <div class="flex justify-between">
-                                <a href="#" class="hover:text-sky-700">
+                                <button class="hover:text-sky-700"
+                                  onClick={() => handleSearch({
+                                    startPoint:'Đà Nẵng',
+                                    endPoint:'Nha Trang'
+                                  })}>
                                     <p class="font-bold text-lg text-left">Nha
                                         Trang</p>
                                     <p class="text-gray-500 text-sm">528km - 9
                                         giờ 25 phút - 13/03/2025</p>
-                                </a>
+                                </button>
                                 <p
                                     class="text-lg font-semibold text-gray-700">370.000đ</p>
                             </div>
