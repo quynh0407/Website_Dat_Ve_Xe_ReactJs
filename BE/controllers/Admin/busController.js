@@ -70,7 +70,7 @@ class BusController {
                     SeatModel.create({
                         busID: bus.id,
                         seatNumber: `G${i}`,
-                        status: '0'
+                        status: 'empty'
                     })
                 );
             }

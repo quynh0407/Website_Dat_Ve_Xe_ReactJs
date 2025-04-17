@@ -126,8 +126,8 @@ function BusCreate() {
                                 required: "Trạng thái không được để trống",
                             })}>
                             <option value="">Chọn trạng thái</option>
-                            <option value="active">Inactive</option>
-                            <option value="maintenance">Active</option>
+                            <option value="Inactive">Inactive</option>
+                            <option value="Active">Active</option>
                         </select>
                         {errors.status && <span className="text-danger">{errors.status.message}</span>}
                     </div>

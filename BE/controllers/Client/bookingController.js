@@ -12,7 +12,14 @@ class BookingController {
     //------------------[ GET ]------------------
     static async get(req, res) {
         try {
+            const userId = req.query.userId;
+
+            // Nếu userId không tồn tại hoặc không hợp lệ, bỏ qua điều kiện userId
+            const whereCondition = userId ? { userId } : {};
+
+
             const bookings = await BookingModel.findAll({
+                where: whereCondition,
                 include: [
                     {
                         model: TripsModel,
@@ -28,24 +35,24 @@ class BookingController {
                         as: 'seat'
                     },
                     {
-                        model: UserModel, 
-                        as: 'user' 
+                        model: UserModel,
+                        as: 'user'
                     }
                 ]
             });
-    
+
             const formattedBookings = bookings.map(booking => {
                 const data = booking.toJSON();
-            
+
                 // Gộp trips vào key "tripId"
                 data.tripId = data.trips;
                 delete data.trips;
-            
+
                 data.seatId = data.seat;
                 delete data.seat;
-            
+
                 delete data.seatID;
-            
+
                 // Đổi tên các quan hệ trong tripId
                 if (data.tripId) {
                     if (data.tripId.routes) {
@@ -61,15 +68,16 @@ class BookingController {
                         delete data.tripId.buses;
                     }
                 }
-    
+
+                // Gộp thông tin từ bảng User vào key "userId"
                 if (data.user) {
-                    data.userId = data.user; 
-                    delete data.user; 
+                    data.userId = data.user;
+                    delete data.user;
                 }
-    
+
                 return data;
             });
-    
+
             res.status(200).json({
                 status: 200,
                 message: "Lấy danh sách thành công",
@@ -79,7 +87,7 @@ class BookingController {
             res.status(500).json({ error: error.message });
         }
     }
-    
+
 
     // ------------------[ GET BY ID ]------------------
     static async getById(req, res) {
@@ -101,29 +109,29 @@ class BookingController {
                         as: 'seat'
                     },
                     {
-                        model: UserModel, 
-                        as: 'user' 
+                        model: UserModel,
+                        as: 'user'
                     }
                 ]
             });
-    
+
             if (!booking) {
                 return res.status(404).json({ message: "Id không tồn tại" });
             }
-    
+
             const data = booking.toJSON();
-    
+
             // Gộp trips vào key "tripId"
             data.tripId = data.trips;
             delete data.trips;
-    
+
             // Gộp seat vào key "seatId"
             data.seatId = data.seat;
             delete data.seat;
-    
+
             // Xóa seatID bị thừa
             delete data.seatID;
-    
+
             // Đổi tên các quan hệ trong tripId
             if (data.tripId) {
                 if (data.tripId.routes) {
@@ -139,13 +147,13 @@ class BookingController {
                     delete data.tripId.buses;
                 }
             }
-    
+
             // Gộp thông tin từ bảng User vào key "userId"
             if (data.user) {
-                data.userId = data.user; 
-                delete data.user; 
+                data.userId = data.user;
+                delete data.user;
             }
-    
+
             res.status(200).json({
                 status: 200,
                 message: "Lấy chi tiết thành công",
@@ -155,27 +163,27 @@ class BookingController {
             res.status(500).json({ error: error.message });
         }
     }
-    
+
 
     // //------------------[ DELETE ]------------------
     static async delete(req, res) {
         try {
             const { id } = req.params;
             const booking = await BookingModel.findByPk(id);
-    
+
             if (!booking) {
                 return res.status(404).json({ message: "Id không tồn tại" });
             }
-    
+
             if (booking.status !== "pending") {
                 return res.status(400).json({
                     success: false,
                     message: "Chỉ được xoá đơn có trạng thái là chờ xác nhận"
                 });
             }
-    
+
             await booking.destroy();
-    
+
             res.status(200).json({
                 success: true,
                 message: "Xóa thành công"
@@ -187,7 +195,7 @@ class BookingController {
                 error: error.message
             });
         }
-    }    
+    }
 }
 
 module.exports = BookingController;
