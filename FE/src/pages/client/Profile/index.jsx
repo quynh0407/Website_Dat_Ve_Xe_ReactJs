@@ -3,6 +3,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Constants from "../../../Constants";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 function Profile() {
     const [profileData, setProfileData] = useState({
@@ -21,11 +23,25 @@ function Profile() {
 
     const getData = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/profile/list`);
-            const profile = res.data.data[3]; 
-            setProfileData(profile);
+            const token = Cookies.get("token");
+            if (!token) {
+                console.log("Không tìm thấy token trong cookie");
+                return;
+            }
+    
+            const decoded = jwtDecode(token);
+            const userId = decoded.id;
+     
+            const res = await axios.get(`${Constants.DOMAIN_API}/profile/getId/${userId}`);
+            if (res.data && res.data.data) {
+                setProfileData(res.data.data);
+            } else {
+                console.log("Không có dữ liệu người dùng.");
+                alert("Không tìm thấy thông tin người dùng.");
+            }
         } catch (err) {
-            console.log("Error", err);
+            console.log("Lỗi khi lấy dữ liệu", err);
+            alert("Có lỗi xảy ra, vui lòng thử lại.");
         }
     };
 

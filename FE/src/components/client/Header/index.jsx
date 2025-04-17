@@ -55,7 +55,7 @@ function Header() {
         navigator("/profile");
     };
     const handleHistory = () => {
-        navigator("/bus");
+        navigator("/bookingHistory");
     };
     const logout = () => {
         setUser(null);

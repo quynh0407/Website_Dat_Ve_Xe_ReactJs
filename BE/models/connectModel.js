@@ -39,11 +39,14 @@ TripsModel.hasMany(BookingModel, { foreignKey: 'tripId', as: 'bookings' });
 BookingModel.belongsTo(TripsModel, { foreignKey: 'tripId', as: 'trips' });
 
 // Booking - Seat
-SeatsModel.hasMany(BookingModel, { foreignKey: 'seatID', as: 'bookings' });
-BookingModel.belongsTo(SeatsModel, { foreignKey: 'seatID', as: 'seat' });
+SeatsModel.hasMany(BookingModel, { foreignKey: 'seatId', as: 'bookings' });
+BookingModel.belongsTo(SeatsModel, { foreignKey: 'seatId', as: 'seat' });
 
 // Quan hệ User và Booking
 UserModel.hasMany(BookingModel, { foreignKey: 'userId', as: 'bookings' });
 BookingModel.belongsTo(UserModel, { foreignKey: 'userId', as: 'user' });
+
+// Quan hệ Booking và Buses
+BookingModel.belongsTo(BusesModel, { foreignKey: 'busId', as: 'bus' }); 
 
 module.exports = {TripsModel,BusTypesModel, BusesModel, DriverModel, RoutesModel, SeatsModel};
