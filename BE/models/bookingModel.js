@@ -3,6 +3,7 @@ const { DataTypes } = require('sequelize');
 const UserModel = require('./userModel');
 const TripModel = require('./tripsModel'); 
 const SeatModel = require('./seatsModel'); 
+const BusesModel = require('./busesModel');
 
 const BookingModel = connection.define('Booking', {
     id: {
@@ -34,7 +35,7 @@ const BookingModel = connection.define('Booking', {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-            model: TripModel,
+            model: BusesModel,
             key: 'id',
         },
         onUpdate: 'CASCADE',
