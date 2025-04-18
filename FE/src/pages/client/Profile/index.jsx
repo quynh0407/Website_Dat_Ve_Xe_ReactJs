@@ -28,13 +28,17 @@ function Profile() {
                 console.log("Không tìm thấy token trong cookie");
                 return;
             }
-    
+
             const decoded = jwtDecode(token);
             const userId = decoded.id;
-     
+
             const res = await axios.get(`${Constants.DOMAIN_API}/profile/getId/${userId}`);
             if (res.data && res.data.data) {
+                const userData = res.data.data;
+                // Khởi tạo mật khẩu mặc định là "oldPassword" khi lấy dữ liệu
+                userData.password = "oldPassword";
                 setProfileData(res.data.data);
+                console.log("Sau khi cập nhật:", res.data.data);
             } else {
                 console.log("Không có dữ liệu người dùng.");
                 alert("Không tìm thấy thông tin người dùng.");
@@ -55,20 +59,35 @@ function Profile() {
         if (file) {
             setImageFile(file);
         }
-    };    
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        console.log("Trước khi cập nhật:", profileData);
+
         try {
             const formData = new FormData();
-            formData.append("fullName", profileData.fullName);
-            formData.append("email", profileData.email);
-            formData.append("phone", profileData.phone);
-            formData.append("password", profileData.password);
+            if (profileData.fullName && profileData.fullName.trim() !== "") {
+                formData.append("fullName", profileData.fullName);
+            }
+
+            if (profileData.email && profileData.email.trim() !== "") {
+                formData.append("email", profileData.email);
+            }
+
+            if (profileData.phone && profileData.phone.trim() !== "") {
+                formData.append("phone", profileData.phone);
+            }
+
+            if (profileData.password && profileData.password.trim() !== "" && profileData.password !== "oldPassword") {
+                formData.append("password", profileData.password);
+            }
+
             if (imageFile) {
                 formData.append("image", imageFile);
             }
+
 
             await axios.patch(
                 `${Constants.DOMAIN_API}/profile/update/${profileData.id}`,
@@ -81,7 +100,7 @@ function Profile() {
             );
 
             alert("Cập nhật thành công!");
-            getData(); 
+            getData();
         } catch (error) {
             console.log("Update error:", error);
             alert("Cập nhật thất bại!");

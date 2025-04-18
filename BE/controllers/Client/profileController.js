@@ -41,26 +41,37 @@ class ProfileController {
     static async update(req, res) {
         try {
             const { id } = req.params;
-            const { fullName, password, email, phone, image } = req.body;
+            const { fullName, password, email, phone } = req.body;
     
             const profile = await ProfileModel.findByPk(id);
             if (!profile) {
                 return res.status(404).json({ message: "Id không tồn tại" });
             }
     
-            const imagePath = req.file ? req.file.path.replace(/\\/g, '/') : profile.image;
+            const imagePath = req.file ? req.file.path.replace(/\\/g, '/') : null;
     
-            if (password) {
-                const salt = await bcrypt.genSalt(10); 
-                const hashedPassword = await bcrypt.hash(password, salt);
-                profile.password = hashedPassword; 
+            if (fullName !== undefined && fullName !== "") {
+                profile.fullName = fullName;
             }
     
-            profile.fullName = fullName || profile.fullName;
-            profile.email = email || profile.email;
-            profile.phone = phone || profile.phone;
-            profile.image = imagePath;
-
+            if (email !== undefined && email !== "") {
+                profile.email = email;
+            }
+    
+            if (phone !== undefined && phone !== "") {
+                profile.phone = phone;
+            }
+    
+            if (password !== undefined && password !== "") {
+                const salt = await bcrypt.genSalt(10); 
+                const hashedPassword = await bcrypt.hash(password, salt);
+                profile.password = hashedPassword;
+            }
+    
+            if (imagePath) {
+                profile.image = imagePath;
+            }
+    
             await profile.save();
     
             res.status(200).json({
@@ -75,7 +86,8 @@ class ProfileController {
                 error: error.message
             });
         }
-    } 
+    }
+    
 }
 
 module.exports = ProfileController;
