@@ -85,5 +85,6 @@ const BookingModel = connection.define('Booking', {
 BookingModel.belongsTo(UserModel, { foreignKey: 'userId' });
 BookingModel.belongsTo(TripModel, { foreignKey: 'tripId' });
 BookingModel.belongsTo(SeatModel, { foreignKey: 'seatId' });
+BookingModel.belongsTo(BusesModel, { foreignKey: 'busId' });
 
 module.exports = BookingModel;

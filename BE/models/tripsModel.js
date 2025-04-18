@@ -1,5 +1,6 @@
 const connection = require('../config/database');
 const { DataTypes } = require('sequelize');
+const RouteModel = require('../models/routesModel');
 
 const TripsModel = connection.define('Trips',{
     id: {
@@ -39,4 +40,6 @@ const TripsModel = connection.define('Trips',{
     tableName: 'trips',
     timestamps: false,
 });
+TripsModel.belongsTo(RouteModel, { as: 'Route', foreignKey: 'routeId' });
+
 module.exports = TripsModel;

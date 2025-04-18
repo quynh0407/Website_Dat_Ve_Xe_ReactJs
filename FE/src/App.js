@@ -169,7 +169,7 @@ const AppRoutes = () => {
 
         <Route path="review">
           <Route path="getAll" element={<ReviewGetAll />} />
-          <Route path="edit/:id" element={<ReviewEdit />} />
+          <Route path="edit" element={<ReviewEdit />} />
         </Route>
 
         <Route path="contact">
