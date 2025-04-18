@@ -2,6 +2,9 @@ const BookingModel = require('../../models/bookingModel');
 const UserModel = require('../../models/userModel');
 const TripModel = require('../../models/tripsModel');
 const SeatModel = require('../../models/seatsModel'); 
+const BusesModel = require('../../models/busesModel');
+const RouteModel = require('../../models/routesModel');
+
 
 class BookingController {
     static async get(req, res) {
@@ -9,8 +12,14 @@ class BookingController {
             const bookings = await BookingModel.findAll({
                 include: [
                     { model: UserModel, as: 'User' },
-                    { model: TripModel, as: 'Trip' },
-                    { model: SeatModel, as: 'Seat' }
+                    { 
+                        model: TripModel, 
+                        as: 'Trip',
+                        include: [{ model: RouteModel, as: 'Route' }] 
+                    },
+                    { model: SeatModel, as: 'Seat' },
+                    { model: BusesModel, as: 'Bus'}
+
                 ]
             });
 
@@ -31,7 +40,11 @@ class BookingController {
             const booking = await BookingModel.findByPk(id, {
                 include: [
                     { model: UserModel, as: 'User' },
-                    { model: TripModel, as: 'Trip' },
+                    { 
+                        model: TripModel, 
+                        as: 'Trip',
+                        include: [{ model: RouteModel, as: 'Route' }] 
+                    },
                     { model: SeatModel, as: 'Seat' }
                 ]
             });
