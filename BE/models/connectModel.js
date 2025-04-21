@@ -6,6 +6,7 @@ const SeatsModel = require('./seatsModel');
 const BusTypesModel = require('./busTypesModel');
 const BookingModel = require('./bookingModel');
 const UserModel = require('./userModel');
+const BookingDetailModel = require('./bookingDetailModel');
 
 
 //--------------------- [ Thiết lập quan hệ ]------------------------
@@ -48,5 +49,13 @@ BookingModel.belongsTo(UserModel, { foreignKey: 'userId', as: 'user' });
 
 // Quan hệ Booking và Buses
 BookingModel.belongsTo(BusesModel, { foreignKey: 'busId', as: 'bus' }); 
+
+
+// Quan hệ Booking và BookingDetail
+BookingModel.hasMany(BookingDetailModel, { foreignKey: 'bookingId', as: 'details' });
+SeatsModel.hasMany(BookingDetailModel, { foreignKey: 'seatsId', as: 'seatDetails' });
+
+BookingDetailModel.belongsTo(BookingModel, { foreignKey: 'bookingId', as: 'booking' });
+BookingDetailModel.belongsTo(SeatsModel, { foreignKey: 'seatsId', as: 'seat' });
 
 module.exports = {TripsModel,BusTypesModel, BusesModel, DriverModel, RoutesModel, SeatsModel};
