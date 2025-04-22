@@ -41,11 +41,13 @@ class BusTypeController {
     static async create(req, res) {
         try {
             const {
-                typeName
+                typeName,
+                totalSeats
             } = req.body;
 
             const busType = await BusTypesModel.create({
-                typeName
+                typeName,
+                totalSeats
             });
 
             res.status(201).json({
@@ -65,7 +67,8 @@ class BusTypeController {
             const { id } = req.params;
 
             const {
-                typeName
+                typeName,
+                totalSeats
             } = req.body;
 
             const busType = await BusTypesModel.findByPk(id);
@@ -74,6 +77,7 @@ class BusTypeController {
             }
 
             busType.typeName = typeName;
+            busType.totalSeats = totalSeats;
 
             await busType.save();
 

@@ -21,10 +21,11 @@ function BusTypeCreate() {
     try {
       let formData = new FormData();
       formData.append("typeName", props.typeName);
-      console.log("Giá trị gửi lên:", props.typeName);
+      formData.append("totalSeats", props.totalSeats);
 
       const res = await axios.post(`${Constants.DOMAIN_API}/admin/busType/add`, {
-        typeName: props.typeName
+        typeName: props.typeName,
+        totalSeats: props.totalSeats
       });
       console.log("Success", res);
 
@@ -58,6 +59,25 @@ function BusTypeCreate() {
                 placeholder="Nhập tên loại xe"
               />
               {errors.typeName && <p className="text-red-700">{errors.typeName.message}</p>}
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2 font-medium">
+                Tổng số ghế <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="number"
+                className={`w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none
+                ${errors.totalSeats ? '!border-red-500' : 'border-gray-300'}`}
+                {...register("totalSeats", {
+                  required: "Vui lòng nhập tổng số ghế",
+                  min: {
+                    value: 1,
+                    message: "Số ghế phải lớn hơn 0"
+                  }
+                })}
+                placeholder="Nhập tổng số ghế"
+              />
+              {errors.totalSeats && <p className="text-red-700">{errors.totalSeats.message}</p>}
             </div>
 
           </div>

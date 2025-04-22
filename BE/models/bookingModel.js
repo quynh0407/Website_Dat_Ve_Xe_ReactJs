@@ -41,16 +41,6 @@ const BookingModel = connection.define('Booking', {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
     },
-    seatId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: SeatModel,
-            key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
-    },
     createdAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
@@ -80,11 +70,5 @@ const BookingModel = connection.define('Booking', {
     tableName: 'bookings',
     timestamps: false,
 });
-
-// Associations (nếu cần)
-BookingModel.belongsTo(UserModel, { foreignKey: 'userId' });
-BookingModel.belongsTo(TripModel, { foreignKey: 'tripId' });
-BookingModel.belongsTo(SeatModel, { foreignKey: 'seatId' });
-BookingModel.belongsTo(BusesModel, { foreignKey: 'busId' });
 
 module.exports = BookingModel;
