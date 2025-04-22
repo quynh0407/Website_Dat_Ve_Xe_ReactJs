@@ -11,6 +11,10 @@ const BusTypesModel = connection.define('BusTypes',{
         type: DataTypes.STRING,
         allowNull: true,
     },
+    totalSeats: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
 }, {
     tableName: 'busTypes',
     timestamps: false,

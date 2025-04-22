@@ -6,6 +6,7 @@ const { checkJWT, isAdmin } = require('../services/authCheck');
 const ContacController = require('../controllers/Client/contactController');
 const ProfileController = require('../controllers/Client/profileController');
 const BookingController = require('../controllers/Client/bookingController');
+const BookingDetailController = require('../controllers/Client/bookingDetailController');
 const BookingTicketsController = require('../controllers/Client/bookingTicketsController');
 const upload = require('../config/upload');
 
@@ -34,6 +35,9 @@ router.patch('/profile/update/:id', upload.single('image'), ProfileController.up
 router.get('/booking/list',BookingController.get);
 router.get('/booking/getId/:id',BookingController.getById);
 router.delete('/booking/delete/:id',BookingController.delete);
-router.post('/booking/add', BookingTicketsController.create);
+
+//------------------[ BOOKINGDETAIL ]------------------
+router.get('/booking-detail/list',BookingDetailController.get);
+router.get('/booking-detail/getId/:id',BookingDetailController.getById);
 
 module.exports = router;

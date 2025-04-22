@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 
 function BookingHistory() {
 
-    const [busBookingData, setBusBookingData] = useState([]);
+    const [BusBookingDetailData, setBusBookingDetailData] = useState([]);
     const [selectedBooking, setSelectedBooking] = useState(null);
     const [showCancelModal, setShowCancelModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -20,7 +20,6 @@ function BookingHistory() {
         try {
             const token = Cookies.get("token");
             if (!token) {
-                console.log("Không tìm thấy token trong cookie");
                 setErrorMessage("Bạn cần đăng nhập để xem lịch sử.");
                 return;
             }
@@ -28,19 +27,28 @@ function BookingHistory() {
             const decoded = jwtDecode(token);
             const userId = decoded.id;
 
-            const res = await axios.get(`${Constants.DOMAIN_API}/booking/list`, {
+            const res = await axios.get(`${Constants.DOMAIN_API}/booking-detail/list`, {
                 params: { userId }
             });
 
-            setBusBookingData(res.data.data);
-            setErrorMessage(null);
+            if (res.data.status === 200) {
+                setBusBookingDetailData(res.data.data);
+                setErrorMessage(null);
+            } else {
+                setErrorMessage("Không thể lấy lịch sử đặt vé. Vui lòng thử lại.");
+            }
         } catch (err) {
+            console.log('Lỗi:', err);
+            setErrorMessage("Lỗi khi kết nối đến server. Vui lòng thử lại.");
             console.log("Lỗi khi lấy lịch sử đặt vé", err);
         }
     };
 
     const deleteBooking = async () => {
-        if (!selectedBooking) return;
+        if (!selectedBooking || selectedBooking.booking.status === 'canceled') {
+            setErrorMessage("Không thể hủy vé này.");
+            return;
+        }
         try {
             await axios.delete(`${Constants.DOMAIN_API}/booking/delete/${selectedBooking.id}`);
             alert("Hủy vé thành công");
@@ -48,10 +56,11 @@ function BookingHistory() {
             setSelectedBooking(null);
             getData();
         } catch (error) {
-            console.log("Lỗi khi hủy vé:", error);
             setErrorMessage("Không thể hủy vé, vui lòng thử lại.");
+            console.log("Lỗi khi hủy vé:", error);
         }
     };
+
 
     return (
         <>
@@ -68,35 +77,36 @@ function BookingHistory() {
                             <div className="text-red-500 text-center mb-4">{errorMessage}</div>
                         )}
 
-                        {busBookingData.length === 0 ? (
+                        {BusBookingDetailData.length === 0 ? (
                             <div className="alert alert-info text-center text-gray-600 fw-bold" role="alert">
                                 Hiện tại bạn chưa đặt vé. Bạn vui lòng đặt vé để xem lịch sử đặt vé của mình tại đây!
                             </div>
                         ) : (
-                            busBookingData.map((item, index) => (
+                            BusBookingDetailData.map((item, index) => (
                                 <div key={index} className="bg-white mb-3 shadow-lg rounded-lg flex border border-gray-300">
                                     <div className="w-2/3 border-r border-dashed border-gray-400">
                                         <div className="text-white font-mono rounded-tl-lg text-lg font-bold bg-[#043175] px-3 py-2">
-                                            Mã vé: {item.id}
+                                            Mã vé: {item.booking.id}
                                         </div>
                                         <div className="text-gray-800 font-mono text-lg font-bold px-3">
                                             Giá <span className="float-right">Chuyến xe</span>
                                         </div>
                                         <div className="text-xl font-bold text-gray-900 px-3">
-                                            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.finalPrice)}
-                                            <span className="float-right">{item.tripId.id}</span>
+                                            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price)}
+                                            <span className="float-right">{item.booking.trips.id}</span>
                                         </div>
 
                                         <div className="mt-2 flex justify-between px-3">
                                             <div>
                                                 <p className="text-gray-700 font-mono text-sm">TỪ</p>
-                                                <p className="text-lg font-bold">{item.tripId.routeId.startPoint}</p>
+                                                <p className="text-lg font-bold">{item.booking.trips.routes.startPoint}</p>
                                             </div>
                                             <div>
                                                 <p className="text-gray-700 font-mono text-sm">GIỜ ĐI</p>
                                                 <p className="text-lg font-bold">
-                                                    {item.tripId?.departureTime
-                                                        ? new Date(item.tripId.departureTime.replace('Z', '')).toLocaleString('vi-VN', {
+                                                    {item.booking.trips?.departureTime
+                                                        ? new Date(new Date(item.booking.trips.departureTime.replace('Z', '')).getTime() + 7 * 60 * 60 * 1000).toLocaleString('vi-VN', {
+                                                            timeZone: 'Asia/Ho_Chi_Minh',
                                                             hour: '2-digit',
                                                             minute: '2-digit',
                                                             hour12: false,
@@ -109,13 +119,14 @@ function BookingHistory() {
                                         <div className="mt-2 flex justify-between px-3">
                                             <div>
                                                 <p className="text-gray-700 font-mono text-sm">ĐẾN</p>
-                                                <p className="text-lg font-bold">{item.tripId.routeId.endPoint}</p>
+                                                <p className="text-lg font-bold">{item.booking.trips.routes.endPoint}</p>
                                             </div>
                                             <div>
                                                 <p className="text-gray-700 font-mono text-sm">GIỜ ĐẾN</p>
                                                 <p className="text-lg font-bold">
-                                                    {item.tripId?.arrivalTime
-                                                        ? new Date(item.tripId.arrivalTime.replace('Z', '')).toLocaleString('vi-VN', {
+                                                    {item.booking.trips?.arrivalTime
+                                                        ? new Date(new Date(item.booking.trips.arrivalTime.replace('Z', '')).getTime() + 7 * 60 * 60 * 1000).toLocaleString('vi-VN', {
+                                                            timeZone: 'Asia/Ho_Chi_Minh',
                                                             hour: '2-digit',
                                                             minute: '2-digit',
                                                             hour12: false,
@@ -128,11 +139,11 @@ function BookingHistory() {
                                         <div className="flex justify-between p-3">
                                             <div>
                                                 <p className="text-gray-700 font-mono text-sm">NGÀY</p>
-                                                <p className="text-lg font-bold">{new Date(item.tripId?.departureTime).toLocaleDateString('vi-VN')}</p>
+                                                <p className="text-lg font-bold">{new Date(item.booking.trips?.departureTime).toLocaleDateString('vi-VN')}</p>
                                             </div>
                                             <div>
                                                 <p className="text-gray-700 font-mono text-sm">GHẾ</p>
-                                                <p className="text-lg font-bold">{item.seatId?.seatNumber}</p>
+                                                <p className="text-lg font-bold">{item?.seatNumber}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -140,15 +151,15 @@ function BookingHistory() {
                                     <div className="w-1/3 p-3 text-center">
                                         <div className="flex justify-between align-items-center">
                                             <b>
-                                                {item.status === 'pending'
+                                                {item.booking.status === 'pending'
                                                     ? 'Chưa khởi hành'
-                                                    : item.status === 'confirmed'
+                                                    : item.booking.status === 'confirmed'
                                                         ? 'Đã khởi hành'
-                                                        : item.status === 'canceled'
+                                                        : item.booking.status === 'canceled'
                                                             ? 'Đã hủy'
-                                                            : item.status}
+                                                            : item.booking.status}
                                             </b>
-                                            {item.status === 'pending' && (
+                                            {item.booking.status === 'pending' && (
                                                 <button
                                                     className="bg-red-400 text-white px-4 py-2 font-mono rounded-md hover:bg-red-600"
                                                     onClick={() => {
@@ -159,7 +170,7 @@ function BookingHistory() {
                                                     Hủy vé
                                                 </button>
                                             )}
-                                            {item.status !== 'pending' && (
+                                            {item.booking.status !== 'pending' && (
                                                 <p className="text-red-500">Không thể hủy vé</p>
                                             )}
                                         </div>
@@ -167,27 +178,27 @@ function BookingHistory() {
 
                                         <div className="flex justify-between">
                                             <p className="text-gray-700 font-mono text-sm">TÊN</p>
-                                            <p className="text-lg font-bold">{item.userName}</p>
+                                            <p className="text-lg font-bold">{item.booking.userName}</p>
                                         </div>
 
                                         <div className="flex justify-between mt-2">
                                             <p className="text-gray-700 font-mono text-sm">TỪ</p>
-                                            <p className="text-lg font-bold">{item.tripId.routeId.startPoint}</p>
+                                            <p className="text-lg font-bold">{item.booking.trips.routes.startPoint}</p>
                                         </div>
 
                                         <div className="flex justify-between mt-2">
                                             <p className="text-gray-700 font-mono text-sm">ĐẾN</p>
-                                            <p className="text-lg font-bold">{item.tripId.routeId.endPoint}</p>
+                                            <p className="text-lg font-bold">{item.booking.trips.routes.endPoint}</p>
                                         </div>
 
                                         <div className="flex justify-between mt-2">
                                             <p className="text-gray-700 font-mono text-sm">CHUYẾN</p>
-                                            <p className="text-lg font-bold">{item.tripId.id}</p>
+                                            <p className="text-lg font-bold">{item.booking.trips.id}</p>
                                         </div>
 
                                         <div className="flex justify-between mt-2">
                                             <p className="text-gray-700 font-mono text-sm">GHẾ</p>
-                                            <p className="text-lg font-bold">{item.seatId?.seatNumber}</p>
+                                            <p className="text-lg font-bold">{item?.seatNumber}</p>
                                         </div>
                                     </div>
                                 </div>

@@ -22,47 +22,42 @@ function BusTypeEdit() {
     trigger(field);
   };
 
-
   const navigate = useNavigate();
-
   const { id } = useParams();
 
   useEffect(() => {
     if (id) {
-      getUserInfo(id);
+      getBusTypeInfo(id);
     }
   }, [id]);
-  
 
-  const getUserInfo = async (id) => {
+  const getBusTypeInfo = async (id) => {
     try {
       const res = await axios.get(`${Constants.DOMAIN_API}/admin/busType/getId/${id}`);
       setValue("typeName", res.data.data.typeName);
+      setValue("totalSeats", res.data.data.totalSeats);  
     } catch (e) {
       console.log(e);
     }
   };
-  
 
   const handleRegister = async (props) => {
     try {
       if (id) {
         await axios.patch(`${Constants.DOMAIN_API}/admin/busType/update/${id}`, {
-          typeName: props.typeName
+          typeName: props.typeName,
+          totalSeats: props.totalSeats 
         });
 
         navigate('/admin/busType/getAll');
-        // alert("Cập nhật thành công");
         toast.success("Cập nhật thành công!");
         return;
       }
     } catch (e) {
       console.log("Error", e);
-      // alert("Cập nhật thất bại");
       toast.error("Cập nhật thất bại!");
     }
   };
-
 
   return (
     <div className="container mx-auto p-4">
@@ -71,6 +66,7 @@ function BusTypeEdit() {
           Chỉnh sửa loại xe
         </h1>
 
+        <form onSubmit={handleSubmit(handleRegister)}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="mb-4">
               <label className="block text-gray-700 mb-2 font-medium">
@@ -90,11 +86,34 @@ function BusTypeEdit() {
               />
               {errors.typeName && <p className="text-red-700">{errors.typeName.message}</p>}
             </div>
+
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2 font-medium">
+                Số ghế <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="number"
+                className={`w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none
+                ${errors.totalSeats ? '!border-red-500' : 'border-gray-300'}`}
+                {...register("totalSeats", {
+                  required: "Vui lòng nhập số ghế",
+                  min: {
+                    value: 1,
+                    message: "Số ghế phải lớn hơn 0"
+                  }
+                })}
+                onChange={(e) => {
+                  setValue("totalSeats", e.target.value);
+                  handleChange("totalSeats");
+                }}
+              />
+              {errors.totalSeats && <p className="text-red-700">{errors.totalSeats.message}</p>}
+            </div>
           </div>
 
           <div className="flex justify-end mt-6 space-x-4 border-t pt-4">
             <button 
-              type="submit" onClick={handleSubmit(handleRegister)}
+              type="submit"
               className="flex items-center px-5 py-2.5 bg-[#073272] text-white rounded-md hover:bg-blue-900 transition-colors"
             >
               <FaSave className="mr-2" /> Cập nhật
@@ -103,6 +122,7 @@ function BusTypeEdit() {
               Hủy
             </Link>
           </div>
+        </form>
       </div>
     </div>
   );

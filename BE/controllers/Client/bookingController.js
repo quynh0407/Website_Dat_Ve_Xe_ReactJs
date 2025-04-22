@@ -5,6 +5,7 @@ const SeatsModel = require('../../models/seatsModel');
 const BusesModel = require('../../models/busesModel');
 const DriverModel = require('../../models/driverModel');
 const UserModel = require('../../models/userModel');
+const BookingDetailModel = require('../../models/bookingDetailModel');
 
 
 class BookingController {
@@ -31,13 +32,10 @@ class BookingController {
                         ]
                     },
                     {
-                        model: SeatsModel,
-                        as: 'seat'
-                    },
-                    {
                         model: UserModel,
                         as: 'user'
-                    }
+                    },
+                    
                 ]
             });
 
@@ -48,10 +46,6 @@ class BookingController {
                 data.tripId = data.trips;
                 delete data.trips;
 
-                data.seatId = data.seat;
-                delete data.seat;
-
-                delete data.seatID;
 
                 // Đổi tên các quan hệ trong tripId
                 if (data.tripId) {
@@ -105,13 +99,9 @@ class BookingController {
                         ]
                     },
                     {
-                        model: SeatsModel,
-                        as: 'seat'
-                    },
-                    {
                         model: UserModel,
                         as: 'user'
-                    }
+                    },
                 ]
             });
 
@@ -125,12 +115,6 @@ class BookingController {
             data.tripId = data.trips;
             delete data.trips;
 
-            // Gộp seat vào key "seatId"
-            data.seatId = data.seat;
-            delete data.seat;
-
-            // Xóa seatID bị thừa
-            delete data.seatID;
 
             // Đổi tên các quan hệ trong tripId
             if (data.tripId) {

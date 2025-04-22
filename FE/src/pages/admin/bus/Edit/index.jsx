@@ -4,8 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import Constants from "../../../../Constants";
-
-
+import { toast } from 'react-toastify';
 
 function BusEdit() {
     const {
@@ -13,6 +12,7 @@ function BusEdit() {
         handleSubmit,
         setValue,
         trigger,
+        watch,
         formState: { errors }
     } = useForm({
         mode: "onChange"
@@ -24,6 +24,7 @@ function BusEdit() {
         { value: "active", label: "Hoạt động" },
         { value: "inactive", label: "Không hoạt động" },
     ]);
+    const [selectedBusType, setSelectedBusType] = useState(null);
 
     const getBusTypes = async () => {
         try {
@@ -42,13 +43,12 @@ function BusEdit() {
             console.log("Lỗi khi load tài xế:", e);
         }
     };
+
     const handleChange = (field) => {
         trigger(field);
     };
 
-
     const navigate = useNavigate();
-
     const { id } = useParams();
 
     useEffect(() => {
@@ -59,25 +59,35 @@ function BusEdit() {
         getDrivers();
     }, [id]);
 
-
     const getUserInfo = async (id) => {
         try {
             const res = await axios.get(`${Constants.DOMAIN_API}/admin/bus/getId/${id}`);
-            setValue("plateNumber", res.data.data.plateNumber);
-            setValue("status", res.data.data.status);
-            setValue("busTypeId", res.data.data.busTypeId);
-            setValue("driverId", res.data.data.driverId);
-            setValue("totalSeats", res.data.data.totalSeats);
+            const busData = res.data.data;
+            setValue("plateNumber", busData.plateNumber);
+            setValue("status", busData.status);
+            setValue("busTypeId", busData.busTypeId);
+            setValue("driverId", busData.driverId);
+            setValue("totalSeats", busData.totalSeats);
+            const selectedType = busTypes.find(type => type.id === busData.busTypeId);
+            setSelectedBusType(selectedType);  // Cập nhật loại xe đã chọn
         } catch (e) {
             console.log(e);
         }
     };
 
 
+    const handleBusTypeChange = (e) => {
+        const selectedType = busTypes.find((type) => type.id === parseInt(e.target.value));
+        setValue("busTypeId", e.target.value);
+        setValue("totalSeats", selectedType?.totalSeats || ""); // Cập nhật số ghế dựa trên loại xe
+        setSelectedBusType(selectedType);
+        trigger("busTypeId");
+    };
+
     const handleRegister = async (props) => {
         try {
             if (id) {
-                await axios.patch(`${Constants.DOMAIN_API}/admin/bus/update/${id}`, {
+                const res = await axios.patch(`${Constants.DOMAIN_API}/admin/bus/update/${id}`, {
                     plateNumber: props.plateNumber,
                     busTypeId: `${props.busTypeId}`,
                     driverId: `${props.driverId}`,
@@ -86,14 +96,19 @@ function BusEdit() {
                 });
 
                 navigate('/admin/bus/getAll');
-                alert("Cập nhật thành công");
+                toast.success("Cập nhật thành công");
                 return;
             }
         } catch (e) {
-            console.log("Error", e);
+            console.error("Error", e);
+
+            if (e.response && e.response.data && e.response.data.error) {
+                toast.error(e.response.data.error);
+            } else {
+                toast.error("Có lỗi xảy ra khi thêm xe. Vui lòng thử lại.");
+            }
         }
     };
-
 
     return (
         <div className="container mx-auto p-4">
@@ -115,10 +130,7 @@ function BusEdit() {
                         <select
                             className="w-full p-2 border rounded"
                             {...register("busTypeId", { required: "Loại xe không được để trống" })}
-                            onChange={(e) => {
-                                setValue("busTypeId", e.target.value);
-                                handleChange("busTypeId");
-                            }}
+                            onChange={handleBusTypeChange} // Cập nhật số ghế khi thay đổi loại xe
                         >
                             <option value="">Chọn loại xe</option>
                             {busTypes.map((type) => (
@@ -130,25 +142,6 @@ function BusEdit() {
                         {errors.busTypeId && <span className="text-red-500">{errors.busTypeId.message}</span>}
                     </div>
 
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Tài xế</label>
-                        <select
-                            className="w-full p-2 border rounded"
-                            {...register("driverId", { required: "Tài xế không được để trống" })}
-                            onChange={(e) => {
-                                setValue("driverId", e.target.value);
-                                handleChange("driverId");
-                            }}
-                        >
-                            <option value="">Chọn tài xế</option>
-                            {drivers.map((driver) => (
-                                <option key={driver.id} value={driver.id}>
-                                    {driver.fullName}
-                                </option>
-                            ))}
-                        </select>
-                        {errors.driverId && <span className="text-red-500">{errors.driverId.message}</span>}
-                    </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Trạng thái</label>
                         <select
@@ -176,6 +169,8 @@ function BusEdit() {
                             placeholder="Vui lòng nhập số ghế"
                             id="totalSeats"
                             required
+                            value={errors.totalSeats ? '' : watch("totalSeats")}  // Lấy giá trị trực tiếp từ form
+                            readOnly
                             {...register("totalSeats", {
                                 required: "Số ghế không được để trống",
                                 min: {
@@ -183,10 +178,6 @@ function BusEdit() {
                                     message: "Số ghế phải lớn hơn 0"
                                 }
                             })}
-                            onChange={(e) => {
-                                setValue("totalSeats", e.target.value);
-                                handleChange("totalSeats");
-                            }}
                         />
                         {errors.totalSeats && <span className="text-danger">{errors.totalSeats.message}</span>}
                     </div>

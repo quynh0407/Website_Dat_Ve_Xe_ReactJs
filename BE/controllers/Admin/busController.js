@@ -42,20 +42,21 @@ class BusController {
     // //------------------[ CREATE ]------------------
     static async create(req, res) {
         try {
-            const {
-                plateNumber,
-                busTypeId,
-                driverId,
-                status,
-                totalSeats
-            } = req.body;
+            const { plateNumber, busTypeId, status, totalSeats } = req.body;
+
+            const existingBus = await BusModel.findOne({
+                where: { plateNumber }
+            });
+
+            if (existingBus) {
+                return res.status(400).json({ error: "Biển số xe đã tồn tại. Vui lòng chọn biển số khác." });
+            }
 
             console.log(req.body);
 
             const bus = await BusModel.create({
                 plateNumber,
                 busTypeId,
-                driverId,
                 status,
                 totalSeats
             });
@@ -85,73 +86,74 @@ class BusController {
 
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: error.message });
+            res.status(500).json({ error: "Có lỗi xảy ra trong quá trình tạo xe. Vui lòng thử lại sau." });
         }
     }
-
-
 
     // //------------------[ UPDATE ]------------------
     static async update(req, res) {
         try {
             const { id } = req.params;
-    
-            let {
-                plateNumber,
-                busTypeId,
-                driverId,
-                status,
-                totalSeats
-            } = req.body;
-    
-            if (!plateNumber || !busTypeId || !driverId || !status || !totalSeats) {
+
+            let { plateNumber, busTypeId, status, totalSeats } = req.body;
+
+            if (!plateNumber || !busTypeId || !status || !totalSeats) {
                 return res.status(400).json({
                     success: false,
                     message: "Vui lòng nhập đầy đủ thông tin hợp lệ."
                 });
             }
-    
+
+            if (isNaN(totalSeats) || totalSeats <= 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Số ghế phải là một số hợp lệ và lớn hơn 0."
+                });
+            }
+
+            const existingBus = await BusModel.findOne({ where: { plateNumber } });
+            if (existingBus && existingBus.id !== id) {
+                return res.status(400).json({ error: "Biển số xe đã tồn tại. Vui lòng chọn biển số khác." });
+            }
+
             const bus = await BusModel.findByPk(id);
             if (!bus) {
                 return res.status(404).json({ message: "Id không tồn tại" });
             }
-    
+
             const oldTotalSeats = bus.totalSeats;
-    
+
             bus.plateNumber = plateNumber;
             bus.busTypeId = busTypeId;
-            bus.driverId = driverId;
             bus.status = status;
             bus.totalSeats = totalSeats;
-    
+
             await bus.save();
-    
-           
+
             if (parseInt(totalSeats) !== parseInt(oldTotalSeats)) {
                 const currentSeats = await SeatModel.findAll({
                     where: { busID: id },
                     order: [['seatNumber', 'ASC']]
                 });
-    
-               
+
                 if (parseInt(totalSeats) < currentSeats.length) {
                     const seatsToRemove = currentSeats.slice(totalSeats);
                     for (const seat of seatsToRemove) {
                         await seat.destroy();
                     }
-                } 
-
+                }
                 else {
-                    for (let i = currentSeats.length + 1; i <= totalSeats; i++) {
+                    const existingSeats = currentSeats.length;
+                    for (let i = existingSeats + 1; i <= totalSeats; i++) {
                         await SeatModel.create({
                             busID: id,
                             seatNumber: `G${i}`,
-                            status: 'null'  
+                            status: 'null'
                         });
                     }
                 }
             }
-    
+
             res.status(200).json({
                 success: true,
                 message: "Cập nhật loại xe thành công",
@@ -165,8 +167,7 @@ class BusController {
             });
         }
     }
-    
-    
+
     // //------------------[ DELETE ]------------------
     static async delete(req, res) {
         try {
@@ -176,13 +177,13 @@ class BusController {
             if (!bus) {
                 return res.status(404).json({ message: "Id không tồn tại" });
             }
-    
+
             await SeatModel.destroy({
                 where: { busID: id }
             });
-    
+
             await bus.destroy();
-    
+
             res.status(200).json({
                 success: true,
                 message: "Xóa loại xe và ghế liên quan thành công"
@@ -205,7 +206,7 @@ class BusController {
                     status: "inactive"
                 }
             });
-    
+
             res.status(200).json({
                 status: 200,
                 success: true,
@@ -219,18 +220,18 @@ class BusController {
 
     static async getAllByStatusEdit(req, res) {
         try {
-            const { tripId } = req.params; 
+            const { tripId } = req.params;
             const trip = await TripsModel.findOne({ where: { id: tripId } });
 
             const bus = await BusModel.findAll({
                 where: {
                     [Op.or]: [
                         { status: 'inactive' },
-                        { id: trip.busID } 
+                        { id: trip.busID }
                     ]
                 }
             });
-    
+
             res.status(200).json({
                 status: 200,
                 message: "Lấy danh sách tài xế cho chỉnh sửa thành công!",
@@ -240,8 +241,8 @@ class BusController {
             res.status(500).json({ error: error.message });
         }
     }
-    
-    
-}    
+
+
+}
 
 module.exports = BusController;

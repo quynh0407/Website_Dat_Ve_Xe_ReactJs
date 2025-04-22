@@ -30,18 +30,11 @@ SeatsModel.belongsTo(BusesModel, { foreignKey: 'busID', as: 'bus' });
 // Buses - BusType
 BusesModel.belongsTo(BusTypesModel, { foreignKey: 'busTypeId', as: 'busType' });
 BusTypesModel.hasMany(BusesModel, { foreignKey: 'busTypeId', as: 'buses' });
-
-// Driver - Trips
-DriverModel.hasOne(BusesModel, { foreignKey: 'driverId', as: 'bus'});
-BusesModel.belongsTo(DriverModel, { foreignKey: 'driverId', as: 'drivers'  });
   
 // Booking - Trip
 TripsModel.hasMany(BookingModel, { foreignKey: 'tripId', as: 'bookings' });
 BookingModel.belongsTo(TripsModel, { foreignKey: 'tripId', as: 'trips' });
 
-// Booking - Seat
-SeatsModel.hasMany(BookingModel, { foreignKey: 'seatId', as: 'bookings' });
-BookingModel.belongsTo(SeatsModel, { foreignKey: 'seatId', as: 'seat' });
 
 // Quan hệ User và Booking
 UserModel.hasMany(BookingModel, { foreignKey: 'userId', as: 'bookings' });
@@ -51,11 +44,15 @@ BookingModel.belongsTo(UserModel, { foreignKey: 'userId', as: 'user' });
 BookingModel.belongsTo(BusesModel, { foreignKey: 'busId', as: 'bus' }); 
 
 
-// Quan hệ Booking và BookingDetail
-BookingModel.hasMany(BookingDetailModel, { foreignKey: 'bookingId', as: 'details' });
+// Quan hệ BookingDetail và Seats
+BookingDetailModel.belongsTo(SeatsModel, { foreignKey: 'seatsId', as: 'seatDetail' });  
 SeatsModel.hasMany(BookingDetailModel, { foreignKey: 'seatsId', as: 'seatDetails' });
 
+// Quan hệ giữa Booking và BookingDetail
+BookingModel.hasMany(BookingDetailModel, { foreignKey: 'bookingId', as: 'details' });
 BookingDetailModel.belongsTo(BookingModel, { foreignKey: 'bookingId', as: 'booking' });
-BookingDetailModel.belongsTo(SeatsModel, { foreignKey: 'seatsId', as: 'seat' });
+
+// Quan hệ giữa Trips và Routes
+TripsModel.belongsTo(RoutesModel, { foreignKey: 'routeId', as: 'route' });
 
 module.exports = {TripsModel,BusTypesModel, BusesModel, DriverModel, RoutesModel, SeatsModel};

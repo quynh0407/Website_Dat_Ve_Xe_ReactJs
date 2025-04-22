@@ -55,6 +55,7 @@ function BusTypeGetAll() {
                         <tr className="bg-gray-200">
                             <th className="p-2 border">ID</th>
                             <th className="p-2 border">Tên loại xe</th>
+                            <th className="p-2 border">Số ghế ngồi</th>
                             <th className="p-2 border">Hành động</th>
                         </tr>
                     </thead>
@@ -63,6 +64,7 @@ function BusTypeGetAll() {
                             <tr key={index} className="border-b">
                                 <td className="p-2 border">{value.id}</td>
                                 <td className="p-2 border">{value.typeName}</td>
+                                <td className="p-2 border">{value.totalSeats}</td>
                                 <td className="p-2 border flex gap-2">
                                     <Link
                                         to={`/admin/busType/update/${value.id}`}
