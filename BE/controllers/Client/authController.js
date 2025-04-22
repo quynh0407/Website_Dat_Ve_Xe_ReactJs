@@ -86,7 +86,13 @@ class AuthController {
                 process.env.JWT_SECRET,
                 { expiresIn: "3h" }
             );
-
+            res.cookie("token", token, {
+                httpOnly: true,  // Không cho JS frontend truy cập cookie
+                secure: false,   // set true nếu chạy trên HTTPS
+                sameSite: "lax", // hoặc "none" nếu FE và BE khác domain
+                maxAge: 3 * 60 * 60 * 1000  // Thời gian hết hạn của cookie
+            });
+            
             return res.status(200).json({
                 success: true,
                 message: "Đăng nhập thành công!",

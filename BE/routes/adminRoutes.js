@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require("multer");
 const router = express.Router();
 const RoutesController = require('../controllers/Admin/routesController');
-const { checkJWT, isAdmin } = require('../services/authCheck');
+const { checkJWT, isAdmin } = require('../config/authCheck');
 const { route } = require('./clientRoutes');
 const ContacController = require('../controllers/Admin/contactController');
 const TripsController = require('../controllers/Admin/tripsController');
@@ -18,7 +18,7 @@ const ReviewController = require('../controllers/Admin/reviewController');
 const BookingController = require('../controllers/Admin/bookingController');
 const upload = require('../config/upload');
 //------------------[ ROUTES ]------------
-router.get('/routes/list',RoutesController.get);
+router.get('/routes/list',checkJWT, isAdmin,RoutesController.get);
 router.get('/routes/getId',RoutesController.getById);
 router.post('/routes/add',RoutesController.create);
 router.patch('/routes/update/:id',RoutesController.update);

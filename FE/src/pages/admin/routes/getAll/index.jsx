@@ -5,7 +5,9 @@ import FormDelete from "../../../../components/formDelete";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import ReactPaginate from "react-paginate";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin';
 import Constants from '../../../../Constants';
+
 
 const URL = Constants.DOMAIN_API;
 const ENDPOIND = `admin/routes`;
@@ -39,7 +41,7 @@ export default function RoutesGetAll() {
 
     const Data = async () => {
         try {
-            const res = await axios.get(`${URL}/${ENDPOIND}/list`);
+            const res = await axiosAdmin.get(`${URL}/${ENDPOIND}/list`);
             setData(res.data.data);
         } catch (err) {
             console.error("Error:", err);

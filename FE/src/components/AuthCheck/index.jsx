@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode'; 
 import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
 
@@ -22,8 +22,14 @@ const PrivateRoute = ({ children }) => {
             const decode = jwtDecode(token);
             const currentPath = location.pathname; 
 
-            if (decode.role !== "admin") {
+            const currentTime = Date.now() / 1000; 
+            if (decode.exp < currentTime) {
+                toast.error("Token đã hết hạn!");
+                navigate("/login");
+                return;
+            }
 
+            if (decode.role !== "admin") {
                 const allowedPaths = ["/profile", "/bookingHistory"];
                 if (decode.role === "customer" && allowedPaths.includes(currentPath)) {
                     setIsAllowed(true); 
@@ -32,7 +38,6 @@ const PrivateRoute = ({ children }) => {
 
                 navigate("/");
                 toast.error("Bạn không có quyền truy cập trang này!");
-
             } else {
                 setIsAllowed(true);
             }
@@ -44,7 +49,7 @@ const PrivateRoute = ({ children }) => {
 
     useEffect(() => {
         checkLogin();
-    }, [cookies.token, navigate])
+    }, [cookies.token, navigate]);
 
     if (isAllowed === null) return null;
 

@@ -5,10 +5,11 @@ const session = require("express-session");
 const clientRoutes = require('./routes/clientRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const apiRoutes = require('./routes/apiRoutes');
+const {isAdmin, checkJWT} = require('./config/authCheck');
 const app = express();
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
-
+app.use(require('cookie-parser')()); 
 
 require('./models/connectModel');
 
@@ -24,7 +25,7 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
 app.use(cors({
-    origin: "*",
+    origin: "http://localhost:3001",
     methods: "GET, POST, PUT, DELETE, PATCH, OPTIONS",
     allowedHeaders: "Content-Type, Authorization",
     credentials: true
@@ -33,7 +34,7 @@ app.use(cors({
 
 // Routes
 app.use(clientRoutes);
-app.use('/admin', adminRoutes);
+app.use('/admin',adminRoutes);
 app.use(apiRoutes);
 
 app.listen(port, () => {
