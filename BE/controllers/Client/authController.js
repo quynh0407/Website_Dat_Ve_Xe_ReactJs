@@ -2,11 +2,14 @@ const UserModel = require('../../models/userModel');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const sendResetPassword = require("../../mail/resetPassword/sendmail");
+const { Op } = require('sequelize');
+const ResetTokenModel = require('../../models/ResetTokenModel');
 require("dotenv").config();
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_secret_key";
 
 class AuthController {
+
     static async register(req, res) {
         try {
             console.log('Nhận từ Client:', req.body);
@@ -21,19 +24,13 @@ class AuthController {
                 });
             }
 
-            const user = await UserModel.create({
+
+            const userResponse = await UserModel.create({
                 fullName,
                 email,
-                password,
                 phone,
+                password
             });
-
-            const userResponse = {
-                id: user.id,
-                fullName: user.fullName,
-                email: user.email,
-                phone: user.phone,
-            };
 
             return res.status(200).json({
                 success: true,
@@ -62,6 +59,14 @@ class AuthController {
                 });
             }
 
+            if (user.status === 0) {
+                return res.status(403).json({
+                    success: false,
+                    message: "Tài khoản đã bị khóa",
+                });
+            }
+
+
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
                 return res.status(400).json({
@@ -71,16 +76,22 @@ class AuthController {
             }
 
             const token = jwt.sign(
-                { id: user.id, fullName: user.fullName, email: user.email, role: user.role, phone: user.phone },
+                {
+                    id: user.id, fullName: user.fullName,
+                    email: user.email,
+                    role: user.role,
+                    status: user.status,
+                    phone: user.phone
+                },
                 process.env.JWT_SECRET,
-                { expiresIn: "2h" }
+                { expiresIn: "3h" }
             );
 
             return res.status(200).json({
                 success: true,
                 message: "Đăng nhập thành công!",
                 token,
-                user: { fullName: user.fullName, email: user.email, role: user.role }
+                user: { fullName: user.fullName, email: user.email, role: user.role, status: user.status }
             });
 
         } catch (error) {
@@ -105,6 +116,12 @@ class AuthController {
             const token = jwt.sign({ email: user.email, id: user.id }, JWT_SECRET, {
                 expiresIn: "5m",
             });
+            await ResetTokenModel.create({
+                token,
+                userId: user.id,
+                used: false,
+                expiresAt: new Date(Date.now() + 5 * 60 * 1000)
+            });
             const link = `http://localhost:3001/resetPassword/${token}`;
             await sendResetPassword(email, link);
             return res.status(200).json({
@@ -120,6 +137,7 @@ class AuthController {
         }
     }
 
+    //------------------------[ UPDATE PASSWORD ]------------------------
     static async updatePassword(req, res) {
         const token = req.params.token;
         const { password } = req.body;
@@ -128,7 +146,19 @@ class AuthController {
             const decoded = jwt.verify(token, JWT_SECRET);
             const userId = decoded.id;
 
-            const user = await UserModel.findOne({ where: { id: userId } });
+            const resetToken = await ResetTokenModel.findOne({
+                where: {
+                    token,
+                    userId: userId,
+                    expiresAt: { [Op.gt]: new Date() }
+                }
+            });
+
+            if (!resetToken) {
+                return res.status(400).json({ message: "Lien kết không khả dụng hoặc đã hết hạn." });
+            }
+
+            const user = await UserModel.findByPk(userId);
             if (!user) {
                 return res.status(404).json({ message: "Tài khoản không tồn tại." });
             }
@@ -136,12 +166,14 @@ class AuthController {
             const enPassword = await bcrypt.hash(password, 10);
             await user.update({ password: enPassword });
 
+
+            await ResetTokenModel.destroy({ where: { id: resetToken.id } });
+
             return res.status(200).json({
                 success: true,
                 message: "Cập nhật mật khẩu thành công",
             });
         } catch (error) {
-            console.error("Error in updatePassword:", error);
             if (error.name === "TokenExpiredError") {
                 return res.status(401).json({
                     message: "Liên kết đặt lại mật khẩu đã hết hạn. Vui lòng yêu cầu lại."
@@ -158,8 +190,6 @@ class AuthController {
             });
         }
     }
-
-
 
 }
 
