@@ -44,10 +44,10 @@ function BusRoutesGetAll() {
             console.log("Error", err);
         }
     }
-    
+
 
     return (
-        <div className="container mx-auto p-2">
+        <div className="container w-full p-2">
             <div className="bg-white p-4 shadow rounded-md">
                 <Link
                     to="/admin/busRoutes/create"
@@ -63,27 +63,45 @@ function BusRoutesGetAll() {
                             <th className="p-2 border">Tài xế</th>
                             <th className="p-2 border">Giờ bắt đầu</th>
                             <th className="p-2 border">Giờ kết thúc</th>
-                            <th className="p-2 border">Giá vé</th>
+                            <th className="p-2 border">Trạng thái</th>
                             <th className="p-2 border">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
                         {routes.map((value) => (
                             <tr key={value.id} className="border-b">
-                                <td className="p-2 border">{value.routes.startPoint} - {value.routes.endPoint}</td>
+                                <td className="p-2 border">{value.routes.startPoint} <br/>
+                                    {value.routes.endPoint}</td>
                                 <td className="p-2 border">{value.buses.plateNumber}</td>
                                 <td className="p-2 border"> {value.drivers ? value.drivers.fullName : "Chưa có tài xế"}</td>
-                                <td className="p-2 border">{formatDate(value.departureTime) }</td>
+                                <td className="p-2 border">{formatDate(value.departureTime)}</td>
                                 <td className="p-2 border">{formatDate(value.arrivalTime)}</td>
-                                <td className="p-2 border">{formatPrice(value.price)}</td>
+                                <td className="p-2 border">
+                                    {value.status === 'scheduled' && (
+                                        <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm">
+                                            Chưa khởi hành
+                                        </span>
+                                    )}
+                                    {value.status === 'running' && (
+                                        <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">
+                                            Đang chạy
+                                        </span>
+                                    )}
+                                    {value.status === 'completed' && (
+                                        <span className="bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-sm">
+                                            Đã cập bến
+                                        </span>
+                                    )}
+                                </td>
+
                                 <td className="p-2 border flex gap-2">
                                     <Link
                                         to={`/admin/busRoutes/edit/${value.id}`}
                                         className="bg-yellow-500 text-white py-2 px-3 rounded" >
                                         <i className="fa-solid fa-pen-to-square text-md"></i>
                                     </Link>
-                                    <button 
-                                        onClick={() => setSelectedRoute(value)} 
+                                    <button
+                                        onClick={() => setSelectedRoute(value)}
                                         className="bg-red-500 text-white py-2 px-3 rounded">
                                         <i className="fa-solid fa-trash text-md"></i>
                                     </button>
@@ -98,7 +116,7 @@ function BusRoutesGetAll() {
                 <FormDelete
                     isOpen={true}
                     onClose={() => setSelectedRoute(null)}
-                    onConfirm={deleteBusTypes} 
+                    onConfirm={deleteBusTypes}
                     message={`Bạn có chắc chắn muốn xóa loại xe  không?`}
                 />
             )}

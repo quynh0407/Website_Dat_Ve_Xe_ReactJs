@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
 
 cron.schedule('* * * * *', async () => {
   try {
-    const response = await axios.get('http://localhost:3000/admin/booking/list');
+    const response = await axios.get('http://localhost:3000/booking/list');
     const bookings = response.data.data;
     console.log('📋 Số booking lấy về:', bookings.length);
 
@@ -27,7 +27,7 @@ cron.schedule('* * * * *', async () => {
     bookings.forEach((booking) => {
       const status = booking.status;
       const email = booking.emailUser;
-      const departure = booking.Trip?.departureTime;
+      const departure = booking.tripId?.departureTime;
       const bookingId = booking.id;
  
       console.log('Booking:', { bookingId, status, email, departure });

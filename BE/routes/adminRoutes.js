@@ -18,7 +18,7 @@ const ReviewController = require('../controllers/Admin/reviewController');
 const BookingController = require('../controllers/Admin/bookingController');
 const upload = require('../config/upload');
 //------------------[ ROUTES ]------------
-router.get('/routes/list',checkJWT, isAdmin,RoutesController.get);
+router.get('/routes/list',RoutesController.get);
 router.get('/routes/getId',RoutesController.getById);
 router.post('/routes/add',RoutesController.create);
 router.patch('/routes/update/:id',RoutesController.update);

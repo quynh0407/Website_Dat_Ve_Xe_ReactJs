@@ -98,17 +98,12 @@ function BusGetAll() {
                 <td className="p-2 border">{value.id}</td>
                 <td className="p-2 border">{value.plateNumber}</td>
                 <td className="p-2 border">{getBusTypeName(value.busTypeId)}</td>
-                <td className="p-2 border">
-                  <span
-                    className={`px-2 py-1 rounded-full text-xs ${value.status === "Hoạt động"
-                      ? "bg-green-100 text-green-800"
-                      : value.status === "Bảo trì"
-                        ? "bg-yellow-100 text-yellow-800"
-                        : "bg-orange-100 text-orange-800"
-                      }`}
-                  >
-                    {value.status}
-                  </span>
+                <td className="p-2 border text-nowrap">
+                    <span
+                        className={`px-2 py-1 rounded-full text-xs ${value.status === "active" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+                    >
+                        {value.status === "active" ? "Hoạt động" : "Ngừng hoạt động"}
+                    </span>
                 </td>
                 <td className="p-2 border">{value.totalSeats}</td>
                 <td className="p-2 border flex gap-2">

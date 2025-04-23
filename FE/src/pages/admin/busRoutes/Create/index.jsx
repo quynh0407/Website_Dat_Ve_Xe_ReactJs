@@ -26,8 +26,8 @@ function BusRoutesCreate() {
     try {
       const [routesRes, busesRes, driversRes] = await Promise.all([
         axios.get(`${Constants.DOMAIN_API}/admin/routes/list`),
-        axios.get(`${Constants.DOMAIN_API}/admin/bus/getAllBusByStatusCreate`),
-        axios.get(`${Constants.DOMAIN_API}/admin/driver/getByStatusCreate`)
+        axios.get(`${Constants.DOMAIN_API}/admin/bus/list`),
+        axios.get(`${Constants.DOMAIN_API}/admin/driver/list`)
       ]);
 
       setRoutes(routesRes.data.data);
@@ -46,7 +46,6 @@ function BusRoutesCreate() {
         busID: parseInt(data.busID),
         driverId: parseInt(data.driverId),
         departureTime: data.startTime,
-        arrivalTime: data.endTime,
         price: parseInt(data.ticketPrice)
       };
 
@@ -55,7 +54,8 @@ function BusRoutesCreate() {
       navigate("/admin/busRoutes/getAll");
     } catch (error) {
       console.error("Lỗi khi tạo chuyến:", error);
-      toast.error("Tạo chuyến xe thất bại!");
+      const errorMessage = error.response?.data?.message || "Tạo chuyến xe thất bại!";
+      toast.error(errorMessage);
     }
   };
 
@@ -121,16 +121,6 @@ function BusRoutesCreate() {
               className={`w-full p-2 border rounded ${errors.startTime ? "border-red-500" : "border-gray-300"}`}
             />
             {errors.startTime && <p className="text-red-600">{errors.startTime.message}</p>}
-          </div>
-
-          <div>
-            <label className="block font-medium mb-1">Giờ kết thúc</label>
-            <input
-              type="datetime-local"
-              {...register("endTime", { required: "Vui lòng nhập giờ kết thúc" })}
-              className={`w-full p-2 border rounded ${errors.endTime ? "border-red-500" : "border-gray-300"}`}
-            />
-            {errors.endTime && <p className="text-red-600">{errors.endTime.message}</p>}
           </div>
 
           <div>

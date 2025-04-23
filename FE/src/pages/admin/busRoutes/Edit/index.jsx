@@ -46,6 +46,7 @@ function BusRoutesEdit() {
                 setValue("departureTime", convertUTCToVNInputFormat(trip.departureTime.slice(0, 16)));
                 setValue("arrivalTime", convertUTCToVNInputFormat(trip.arrivalTime.slice(0, 16)));
                 setValue("price", trip.price);
+                setValue("status", trip.status);
 
                 const seatRes = await axios.get(`${Constants.DOMAIN_API}/admin/seats/${trip.busID}`);
                 setSeats(seatRes.data.data);
@@ -59,8 +60,8 @@ function BusRoutesEdit() {
             try {
                 const [routeRes, busRes, driverRes] = await Promise.all([
                     axios.get(`${Constants.DOMAIN_API}/admin/routes/list`),
-                    axios.get(`${Constants.DOMAIN_API}/admin/bus/getAllByStatusEdit/${id}`),
-                    axios.get(`${Constants.DOMAIN_API}/admin/driver/getByStatusEdit/${id}`)
+                    axios.get(`${Constants.DOMAIN_API}/admin/bus/list`),
+                    axios.get(`${Constants.DOMAIN_API}/admin/driver/list`)
                 ]);
                 setRoutes(routeRes.data.data);
                 setBuses(busRes.data.data);
@@ -72,7 +73,7 @@ function BusRoutesEdit() {
 
         fetchData();
         fetchDropdownData();
-    }, [id, setValue]);
+    },setValue);
 
     const onSubmit = async (data) => {
         try {
@@ -202,6 +203,24 @@ function BusRoutesEdit() {
                             })}
                         />
                         {errors.price && <p className="text-red-700">{errors.price.message}</p>}
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium mb-2">Trạng thái chuyến xe</label>
+                        <select
+                            type="number"
+                            className={`w-full p-2 border rounded ${errors.status ? '!border-red-500' : 'border-gray-300'}`}
+                            {...register("status", {
+                                required: "Vui lòng nhập giá vé",
+                                min: { value: 1000, message: "Giá vé phải lớn hơn 1000" }
+                            })}
+                        >
+                            <option value="">Chọn trạng thái</option>
+                            <option value="scheduled">Chưa khởi hành</option>
+                            <option value="running">Đang chạy</option>
+                            <option value="completed">Đã cập bến</option>
+                        </select>
+                        {errors.status && <p className="text-red-700">{errors.status.message}</p>}
                     </div>
 
                     <div className="mb-4">
