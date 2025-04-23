@@ -6,19 +6,31 @@ import { toast } from 'react-toastify';
 import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 
 import Constants from "../../../../Constants";
+import { toast } from "react-toastify";
 
 const BlogEdit = () => {
     const [queryParams] = useSearchParams();
     const navigate = useNavigate();
     const [initialContent, setInitialContent] = useState("");
     const [previewImage, setPreviewImage] = useState(null);
+    const [categories, setCategories] = useState([]);
     const { control, register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
 
     useEffect(() => {
+        fetchCategories();
         if (queryParams.get("id")) {
             getBlogInfo();
         }
     }, []);
+
+    const fetchCategories = async () => {
+        try {
+            const res = await axios.get(`${Constants.DOMAIN_API}/admin/blog-category/active`);
+            setCategories(res.data.data);
+        } catch (error) {
+            console.log("Lỗi lấy danh mục:", error);
+        }
+    };
 
     const getBlogInfo = async () => {
         try {
@@ -26,12 +38,13 @@ const BlogEdit = () => {
             const data = res.data.data;
             setValue("title", data.title);
             setValue("content", data.content);
-            setValue("status", data.status);
+            setValue("status", data.status ? "1" : "0");
+            setValue("categoryId", data.categoryId?.toString());
             if (data.image) {
                 setPreviewImage(data.image);
             }
         } catch (error) {
-            console.log("Error fetching user info: ", error);
+            console.log("Lỗi lấy thông tin bài viết:", error);
         }
     };
 
@@ -40,14 +53,21 @@ const BlogEdit = () => {
             const formData = new FormData();
             formData.append("title", data.title);
             formData.append("content", data.content);
+            formData.append("status", Number(data.status)); 
+            formData.append("categoryId", data.categoryId);
             if (data.image && data.image.length > 0) {
                 formData.append("image", data.image[0]);
             }
 
-            await axiosAdmin.patch(`${Constants.DOMAIN_API}/admin/blog/update/${queryParams.get("id")}`, formData);
+            const res = await axios.patch(`${Constants.DOMAIN_API}/admin/blog/update/${queryParams.get("id")}`, formData);
+            toast.success(res.data.message);
             navigate("/admin/blog/getAll");
-        } catch (error) {
-            console.error("Lỗi khi cập nhật blog:", error);
+        } catch (err) {
+            if (err.response) {
+                toast.error(err.response.data.message);
+            } else {
+                toast.error("Lỗi kết nối đến server!");
+            }
         }
     };
 
@@ -91,19 +111,40 @@ const BlogEdit = () => {
                     </div>
 
                     <div className="mb-4">
+                        <label className="block font-medium mb-2">Danh mục</label>
+                        <select className="w-full p-2 border rounded" {...register("categoryId", { required: "Vui lòng chọn danh mục" })}>
+                            <option value="">-- Chọn danh mục --</option>
+                            {categories.map((cat) => (
+                                <option key={cat.id} value={cat.id}>{cat.name}</option>
+                            ))}
+                        </select>
+                        {errors.blogCategoryId && <p className="text-red-500">{errors.blogCategoryId.message}</p>}
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="block font-medium mb-2">Trạng thái</label>
+                        <select className="w-full p-2 border rounded" {...register("status", { required: "Trạng thái là bắt buộc" })}>
+                            <option value="">-- Chọn trạng thái --</option>
+                            <option value="1">Hiển thị</option>
+                            <option value="0">Ẩn</option>
+                        </select>
+                        {errors.status && <p className="text-red-500">{errors.status.message}</p>}
+                    </div>
+
+                    <div className="mb-4">
                         <label className="block font-medium mb-2">Ảnh</label>
                         <input
                             type="file"
                             className="w-full p-2 border rounded"
                             {...register("image")}
                         />
-                        {
+                        {previewImage && (
                             <img
                                 src={`${Constants.DOMAIN_API}/public/images/${previewImage}`}
                                 alt="Ảnh hiện tại"
                                 className="mt-2 w-[100px] h-[100px] object-cover rounded"
                             />
-                        }
+                        )}
                     </div>
 
                     <button type="submit" className="px-4 py-2 bg-[#073272] text-white rounded">

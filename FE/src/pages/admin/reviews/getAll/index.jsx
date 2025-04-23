@@ -4,6 +4,7 @@ import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 const ReviewGetAll = () => {
@@ -26,12 +27,17 @@ const ReviewGetAll = () => {
     const deleteReview = async () => {
         if (!selectedReview) return;
         try {
-            await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/review/${selectedReview.id}`);
+            const res = await axios.delete(`${Constants.DOMAIN_API}/admin/review/${selectedReview.id}`);
             setSelectedReview(null);
-            toast.success("Xóa thành công");
+            toast.success(res.data.message);
             getAllReviews();
         } catch (err) {
-            console.error("Lỗi khi xóa đánh giá:", err);
+            if (err.response) {
+                const errorMessage = err.response.data.message;
+                toast.error(errorMessage);
+            } else {
+                toast.error("Lỗi kết nối đến server!");
+            }
         }
     };
 

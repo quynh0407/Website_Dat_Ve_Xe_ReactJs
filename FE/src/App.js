@@ -55,6 +55,10 @@ import ResetForm from "./pages/authenticator/resetForm";
 import ResetPassword from "./pages/authenticator/resetPassword";
 
 import PrivateRoute from "./components/AuthCheck";
+import BlogCategoryGetAll from "./pages/admin/blog/getAllCategory";
+import BlogCategoryCreate from "./pages/admin/blog/CreateCategory";
+import BlogCategoryEdit from "./pages/admin/blog/EditCategory";
+import BlogDetail from "./pages/client/BlogDetail";
 
 
 const AppRoutes = () => {
@@ -74,7 +78,9 @@ const AppRoutes = () => {
         <Route path="bus" element={<Bus />} />
         <Route path="about" element={<AboutUs />} />
         <Route path="blog" element={<Blog />} />
-        <Route path="contact" element={<Contact />} />
+        <Route path="/blog/:id" element={<BlogDetail />} />
+        <Route path="/blog/category/:id" element={<Blog />} />
+
 
         {/* Các route cần bảo vệ được bọc riêng lẻ bằng <PrivateRoute> */}
         {/* <Route path="bookingHistory"element={ <PrivateRoute><BookingHistory />
@@ -156,6 +162,9 @@ const AppRoutes = () => {
           <Route path="getAll" element={<BlogGetAll />} />
           <Route path="create" element={<BlogCreate />} />
           <Route path="edit" element={<BlogEdit />} />
+          <Route path="createCategory" element={<BlogCategoryCreate />} />
+          <Route path="getCategoryAll" element={< BlogCategoryGetAll />} />
+          <Route path="editCategory" element={< BlogCategoryEdit/>} />
         </Route>
 
         <Route path="historyBill">

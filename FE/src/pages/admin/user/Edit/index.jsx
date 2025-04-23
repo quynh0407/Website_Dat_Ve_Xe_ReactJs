@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { FaSave, FaTimes } from 'react-icons/fa';
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const UserEdit = () => {
     const [queryParams] = useSearchParams();
@@ -43,7 +43,7 @@ const UserEdit = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axiosAdmin.patch(`${Constants.DOMAIN_API}/admin/user/update/${queryParams.get("id")}`, {
+            const res = await axios.patch(`${Constants.DOMAIN_API}/admin/user/update/${queryParams.get("id")}`, {
                 fullName: data.fullName,
                 email: data.email,
                 phone: data.phone,
@@ -51,12 +51,16 @@ const UserEdit = () => {
                 status: data.status
             });
 
-            console.log("Cập nhật thành công:", response.data);
-            toast.success("Tài khoản đã được cập nhật thành công!");
+            console.log("Cập nhật thành công:", res.data);
+            toast.success(res.data.message);
             navigate("/admin/user/getAll");
-        } catch (error) {
-            console.error("Lỗi khi cập nhật:", error);
-            setErrorMessage("Cập nhật thất bại. Vui lòng thử lại.");
+        } catch (err) {
+            if (err.response) {
+                const errorMessage = err.response.data.message;
+                toast.error(errorMessage);
+            } else {
+                toast.error("Lỗi kết nối đến server!");
+            }
         }
     };
 

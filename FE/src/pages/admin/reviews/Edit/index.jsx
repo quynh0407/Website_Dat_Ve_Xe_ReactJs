@@ -3,10 +3,11 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from 'react-toastify';
 import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
+import { toast } from "react-toastify";
 
 function ReviewEdit() {
 
-     const [queryParams] = useSearchParams();
+    const [queryParams] = useSearchParams();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         userID: "",
@@ -48,13 +49,18 @@ function ReviewEdit() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axiosAdmin.patch(`${Constants.DOMAIN_API}/admin/review/update/${queryParams.get("id")}`, {
+            const res = await axios.patch(`${Constants.DOMAIN_API}/admin/review/update/${queryParams.get("id")}`, {
                 status: formData.status,
             });
-            toast.success("Cập nhật tahnfh công ");
+            toast.success(res.data.message);
             navigate("/admin/review/getAll");
-        } catch (error) {
-            console.error("Lỗi khi cập nhật đánh giá:", error);
+        } catch (err) {
+            if (err.response) {
+                const errorMessage = err.response.data.message;
+                toast.error(errorMessage);
+            } else {
+                toast.error("Lỗi kết nối đến server!");
+            }
         }
     };
 
@@ -75,7 +81,7 @@ function ReviewEdit() {
                         <label className="block text-sm font-medium">Đánh giá</label>
                         <div className="flex items-center gap-2">
                             <input type="text" name="rating" value={formData.rating} disabled className="w-[35px] p-2 rounded" />
-                            <span>{Array.from({ length: formData.rating }, (_, i) =><span key={i} className="pr-1 text-yellow-500">★</span>)}</span>
+                            <span>{Array.from({ length: formData.rating }, (_, i) => <span key={i} className="pr-1 text-yellow-500">★</span>)}</span>
                         </div>
                     </div>
                     <div className="mb-4">

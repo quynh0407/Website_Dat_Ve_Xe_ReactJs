@@ -3,7 +3,7 @@ import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 
 const UserGetAll = () => {
@@ -28,13 +28,17 @@ const UserGetAll = () => {
     const deleteUser = async () => {
         if (!selectedUser) return;
         try {
-            await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/user/${selectedUser.id}`);
-            toast.success("Người dùng đã được xóa thành công!");
+            const res = await axios.delete(`${Constants.DOMAIN_API}/admin/user/${selectedUser.id}`);
             setSelectedUser(null);
+            toast.success(res.data.message);
             getAll();
-        } catch (error) {
-            console.log("Lỗi khi xóa:", error);
-            toast.error("Xóa thất bại!!");
+        } catch (err) {
+            if (err.response) {
+                const errorMessage = err.response.data.message;
+                toast.error(errorMessage);
+            } else {
+                toast.error("Lỗi kết nối đến server!");
+            }
         }
     };
 

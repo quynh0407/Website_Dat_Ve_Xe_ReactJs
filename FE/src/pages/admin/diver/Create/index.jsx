@@ -5,7 +5,7 @@ import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 
 const DiverCreate = () => {
@@ -31,11 +31,15 @@ const DiverCreate = () => {
             formData.append("image", props.image[0]);
             const res = await axiosAdmin.post(`${Constants.DOMAIN_API}/admin/driver/add`, formData);
             console.log("Thành công === ", res);
-            toast.success("Tài xế đã được thêm thành công!");
+            toast.success(res.data.message);
             navigate("/admin/driver/getAll");
-        } catch (error) {
-            console.error("Lỗi khi thêm tài xế === ", error);
-            setErrorMessage("Thêm tài xế thất bại. Vui lòng thử lại.");
+        } catch (err) {
+            if (err.response) {
+                const errorMessage = err.response.data.message;
+                toast.error(errorMessage);
+            } else {
+                toast.error("Lỗi kết nối đến server!");
+            }
         }
     };
     const validateImage = (fileList) => {
@@ -92,9 +96,6 @@ const DiverCreate = () => {
                                         required: "Loại GPLX không được để trống",
                                     })}>
                                     <option value="">Vui lòng chọn lại GPLX</option>
-                                    <option value="B1">B1</option>
-                                    <option value="B2" >B2</option>
-                                    <option value="C">C</option>
                                     <option value="D">D</option>
                                     <option value="E">E</option>
                                 </select>

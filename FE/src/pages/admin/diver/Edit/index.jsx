@@ -7,6 +7,7 @@ import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import { toast } from 'react-toastify';
 
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const DriverEditForm = () => {
     const navigate = useNavigate();
@@ -62,15 +63,19 @@ const DriverEditForm = () => {
                 formData.append("image", props.image[0]);
             }
 
-            await axiosAdmin.patch(
+            const res = await axios.patch(
                 `${Constants.DOMAIN_API}/admin/driver/update/${queryParams.get("id")}`,
                 formData
             );
-            toast.success("tài xế đã được cập nhật thành công!");
-
-            navigate("/admin/driver/getAll"); 
-        } catch (error) {
-            console.log("Error === ", error);
+            toast.success(res.data.message);
+            navigate("/admin/driver/getAll");
+        } catch (err) {
+            if (err.response) {
+                const errorMessage = err.response.data.message;
+                toast.error(errorMessage);
+            } else {
+                toast.error("Lỗi kết nối đến server!");
+            }
         }
     };
 

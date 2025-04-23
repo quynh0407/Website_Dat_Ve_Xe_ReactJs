@@ -5,7 +5,7 @@ import { FaSave, FaTimes } from 'react-icons/fa';
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const UserCreate = () => {
     const navigate = useNavigate();
@@ -29,11 +29,15 @@ const UserCreate = () => {
             });
 
             console.log("Thêm người dùng thành công === ", res);
-            toast.success("Thêm người dùng thành công!");
+            toast.success(res.data.message);
             navigate("/admin/user/getAll");
-        } catch (error) {
-            console.error("Lỗi khi thêm người dùng === ", error);
-            setErrorMessage("Thêm người dùng thất bại. Vui lòng thử lại.");
+        } catch (err) {
+            if (err.response) {
+                const errorMessage = err.response.data.message;
+                toast.error(errorMessage);
+            } else {
+                toast.error("Lỗi kết nối đến server!");
+            }
         }
     };
 

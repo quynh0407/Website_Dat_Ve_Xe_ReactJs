@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Constants from "../../../../Constants";
+import { toast } from "react-toastify";
 
 function HistoryBillEdit() {
   const [queryParams] = useSearchParams();
@@ -19,6 +20,7 @@ function HistoryBillEdit() {
 
   const fetchBillData = async () => {
     try {
+      // Lấy thông tin booking
       const res = await axios.get(
         `${Constants.DOMAIN_API}/admin/booking/getById/${queryParams.get("id")}`
       );
@@ -30,12 +32,28 @@ function HistoryBillEdit() {
       setValue("price", data.finalPrice);
       setValue("bookingTime", data.createdAt.slice(0, 16));
 
-      // Lưu thông tin chuyến đi và danh sách ghế
+      // Lưu thông tin chuyến đi
       setTripInfo(data.Trip || {});
-      setSeats([data.Seat?.seatNumber || data.seatId]); // fallback nếu seatNumber không có
 
+      // Gọi API để lấy thông tin chỗ ngồi
+      fetchSeatsData(data.id);
     } catch (error) {
       console.error("Lỗi khi lấy dữ liệu hóa đơn:", error);
+    }
+  };
+
+  const fetchSeatsData = async (bookingId) => {
+    try {
+      const res = await axios.get(
+        `${Constants.DOMAIN_API}/admin/booking-detail/by-booking/${bookingId}`
+      );
+      const seatData = res.data.data;
+
+      // Lấy danh sách chỗ ngồi
+      const seatNumbers = seatData.map(item => item.seatNumber);
+      setSeats(seatNumbers); // Cập nhật danh sách ghế
+    } catch (error) {
+      console.error("Lỗi khi lấy dữ liệu chỗ ngồi:", error);
     }
   };
 
@@ -43,15 +61,27 @@ function HistoryBillEdit() {
 
   const onSubmit = async (formData) => {
     try {
-      await axios.patch(
+      const res = await axios.patch(
         `${Constants.DOMAIN_API}/admin/booking/update/${queryParams.get("id")}`,
         { status: formData.status }
       );
+
+      toast.success(res.data.message);
+
       navigate("/admin/historyBill/getAll");
-    } catch (error) {
-      console.error("Lỗi khi cập nhật hóa đơn:", error);
+
+    } catch (err) {
+      console.error("Lỗi khi cập nhật hóa đơn:", err);
+
+      if (err.response) {
+        const errorMessage = err.response.data.message || "Có lỗi xảy ra!";
+        toast.error(errorMessage);
+      } else {
+        toast.error("Lỗi kết nối đến server!");
+      }
     }
   };
+
 
   return (
     <div className="container mx-auto p-4">
@@ -123,7 +153,7 @@ function HistoryBillEdit() {
             >
               <option value="pending">Chờ xử lý</option>
               <option value="confirmed">Đã xác nhận</option>
-              <option value="cancelled">Đã hủy</option>
+              <option value="canceled">Đã hủy</option>
             </select>
           </div>
 

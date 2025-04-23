@@ -1,15 +1,19 @@
 import { useForm } from "react-hook-form";
 import { Editor } from '@tinymce/tinymce-react';
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
+import { toast } from "react-toastify";
+import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
 
 const BlogCreate = () => {
     const navigate = useNavigate();
     const editorRef = useRef(null);
     const [errorMessage, setErrorMessage] = useState("");
+    const [categories, setCategories] = useState([]);
 
     const {
         register,
@@ -17,6 +21,32 @@ const BlogCreate = () => {
         setValue,
         formState: { errors },
     } = useForm();
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const res = await axios.get(`${Constants.DOMAIN_API}/admin/blog-category/active`);
+                setCategories(res.data.data || []);
+            } catch (err) {
+                toast.error("Không thể tải danh mục");
+            }
+        };
+        fetchCategories();
+    }, []);
+
+    useEffect(() => {
+        const token = Cookies.get('token');
+        if (token) {
+            try {
+                const decoded = jwtDecode(token);
+                if (decoded && decoded.id) {
+                    setValue("userId", decoded.id); //  Set userId từ token
+                }
+            } catch (err) {
+                console.error("Lỗi giải mã token:", err);
+            }
+        }
+    }, [setValue]);
 
     const validateImage = (fileList) => {
         if (fileList.length === 0) return "Ảnh là bắt buộc";
@@ -34,12 +64,19 @@ const BlogCreate = () => {
             formData.append("title", data.title);
             formData.append("content", content);
             formData.append("image", data.image[0]);
+            formData.append("status", data.status);
+            formData.append("categoryId", data.blogCategoryId);
+            formData.append("userId", data.userId); //  Gửi userId
 
-            await axiosAdmin.post(`${Constants.DOMAIN_API}/admin/blog/add`, formData);
+            const res = await axios.post(`${Constants.DOMAIN_API}/admin/blog/add`, formData);
+            toast.success(res.data.message);
             navigate("/admin/blog/getAll");
-        } catch (error) {
-            console.error("Lỗi khi thêm blog:", error);
-            setErrorMessage("Thêm bài viết thất bại. Vui lòng thử lại.");
+        } catch (err) {
+            if (err.response) {
+                toast.error(err.response.data.message);
+            } else {
+                toast.error("Lỗi kết nối đến server!");
+            }
         }
     };
 
@@ -53,6 +90,8 @@ const BlogCreate = () => {
                 )}
 
                 <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" className="p-4 border rounded-md shadow-lg">
+                    <input type="hidden" {...register("userId")} /> {/*  Hidden userId */}
+
                     <div className="mb-4">
                         <label className="block font-medium mb-2">Tiêu đề bài viết</label>
                         <input
@@ -87,6 +126,33 @@ const BlogCreate = () => {
                             {...register("image", { validate: validateImage })}
                         />
                         {errors.image && <p className="text-red-500">{errors.image.message}</p>}
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="block font-medium mb-2">Danh mục</label>
+                        <select
+                            className="w-full p-2 border rounded"
+                            {...register("blogCategoryId", { required: "Vui lòng chọn danh mục" })}
+                        >
+                            <option value="">-- Chọn danh mục --</option>
+                            {categories.map((cat) => (
+                                <option key={cat.id} value={cat.id}>{cat.name}</option>
+                            ))}
+                        </select>
+                        {errors.blogCategoryId && <p className="text-red-500">{errors.blogCategoryId.message}</p>}
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="block font-medium mb-2">Trạng thái</label>
+                        <select
+                            className="w-full p-2 border rounded"
+                            {...register("status", { required: "Vui lòng chọn trạng thái" })}
+                        >
+                            <option value="">-- Chọn trạng thái --</option>
+                            <option value="1">Hiển thị</option>
+                            <option value="0">Ẩn</option>
+                        </select>
+                        {errors.status && <p className="text-red-500">{errors.status.message}</p>}
                     </div>
 
                     <button type="submit" className="px-4 py-2 bg-[#073272] text-white rounded hover:bg-blue-900">

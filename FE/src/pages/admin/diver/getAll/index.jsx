@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import FormDelete from "../../../../components/formDelete";
 import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const DriverGetAll = () => {
 
@@ -19,20 +19,30 @@ const DriverGetAll = () => {
             const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/driver/list`);
             console.log(res.data.data);
             setData(res.data.data);
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            if (err.response) {
+                const errorMessage = err.response.data.message;
+                toast.error(errorMessage);
+            } else {
+                toast.error("Lỗi kết nối đến server!");
+            }
         }
     };
 
     const deleteDiver = async () => {
         if (!selectedDriver) return;
         try {
-            await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/driver/${selectedDriver.id}`);
+            const res = await axios.delete(`${Constants.DOMAIN_API}/admin/driver/${selectedDriver.id}`);
             setSelectedDriver(null);
-            toast.success("Tài xế đã được xóa thành công!");
+            toast.success(res.data.message);
             getAll();
-        } catch (error) {
-            console.log("Lỗi khi xóa:", error);
+        } catch (err) {
+            if (err.response) {
+                const errorMessage = err.response.data.message;
+                toast.error(errorMessage);
+            } else {
+                toast.error("Lỗi kết nối đến server!");
+            }
         }
     };
 
