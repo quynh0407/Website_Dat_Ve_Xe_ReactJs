@@ -8,6 +8,8 @@ const BookingController = require('../controllers/Client/bookingController');
 const BookingDetailController = require('../controllers/Client/bookingDetailController');
 const BookingTicketsController = require('../controllers/Client/bookingTicketsController');
 const upload = require('../config/upload');
+const { checkJWT, isAdmin } = require('../config/authCheck');
+
 
 const BusController = require('../controllers/Client/busController');
 const multer = require("multer");
@@ -27,8 +29,8 @@ router.post('/contact/question', ContacController.create);
 
 //------------------[ PROFILE ]------------------
 router.get('/profile/list',ProfileController.get);
-router.get('/profile/getId/:id',ProfileController.getById);
-router.patch('/profile/update/:id', upload.single('image'), ProfileController.update);
+router.get('/profile/getId/:id',checkJWT,ProfileController.getById);
+router.patch('/profile/update/:id',checkJWT, upload.single('image'), ProfileController.update);
 
 //------------------[ BOOKING ]------------------
 router.get('/booking/list',BookingController.get);

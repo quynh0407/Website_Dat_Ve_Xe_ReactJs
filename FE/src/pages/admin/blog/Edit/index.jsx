@@ -2,7 +2,9 @@ import { useForm, Controller } from "react-hook-form";
 import { Editor } from '@tinymce/tinymce-react';
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import { toast } from 'react-toastify';
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
+
 import Constants from "../../../../Constants";
 
 const BlogEdit = () => {
@@ -20,7 +22,7 @@ const BlogEdit = () => {
 
     const getBlogInfo = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/blog/getById/${queryParams.get("id")}`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/blog/getById/${queryParams.get("id")}`);
             const data = res.data.data;
             setValue("title", data.title);
             setValue("content", data.content);
@@ -42,7 +44,7 @@ const BlogEdit = () => {
                 formData.append("image", data.image[0]);
             }
 
-            await axios.patch(`${Constants.DOMAIN_API}/admin/blog/update/${queryParams.get("id")}`, formData);
+            await axiosAdmin.patch(`${Constants.DOMAIN_API}/admin/blog/update/${queryParams.get("id")}`, formData);
             navigate("/admin/blog/getAll");
         } catch (error) {
             console.error("Lỗi khi cập nhật blog:", error);

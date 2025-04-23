@@ -3,7 +3,9 @@ import { FaSave, FaCamera } from 'react-icons/fa';
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import Constants from "../../../../Constants";
-import axios from "axios";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
+import { toast } from 'react-toastify';
+
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const DriverEditForm = () => {
@@ -26,7 +28,7 @@ const DriverEditForm = () => {
 
     const getDriverInfo = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/driver/getById/${queryParams.get("id")}`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/driver/getById/${queryParams.get("id")}`);
             const data = res.data.data;
             setValue("fullName", data.fullName);
             setValue("phone", data.phone);
@@ -60,12 +62,13 @@ const DriverEditForm = () => {
                 formData.append("image", props.image[0]);
             }
 
-            await axios.patch(
+            await axiosAdmin.patch(
                 `${Constants.DOMAIN_API}/admin/driver/update/${queryParams.get("id")}`,
                 formData
             );
+            toast.success("tài xế đã được cập nhật thành công!");
 
-            navigate("/admin/driver/getAll");
+            navigate("/admin/driver/getAll"); 
         } catch (error) {
             console.log("Error === ", error);
         }

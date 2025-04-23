@@ -1,5 +1,6 @@
 import FormDelete from "../../../../components/formDelete";
-import axios from "axios";
+import { toast } from 'react-toastify';
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -15,7 +16,7 @@ const ReviewGetAll = () => {
 
     const getAllReviews = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/review/list`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/review/list`);
             setReviews(res.data.data);
         } catch (err) {
             console.error("Lỗi khi lấy đánh giá:", err);
@@ -25,8 +26,9 @@ const ReviewGetAll = () => {
     const deleteReview = async () => {
         if (!selectedReview) return;
         try {
-            await axios.delete(`${Constants.DOMAIN_API}/admin/review/${selectedReview.id}`);
+            await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/review/${selectedReview.id}`);
             setSelectedReview(null);
+            toast.success("Xóa thành công");
             getAllReviews();
         } catch (err) {
             console.error("Lỗi khi xóa đánh giá:", err);

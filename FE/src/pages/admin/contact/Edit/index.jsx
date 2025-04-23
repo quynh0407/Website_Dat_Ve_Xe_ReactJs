@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import axios from "axios";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -31,7 +31,7 @@ function ContactEdit() {
 
     const getById = async () => {
         try {
-            const res = await axios.get(`${URL}/${ENDPOINT}/getById/${id}`);
+            const res = await axiosAdmin.get(`${URL}/${ENDPOINT}/getById/${id}`);
             setValue("fullName", res.data.data.fullName);
             setValue("email", res.data.data.email);
             setValue("question", res.data.data.question);
@@ -57,7 +57,7 @@ function ContactEdit() {
             reply: data.reply,
         };
         try {
-            const res = await axios.patch(`${URL}/${ENDPOINT}/update/${id}`, formdata);
+            const res = await axiosAdmin.patch(`${URL}/${ENDPOINT}/update/${id}`, formdata);
             toast.success("Trả lời câu hỏi thành công!");
             navigatore("/admin/contact/getAll");
         } catch (err) {

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { useNavigate } from "react-router";
 import Constants from "../../../../Constants";
 import { toast } from 'react-toastify';
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
+
 
 function BusEdit() {
     const {
@@ -28,7 +29,7 @@ function BusEdit() {
 
     const getBusTypes = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/busType/list`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/busType/list`);
             setBusTypes(res.data.data);
         } catch (e) {
             console.log("Lỗi khi load loại xe:", e);
@@ -37,7 +38,7 @@ function BusEdit() {
 
     const getDrivers = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/driver/list`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/driver/list`);
             setDrivers(res.data.data);
         } catch (e) {
             console.log("Lỗi khi load tài xế:", e);
@@ -61,7 +62,7 @@ function BusEdit() {
 
     const getUserInfo = async (id) => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/bus/getId/${id}`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/bus/getId/${id}`);
             const busData = res.data.data;
             setValue("plateNumber", busData.plateNumber);
             setValue("status", busData.status);
@@ -87,7 +88,7 @@ function BusEdit() {
     const handleRegister = async (props) => {
         try {
             if (id) {
-                const res = await axios.patch(`${Constants.DOMAIN_API}/admin/bus/update/${id}`, {
+                const res = await axiosAdmin.patch(`${Constants.DOMAIN_API}/admin/bus/update/${id}`, {
                     plateNumber: props.plateNumber,
                     busTypeId: `${props.busTypeId}`,
                     driverId: `${props.driverId}`,

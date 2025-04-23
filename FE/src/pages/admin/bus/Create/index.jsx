@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import Constants from "../../../../Constants.jsx";
 import { toast } from 'react-toastify';
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 
 function BusCreate() {
     const {
@@ -21,7 +22,7 @@ function BusCreate() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const busTypesRes = await axios.get(`${Constants.DOMAIN_API}/admin/busType/list`);
+                const busTypesRes = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/busType/list`);
 
                 if (Array.isArray(busTypesRes.data.data)) {
                     setBusTypes(busTypesRes.data.data);
@@ -51,7 +52,7 @@ function BusCreate() {
         console.log("Dữ liệu nhập vào:", props);
     
         try {
-            const res = await axios.post(`${Constants.DOMAIN_API}/admin/bus/add`, {
+            const res = await axiosAdmin.post(`${Constants.DOMAIN_API}/admin/bus/add`, {
                 plateNumber: props.plateNumber,
                 busTypeId: `${props.busTypeId}`,
                 status: props.status,

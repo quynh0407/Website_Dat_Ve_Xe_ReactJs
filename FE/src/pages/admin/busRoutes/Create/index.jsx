@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import Constants from "../../../../Constants.jsx";
 import { toast } from "react-toastify";
+import axiosAdmin from "../../../../apiRoutes/axiosAdmin.js";
 
 function BusRoutesCreate() {
   const {
@@ -25,9 +26,9 @@ function BusRoutesCreate() {
   const fetchInitialData = async () => {
     try {
       const [routesRes, busesRes, driversRes] = await Promise.all([
-        axios.get(`${Constants.DOMAIN_API}/admin/routes/list`),
-        axios.get(`${Constants.DOMAIN_API}/admin/bus/list`),
-        axios.get(`${Constants.DOMAIN_API}/admin/driver/list`)
+        axiosAdmin.get(`${Constants.DOMAIN_API}/admin/routes/list`),
+        axiosAdmin.get(`${Constants.DOMAIN_API}/admin/bus/list`),
+        axiosAdmin.get(`${Constants.DOMAIN_API}/admin/driver/list`)
       ]);
 
       setRoutes(routesRes.data.data);
@@ -49,7 +50,7 @@ function BusRoutesCreate() {
         price: parseInt(data.ticketPrice)
       };
 
-      const res = await axios.post(`${Constants.DOMAIN_API}/admin/trips/add`, newTrip);
+      const res = await axiosAdmin.post(`${Constants.DOMAIN_API}/admin/trips/add`, newTrip);
       toast.success("Thêm chuyến xe thành công!");
       navigate("/admin/busRoutes/getAll");
     } catch (error) {

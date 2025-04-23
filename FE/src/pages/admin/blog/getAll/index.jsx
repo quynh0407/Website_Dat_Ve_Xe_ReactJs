@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import FormDelete from "../../../../components/formDelete";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
+import { toast } from 'react-toastify';
+
 const BlogGetAll = () => {
     const [selectedBlog, setSelectedBlog] = useState(null);
     const [blogData, setData] = useState([]);
@@ -13,7 +15,7 @@ const BlogGetAll = () => {
 
     const getAll = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/blog/list`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/blog/list`);
             console.log(res.data.data);
             setData(res.data.data);
         } catch (error) {
@@ -24,8 +26,10 @@ const BlogGetAll = () => {
     const deleteBlog = async () => {
         if (!selectedBlog) return;
         try {
-            await axios.delete(`${Constants.DOMAIN_API}/admin/blog/${selectedBlog.id}`);
+            await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/blog/${selectedBlog.id}`);
             setSelectedBlog(null);
+            toast.success("Bài viết đã được xóa thành công!");
+
             getAll();
         } catch (error) {
             console.log("Lỗi khi xóa:", error);

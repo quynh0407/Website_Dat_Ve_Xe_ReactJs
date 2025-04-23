@@ -1,10 +1,11 @@
 import Navbar from "../../../components/client/Navbar";
-import axios from "axios";
+import axiosAdmin from '../../../apiRoutes/axiosAdmin';
 import { useState, useEffect } from "react";
 import Constants from "../../../Constants";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 
 function Profile() {
     const [profileData, setProfileData] = useState({
@@ -32,7 +33,7 @@ function Profile() {
             const decoded = jwtDecode(token);
             const userId = decoded.id;
 
-            const res = await axios.get(`${Constants.DOMAIN_API}/profile/getId/${userId}`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/profile/getId/${userId}`);
             if (res.data && res.data.data) {
                 const userData = res.data.data;
                 // Khởi tạo mật khẩu mặc định là "oldPassword" khi lấy dữ liệu
@@ -41,11 +42,12 @@ function Profile() {
                 console.log("Sau khi cập nhật:", res.data.data);
             } else {
                 console.log("Không có dữ liệu người dùng.");
-                alert("Không tìm thấy thông tin người dùng.");
+                toast.error("Không tìm thấy thông tin người dùng.");
+
             }
         } catch (err) {
             console.log("Lỗi khi lấy dữ liệu", err);
-            alert("Có lỗi xảy ra, vui lòng thử lại.");
+            toast.error("Có lỗi xảy ra, vui lòng thử lại.");
         }
     };
 
@@ -89,7 +91,7 @@ function Profile() {
             }
 
 
-            await axios.patch(
+            await axiosAdmin.patch(
                 `${Constants.DOMAIN_API}/profile/update/${profileData.id}`,
                 formData,
                 {
@@ -99,11 +101,11 @@ function Profile() {
                 }
             );
 
-            alert("Cập nhật thành công!");
+            toast.success("Cập nhật thành công!");
             getData();
         } catch (error) {
             console.log("Update error:", error);
-            alert("Cập nhật thất bại!");
+            toast.error("Cập nhật thất bại!");
         }
         console.log(`${Constants.DOMAIN_API}/${profileData.image}`);
     };

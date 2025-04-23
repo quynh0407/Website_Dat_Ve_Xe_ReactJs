@@ -9,6 +9,7 @@ import axiosAdmin from '../../../../apiRoutes/axiosAdmin';
 import Constants from '../../../../Constants';
 
 
+
 const URL = Constants.DOMAIN_API;
 const ENDPOIND = `admin/routes`;
 
@@ -50,7 +51,7 @@ export default function RoutesGetAll() {
 
     const handleDelete = async ({ id }) => {
         try {
-            await axios.delete(`${URL}/${ENDPOIND}/delete/${id}`);
+            await axiosAdmin.delete(`${URL}/${ENDPOIND}/delete/${id}`);
             toast.success("Tuyến đường đã được xóa thành công!");
             Data();
             setSelectedRoute(null);

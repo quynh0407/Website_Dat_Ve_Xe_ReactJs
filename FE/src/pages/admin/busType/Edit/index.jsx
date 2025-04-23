@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { FaSave } from "react-icons/fa";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import { useNavigate } from "react-router";
 import Constants from "../../../../Constants";
 import { toast } from 'react-toastify';
@@ -33,7 +33,7 @@ function BusTypeEdit() {
 
   const getBusTypeInfo = async (id) => {
     try {
-      const res = await axios.get(`${Constants.DOMAIN_API}/admin/busType/getId/${id}`);
+      const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/busType/getId/${id}`);
       setValue("typeName", res.data.data.typeName);
       setValue("totalSeats", res.data.data.totalSeats);  
     } catch (e) {
@@ -44,7 +44,7 @@ function BusTypeEdit() {
   const handleRegister = async (props) => {
     try {
       if (id) {
-        await axios.patch(`${Constants.DOMAIN_API}/admin/busType/update/${id}`, {
+        await axiosAdmin.patch(`${Constants.DOMAIN_API}/admin/busType/update/${id}`, {
           typeName: props.typeName,
           totalSeats: props.totalSeats 
         });

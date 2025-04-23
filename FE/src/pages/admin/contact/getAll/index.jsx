@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FormDelete from "../../../../components/formDelete";
-import axios from "axios";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import { toast } from "react-toastify";
 import { Tab, Tabs, Box, CircularProgress } from "@mui/material";
 import Constants from "../../../../Constants";
@@ -32,7 +32,7 @@ function ContactGetAll() {
   const contactData = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${URL}/${ENDPOIND}/list`);
+      const res = await axiosAdmin.get(`${URL}/${ENDPOIND}/list`);
       setData(res.data.data);
       setLoading(false);
     } catch (err) {
@@ -66,7 +66,7 @@ function ContactGetAll() {
 
   const handleDelete = async ({ id }) => {
     try {
-      await axios.delete(`${URL}/${ENDPOIND}/${id}`);
+      await axiosAdmin.delete(`${URL}/${ENDPOIND}/${id}`);
       toast.success("Yêu cầu đã được xóa thành công!");
       contactData();
       setSelectedContact(null);

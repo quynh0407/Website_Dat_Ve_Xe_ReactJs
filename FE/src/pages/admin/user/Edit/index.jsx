@@ -1,9 +1,10 @@
-import axios from "axios";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { FaSave, FaTimes } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 const UserEdit = () => {
     const [queryParams] = useSearchParams();
@@ -25,7 +26,7 @@ const UserEdit = () => {
 
     const getUserInfo = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/user/getById/${queryParams.get("id")}`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/user/getById/${queryParams.get("id")}`);
             const data = res.data.data;
 
             setValue("fullName", data.fullName);
@@ -42,7 +43,7 @@ const UserEdit = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.patch(`${Constants.DOMAIN_API}/admin/user/update/${queryParams.get("id")}`, {
+            const response = await axiosAdmin.patch(`${Constants.DOMAIN_API}/admin/user/update/${queryParams.get("id")}`, {
                 fullName: data.fullName,
                 email: data.email,
                 phone: data.phone,
@@ -51,6 +52,7 @@ const UserEdit = () => {
             });
 
             console.log("Cập nhật thành công:", response.data);
+            toast.success("Tài khoản đã được cập nhật thành công!");
             navigate("/admin/user/getAll");
         } catch (error) {
             console.error("Lỗi khi cập nhật:", error);
@@ -62,12 +64,12 @@ const UserEdit = () => {
         <div className="container mx-auto p-4">
             <div className="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
                 <h3 className="text-2xl font-bold mb-4">Chỉnh sửa người dùng</h3>
-
+{/* 
                 {errorMessage && (
                     <div className="text-red-500 mb-4">
                         <strong>{errorMessage}</strong>
                     </div>
-                )}
+                )} */}
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-4">

@@ -1,8 +1,9 @@
 import FormDelete from "../../../../components/formDelete";
-import axios from "axios";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 
 const UserGetAll = () => {
@@ -16,7 +17,7 @@ const UserGetAll = () => {
 
     const getAll = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/user/list`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/user/list`);
             console.log(res.data.data);
             setData(res.data.data);
         } catch (error) {
@@ -27,18 +28,20 @@ const UserGetAll = () => {
     const deleteUser = async () => {
         if (!selectedUser) return;
         try {
-            await axios.delete(`${Constants.DOMAIN_API}/admin/user/${selectedUser.id}`);
+            await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/user/${selectedUser.id}`);
+            toast.success("Người dùng đã được xóa thành công!");
             setSelectedUser(null);
             getAll();
         } catch (error) {
             console.log("Lỗi khi xóa:", error);
+            toast.error("Xóa thất bại!!");
         }
     };
 
     const renderUser = (user, index) => {
         return (
             <tr key={user.id} className="border-b">
-                <td className="p-2 border">{user.id}</td>
+                <td className="p-2 border">{ index + 1 }</td>
                 <td className="p-2 border text-center">
                     <img
                         src={user?.image ? `${Constants.DOMAIN_API}/uploads/${user.image}` : "https://media-public.canva.com/mDo-I/MAGCJcmDo-I/1/t.png"}

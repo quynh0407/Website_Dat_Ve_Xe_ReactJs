@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import Constants from "../../../../Constants.jsx";
 import { toast } from 'react-toastify';
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 
 function BusTypeCreate() {
   const {
@@ -23,7 +24,7 @@ function BusTypeCreate() {
       formData.append("typeName", props.typeName);
       formData.append("totalSeats", props.totalSeats);
 
-      const res = await axios.post(`${Constants.DOMAIN_API}/admin/busType/add`, {
+      const res = await axiosAdmin.post(`${Constants.DOMAIN_API}/admin/busType/add`, {
         typeName: props.typeName,
         totalSeats: props.totalSeats
       });

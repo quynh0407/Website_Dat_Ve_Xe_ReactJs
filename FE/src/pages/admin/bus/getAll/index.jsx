@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Constants from "../../../../Constants.jsx";
 import { toast } from 'react-toastify';
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 
 function BusGetAll() {
   const [selectedBus, setSelectedBus] = useState(null);
@@ -18,7 +19,7 @@ function BusGetAll() {
 
   const getBusTypes = async () => {
     try {
-      const res = await axios.get(`${Constants.DOMAIN_API}/admin/busType/list`);
+      const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/busType/list`);
       setBusTypes(res.data.data);
     } catch (err) {
       console.log("Lỗi khi lấy loại xe", err);
@@ -37,7 +38,7 @@ function BusGetAll() {
   const deleteBus = async () => {
     if (!selectedBus) return;
     try {
-      await axios.delete(`${Constants.DOMAIN_API}/admin/bus/delete/${selectedBus.id}`);
+      await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/bus/delete/${selectedBus.id}`);
       toast.success("Xóa thành công");
       setSelectedBus(null); // Đóng hộp thoại xác nhận khi xóa thành công
       getData();
@@ -63,7 +64,7 @@ function BusGetAll() {
 
   const getData = async () => {
     try {
-      const res = await axios.get(`${Constants.DOMAIN_API}/admin/bus/list`);
+      const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/bus/list`);
       console.log('Response', res.data.data);
 
       setBussData(res.data.data);

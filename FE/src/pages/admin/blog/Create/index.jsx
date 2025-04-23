@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form";
 import { Editor } from '@tinymce/tinymce-react';
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { toast } from 'react-toastify';
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
 
 const BlogCreate = () => {
@@ -34,7 +35,7 @@ const BlogCreate = () => {
             formData.append("content", content);
             formData.append("image", data.image[0]);
 
-            await axios.post(`${Constants.DOMAIN_API}/admin/blog/add`, formData);
+            await axiosAdmin.post(`${Constants.DOMAIN_API}/admin/blog/add`, formData);
             navigate("/admin/blog/getAll");
         } catch (error) {
             console.error("Lỗi khi thêm blog:", error);

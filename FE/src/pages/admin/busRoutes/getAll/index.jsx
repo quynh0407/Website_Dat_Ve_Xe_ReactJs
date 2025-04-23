@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import Constants from "../../../../Constants.jsx";
 import { toast } from 'react-toastify';
 import dayjs from "dayjs";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
+
 
 function BusRoutesGetAll() {
     const formatPrice = (price) => {
@@ -20,7 +22,7 @@ function BusRoutesGetAll() {
     const deleteBusTypes = async () => {
         if (!selectedRoute) return;
         try {
-            await axios.delete(`${Constants.DOMAIN_API}/admin/trips/${selectedRoute.id}`);
+            await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/trips/${selectedRoute.id}`);
             toast.success("Xóa thành công!");
             setSelectedRoute(null);
             getData();
@@ -37,7 +39,7 @@ function BusRoutesGetAll() {
 
     const getData = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/trips/list`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/trips/list`);
             console.log('Response', res.data.data);
             setRoutes(res.data.data);
         } catch (err) {

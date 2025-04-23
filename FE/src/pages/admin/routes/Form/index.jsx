@@ -9,7 +9,7 @@ import MapPreview from "../../../../components/mapView";
 import Constants from '../../../../Constants';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Select from 'react-select';
-
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 
 const URL = Constants.DOMAIN_API;
 const ENDPOINT = `admin/routes`;
@@ -250,14 +250,14 @@ function RoutesCreate() {
     const getUseInfo = async (provincesData) => {
         try {
             setLoading(true);
-            const res = await axios.get(`${URL}/${ENDPOINT}/getId/?id=${id}`);
+            const res = await axiosAdmin.get(`${URL}/${ENDPOINT}/getId/?id=${id}`);
             const data = res.data.data;
 
             setValue("startProvince", data.startProvinceID);
             setValue("endProvince", data.endProvinceID);
 
             if (data.startProvinceID) {
-                const districtsRes = await axios.get(`${URL}/apiRoutes/districts?provinceId=${data.startProvinceID}`);
+                const districtsRes = await axiosAdmin.get(`${URL}/apiRoutes/districts?provinceId=${data.startProvinceID}`);
                 const districtsData = districtsRes.data;
                 setStartDistricts(districtsData);
 
@@ -265,7 +265,7 @@ function RoutesCreate() {
                 setValue("startDistrict", data.startDistrictID);
 
                 if (data.startDistrictID) {
-                    const wardsRes = await axios.get(`${URL}/apiRoutes/wards?districtId=${data.startDistrictID}`);
+                    const wardsRes = await axiosAdmin.get(`${URL}/apiRoutes/wards?districtId=${data.startDistrictID}`);
                     const wardsData = wardsRes.data;
                     setStartWards(wardsData);
 
@@ -276,7 +276,7 @@ function RoutesCreate() {
 
             // Tải và đặt giá trị quận/huyện và xã/phường cho điểm đến
             if (data.endProvinceID) {
-                const districtsRes = await axios.get(`${URL}/apiRoutes/districts?provinceId=${data.endProvinceID}`);
+                const districtsRes = await axiosAdmin.get(`${URL}/apiRoutes/districts?provinceId=${data.endProvinceID}`);
                 const districtsData = districtsRes.data;
                 setEndDistricts(districtsData);
 
@@ -284,7 +284,7 @@ function RoutesCreate() {
                 setValue("endDistrict", data.endDistrictID);
 
                 if (data.endDistrictID) {
-                    const wardsRes = await axios.get(`${URL}/apiRoutes/wards?districtId=${data.endDistrictID}`);
+                    const wardsRes = await axiosAdmin.get(`${URL}/apiRoutes/wards?districtId=${data.endDistrictID}`);
                     const wardsData = wardsRes.data;
                     setEndWards(wardsData);
 
@@ -343,10 +343,10 @@ function RoutesCreate() {
             };
 
             if (id) {
-                await axios.patch(`${URL}/${ENDPOINT}/update/${id}`, formData);
+                await axiosAdmin.patch(`${URL}/${ENDPOINT}/update/${id}`, formData);
                 toast.success("Cập nhật tuyến đường thành công");
             } else {
-                await axios.post(`${URL}/${ENDPOINT}/add`, formData);
+                await axiosAdmin.post(`${URL}/${ENDPOINT}/add`, formData);
                 toast.success("Tạo tuyến đường thành công");
             }
             navigate('/admin/routes/getAll');

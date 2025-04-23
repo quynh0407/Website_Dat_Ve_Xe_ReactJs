@@ -4,6 +4,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Constants from "../../../../Constants.jsx";
 import { toast } from 'react-toastify';
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
+
 
 function BusTypeGetAll() {
     const [selectedBusType, setSelectedBusType] = useState(null);
@@ -13,7 +15,7 @@ function BusTypeGetAll() {
     const deleteBusTypes = async () => {
         if (!selectedBusType) return;
         try {
-            await axios.delete(`${Constants.DOMAIN_API}/admin/busType/delete/${selectedBusType.id}`);
+            await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/busType/delete/${selectedBusType.id}`);
             // alert("Xóa thành công");
             toast.success("Xóa thành công!");
             setSelectedBusType(null);
@@ -32,7 +34,7 @@ function BusTypeGetAll() {
 
     const getData = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/busType/list`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/busType/list`);
             console.log('Response', res.data.data);
 
             setBusTypesData(res.data.data);

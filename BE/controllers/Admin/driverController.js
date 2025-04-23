@@ -6,7 +6,9 @@ const TripsModel = require('../../models/tripsModel');
 class DriverController {
     static async get(req, res) {
         try {
-            const routes = await DriverModel.findAll();
+            const routes = await DriverModel.findAll({
+                order:[['id', 'DESC']]
+            });
             res.status(200).json({
                 status: 200,
                 success: true,
@@ -152,6 +154,8 @@ class DriverController {
                 message: "Xóa không thành công",
                 error: error.message
             });
+            console.log(error);
+            
         }
     }
 

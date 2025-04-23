@@ -77,11 +77,7 @@ const AppRoutes = () => {
         <Route path="contact" element={<Contact />} />
 
         {/* Các route cần bảo vệ được bọc riêng lẻ bằng <PrivateRoute> */}
-        <Route
-          path="bookingHistory"
-          element={
-            <PrivateRoute>
-              <BookingHistory />
+        {/* <Route path="bookingHistory"element={ <PrivateRoute><BookingHistory />
             </PrivateRoute>
           }
         />
@@ -100,7 +96,7 @@ const AppRoutes = () => {
               <BookingTickets />
             </PrivateRoute>
           }
-        />
+        /> */}
       </Route>
 
 
@@ -111,11 +107,11 @@ const AppRoutes = () => {
       <Route path="resetPassword/:token" element={<ResetPassword />} />
 
 
-      {/* <Route path="/" element={<PrivateRoute><ClientLayout /></PrivateRoute>}>
+      <Route path="/" element={<PrivateRoute><ClientLayout /></PrivateRoute>}>
         <Route path="bookingHistory" element={<BookingHistory />} />
         <Route path="profile" element={<Profile />} />
         <Route path="bookingTickets/:tripId" element={<BookingTickets />} />
-      </Route> */}
+      </Route>
 
 
       <Route path="/admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>

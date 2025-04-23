@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import { toast } from 'react-toastify';
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
 
 function ReviewEdit() {
@@ -22,7 +23,7 @@ function ReviewEdit() {
 
     const getReview = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/review/getById/${queryParams.get("id")}`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/review/getById/${queryParams.get("id")}`);
             const data = res.data.data;
             setFormData({
                 userID: data.User.fullName,
@@ -47,9 +48,10 @@ function ReviewEdit() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.patch(`${Constants.DOMAIN_API}/admin/review/update/${queryParams.get("id")}`, {
+            await axiosAdmin.patch(`${Constants.DOMAIN_API}/admin/review/update/${queryParams.get("id")}`, {
                 status: formData.status,
             });
+            toast.success("Cập nhật tahnfh công ");
             navigate("/admin/review/getAll");
         } catch (error) {
             console.error("Lỗi khi cập nhật đánh giá:", error);

@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import Constants from "../../../../Constants.jsx";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
+
 
 function BusRoutesEdit() {
     dayjs.extend(utc);
@@ -37,7 +38,7 @@ function BusRoutesEdit() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`${Constants.DOMAIN_API}/admin/trips/getById/${id}`);
+                const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/trips/getById/${id}`);
                 const trip = res.data.data;
 
                 setValue("routeId", trip.routeId);
@@ -48,7 +49,7 @@ function BusRoutesEdit() {
                 setValue("price", trip.price);
                 setValue("status", trip.status);
 
-                const seatRes = await axios.get(`${Constants.DOMAIN_API}/admin/seats/${trip.busID}`);
+                const seatRes = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/seats/${trip.busID}`);
                 setSeats(seatRes.data.data);
             } catch (e) {
                 console.log("Fetch trip error:", e);
@@ -59,9 +60,9 @@ function BusRoutesEdit() {
         const fetchDropdownData = async () => {
             try {
                 const [routeRes, busRes, driverRes] = await Promise.all([
-                    axios.get(`${Constants.DOMAIN_API}/admin/routes/list`),
-                    axios.get(`${Constants.DOMAIN_API}/admin/bus/list`),
-                    axios.get(`${Constants.DOMAIN_API}/admin/driver/list`)
+                    axiosAdmin.get(`${Constants.DOMAIN_API}/admin/routes/list`),
+                    axiosAdmin.get(`${Constants.DOMAIN_API}/admin/bus/list`),
+                    axiosAdmin.get(`${Constants.DOMAIN_API}/admin/driver/list`)
                 ]);
                 setRoutes(routeRes.data.data);
                 setBuses(busRes.data.data);
@@ -80,10 +81,10 @@ function BusRoutesEdit() {
             data.departureTime = dayjs(data.departureTime).format("YYYY-MM-DDTHH:mm:ss");
             data.arrivalTime = dayjs(data.arrivalTime).format("YYYY-MM-DDTHH:mm:ss");
 
-            await axios.patch(`${Constants.DOMAIN_API}/admin/trips/update/${id}`, data);
+            await axiosAdmin.patch(`${Constants.DOMAIN_API}/admin/trips/update/${id}`, data);
 
             if (selectedSeatId && seatStatus) {
-                await axios.put(`${Constants.DOMAIN_API}/admin/seats/${selectedSeatId}`, {
+                await axiosAdmin.put(`${Constants.DOMAIN_API}/admin/seats/${selectedSeatId}`, {
                     status: seatStatus
                 });
             }
@@ -134,7 +135,7 @@ function BusRoutesEdit() {
                                 await trigger("busID");
                                 if (selectedBusId) {
                                     try {
-                                        const seatRes = await axios.get(`${Constants.DOMAIN_API}/admin/seats/${selectedBusId}`);
+                                        const seatRes = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/seats/${selectedBusId}`);
                                         setSeats(seatRes.data.data);
                                         setSelectedSeatId("");
                                         setSeatStatus("");

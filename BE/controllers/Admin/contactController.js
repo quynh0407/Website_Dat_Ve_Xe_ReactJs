@@ -4,7 +4,9 @@ const sendContactReply = require('../../mail/contact/sendmail.js')
 class ContacController {
     static async get(req, res) {
         try {
-            const routes = await ContactModel.findAll();
+            const routes = await ContactModel.findAll({
+                order:[['id', 'DESC']]
+            });
             res.status(200).json({
                 "status": 200,
                  success:true,

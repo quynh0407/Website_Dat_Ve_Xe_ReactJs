@@ -21,7 +21,7 @@ app.use('/public', express.static('public'));
 
 const port = 3000;
 
-app.use(express.json());
+// app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
 app.use(cors({

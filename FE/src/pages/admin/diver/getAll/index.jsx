@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FormDelete from "../../../../components/formDelete";
-import axios from "axios";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
+import { toast } from 'react-toastify';
 
 const DriverGetAll = () => {
 
@@ -15,7 +16,7 @@ const DriverGetAll = () => {
 
     const getAll = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/driver/list`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/driver/list`);
             console.log(res.data.data);
             setData(res.data.data);
         } catch (error) {
@@ -26,8 +27,9 @@ const DriverGetAll = () => {
     const deleteDiver = async () => {
         if (!selectedDriver) return;
         try {
-            await axios.delete(`${Constants.DOMAIN_API}/admin/driver/${selectedDriver.id}`);
+            await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/driver/${selectedDriver.id}`);
             setSelectedDriver(null);
+            toast.success("Tài xế đã được xóa thành công!");
             getAll();
         } catch (error) {
             console.log("Lỗi khi xóa:", error);

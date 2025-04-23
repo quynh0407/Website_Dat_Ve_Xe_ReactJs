@@ -1,10 +1,11 @@
 import { Link } from "react-router";
 import { FaSave, FaTimes } from 'react-icons/fa';
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { toast } from 'react-toastify';
 
 
 const DiverCreate = () => {
@@ -28,8 +29,9 @@ const DiverCreate = () => {
             formData.append("hireDate", props.hireDate);
             formData.append("status", props.status);
             formData.append("image", props.image[0]);
-            const res = await axios.post(`${Constants.DOMAIN_API}/admin/driver/add`, formData);
+            const res = await axiosAdmin.post(`${Constants.DOMAIN_API}/admin/driver/add`, formData);
             console.log("Thành công === ", res);
+            toast.success("Tài xế đã được thêm thành công!");
             navigate("/admin/driver/getAll");
         } catch (error) {
             console.error("Lỗi khi thêm tài xế === ", error);

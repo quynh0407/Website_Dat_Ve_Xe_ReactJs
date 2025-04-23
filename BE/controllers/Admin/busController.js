@@ -7,7 +7,9 @@ class BusController {
     //------------------[ GET ]------------------
     static async get(req, res) {
         try {
-            const bus = await BusModel.findAll();
+            const bus = await BusModel.findAll({
+                order: [['id', 'DESC']]
+            });
             res.status(200).json({
                 "status": 200,
                 "message": "Lấy danh sách thành công",

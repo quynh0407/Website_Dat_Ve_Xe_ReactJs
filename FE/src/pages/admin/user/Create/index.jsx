@@ -1,10 +1,11 @@
-import axios from "axios";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
 import { Link } from "react-router-dom";
 import { FaSave, FaTimes } from 'react-icons/fa';
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { toast } from 'react-toastify';
 
 const UserCreate = () => {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ const UserCreate = () => {
 
     const handleUser = async (data) => {
         try {
-            const res = await axios.post(`${Constants.DOMAIN_API}/admin/user/add`, {
+            const res = await axiosAdmin.post(`${Constants.DOMAIN_API}/admin/user/add`, {
                 fullName: data.fullName,
                 email: data.email,
                 phone: data.phone,
@@ -28,6 +29,7 @@ const UserCreate = () => {
             });
 
             console.log("Thêm người dùng thành công === ", res);
+            toast.success("Thêm người dùng thành công!");
             navigate("/admin/user/getAll");
         } catch (error) {
             console.error("Lỗi khi thêm người dùng === ", error);
@@ -48,12 +50,12 @@ const UserCreate = () => {
         <div className="container mx-auto p-4">
             <div className="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
                 <h2 className="text-xl font-bold mb-4">Thêm người dùng</h2>
-
+{/* 
                 {errorMessage && (
                     <div className="text-red-500 mb-4">
                         <strong>{errorMessage}</strong>
                     </div>
-                )}
+                )} */}
 
                 <form onSubmit={handleSubmit(handleUser)}>
                     <div className="grid grid-cols-2 gap-4">

@@ -9,7 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import Cookies from "js-cookie";
-import axios from "axios";
+import axiosAdmin from '../../../apiRoutes/axiosAdmin';
 import Select from "react-select";
 import { useNavigate } from 'react-router-dom';
 import Constants from "../../../Constants";
@@ -96,7 +96,7 @@ function Header() {
 
     const getDataOptions = async () => {
         try {
-            const response = await axios.get(`${URL}/${ENDPOINT}/list`);
+            const response = await axiosAdmin.get(`${URL}/${ENDPOINT}/list`);
             const responseData = response.data;
 
             if (responseData && responseData.data && Array.isArray(responseData.data)) {
@@ -127,7 +127,7 @@ function Header() {
 
     const handleSearch = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/bus/search', {
+            const response = await axiosAdmin.post('http://localhost:3000/bus/search', {
                 startPoint: selectedStartPoint?.value || '',
                 endPoint: selectedEndPoint?.value || '',
                 travelTime: selectedDate
