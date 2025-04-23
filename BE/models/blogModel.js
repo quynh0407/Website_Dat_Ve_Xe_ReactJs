@@ -1,6 +1,7 @@
 const connection = require('../config/database');
 const { DataTypes } = require('sequelize');
 const UserModel = require('./userModel'); 
+const BlogCategoryModel = require('./blogCategoryModel');
 
 const BlogModel = connection.define('Blog', {
     id: {
@@ -17,6 +18,24 @@ const BlogModel = connection.define('Blog', {
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
+    },
+    categoryId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: BlogCategoryModel,
+            key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+    },
+    status: {
+        type: DataTypes.TINYINT,
+        allowNull: false,
+        defaultValue: 1,
+        validate: {
+            isIn: [[0, 1]]
+        }
     },
     title: {
         type: DataTypes.STRING(255),
@@ -41,5 +60,4 @@ const BlogModel = connection.define('Blog', {
 });
 
 BlogModel.belongsTo(UserModel, { foreignKey: 'userId' });
-
 module.exports = BlogModel;

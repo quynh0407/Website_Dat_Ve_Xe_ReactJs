@@ -71,4 +71,9 @@ const BookingModel = connection.define('Booking', {
     timestamps: false,
 });
 
+// Associations (nếu cần)
+BookingModel.belongsTo(UserModel, { foreignKey: 'userId' });
+BookingModel.belongsTo(TripModel, { foreignKey: 'tripId' });
+BookingModel.belongsTo(BusesModel, { foreignKey: 'busId' });
+
 module.exports = BookingModel;

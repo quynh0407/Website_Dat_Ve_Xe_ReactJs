@@ -1,11 +1,15 @@
-const BlogModel = require('../../models/blogModel'); 
-const UserModel = require('../../models/userModel'); 
+const BlogCategoryModel = require('../../models/blogCategoryModel');
+const BlogModel = require('../../models/blogModel');
+const UserModel = require('../../models/userModel');
 
 class BlogController {
     static async get(req, res) {
         try {
             const blogs = await BlogModel.findAll({
-                include: [{ model: UserModel, as: 'User' }]
+                include: [
+                    { model: UserModel },
+                    { model: BlogCategoryModel, as:'blogCategory' }
+                ]
             });
 
             res.status(200).json({
@@ -18,6 +22,8 @@ class BlogController {
             res.status(500).json({ error: error.message });
         }
     }
+
+
     static async getById(req, res) {
         try {
             const { id } = req.params;
@@ -46,7 +52,7 @@ class BlogController {
 
     static async create(req, res) {
         try {
-            const { title, content, userId } = req.body;
+            const { title, content, userId, status, categoryId } = req.body;
             const image = req.file ? req.file.filename : null;
 
             const newBlog = await BlogModel.create({
@@ -54,6 +60,8 @@ class BlogController {
                 content,
                 image,
                 userId,
+                status,
+                categoryId,
             });
 
             res.status(201).json({
@@ -68,10 +76,11 @@ class BlogController {
         }
     }
 
+
     static async update(req, res) {
         try {
             const { id } = req.params;
-            const { title, content, userId } = req.body;
+            const { title, content, userId, status, categoryId } = req.body;
             const image = req.file ? req.file.filename : undefined;
 
             const blog = await BlogModel.findByPk(id);
@@ -83,6 +92,8 @@ class BlogController {
                 title,
                 content,
                 userId,
+                status,
+                categoryId,
                 ...(image && { image })
             });
 
@@ -99,6 +110,7 @@ class BlogController {
             });
         }
     }
+
 
     static async delete(req, res) {
         try {

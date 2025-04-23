@@ -46,43 +46,61 @@ class DriverController {
 
     static async create(req, res) {
         try {
-            const {
-                fullName,
-                phone,
-                licenseNumber,
-                licenseType,
-                experienceYears,
-                birthDate,
-                hireDate,
-                status,
-            } = req.body;
-
-            const image = req.file ? req.file.filename : null;
-            const age = calculateAge(birthDate);
-            const newDriver = await DriverModel.create({
-                fullName,
-                phone,
-                licenseNumber,
-                licenseType,
-                experienceYears,
-                birthDate,
-                hireDate,
-                status,
-                image,
-                age
+          const {
+            fullName,
+            phone,
+            licenseNumber,
+            licenseType,
+            experienceYears,
+            birthDate,
+            hireDate,
+            status,
+          } = req.body;
+      
+          const image = req.file ? req.file.filename : null;
+          const age = calculateAge(birthDate);
+      
+          const existingDriver = await DriverModel.findOne({
+            where: {
+              [Op.or]: [
+                { phone },
+                { licenseNumber }
+              ]
+            }
+          });
+      
+          if (existingDriver) {
+            return res.status(400).json({
+              success: false,
+              message: "Tài xế đã tồn tại với SĐT hoặc Số GPLX này!"
             });
-
-            res.status(201).json({
-                status: 201,
-                success: true,
-                message: "Thêm tài xế thành công!",
-                data: newDriver
-            });
-
+          }
+      
+          const newDriver = await DriverModel.create({
+            fullName,
+            phone,
+            licenseNumber,
+            licenseType,
+            experienceYears,
+            birthDate,
+            hireDate,
+            status,
+            image,
+            age
+          });
+      
+          res.status(201).json({
+            status: 201,
+            success: true,
+            message: "Thêm tài xế thành công!",
+            data: newDriver
+          });
+      
         } catch (error) {
-            res.status(500).json({ success: false, message: error.message });
+          res.status(500).json({ success: false, message: error.message });
         }
-    }
+      }
+      
 
 
     static async update(req, res) {

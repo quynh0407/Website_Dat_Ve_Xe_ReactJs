@@ -1,25 +1,40 @@
 const BookingModel = require('../../models/bookingModel');
 const UserModel = require('../../models/userModel');
 const TripModel = require('../../models/tripsModel');
-const SeatModel = require('../../models/seatsModel'); 
 const BusesModel = require('../../models/busesModel');
 const RouteModel = require('../../models/routesModel');
+const DriverModel = require('../../models/driverModel');
 
 
 class BookingController {
     static async get(req, res) {
         try {
+            const { userId, tripId, status, dateFrom, dateTo, userName } = req.query;
+
+            const whereCondition = {};
+            if (status) {
+                whereCondition.status = status;
+            }
+            if (userName) {
+                whereCondition['userName'] = userName;
+            }
+
             const bookings = await BookingModel.findAll({
+                where: whereCondition,
                 include: [
                     { model: UserModel, as: 'User' },
-                    { 
-                        model: TripModel, 
+                    {
+                        model: TripModel,
                         as: 'Trip',
-                        include: [{ model: RouteModel, as: 'Route' }] 
+                        include: [{ model: RouteModel, as: 'Route' },
+                        {
+                            model: DriverModel,
+                            as: 'drivers',
+                            attributes: ['fullName', 'licenseNumber']
+                        }
+                        ]
                     },
-                    { model: SeatModel, as: 'Seat' },
-                    { model: BusesModel, as: 'Bus'}
-
+                    { model: BusesModel, as: 'Bus' }
                 ]
             });
 
@@ -27,12 +42,14 @@ class BookingController {
                 status: 200,
                 success: true,
                 message: "Lấy danh sách đặt vé thành công",
-                data: bookings
+                data: bookings 
             });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     }
+
+
 
     static async getById(req, res) {
         try {
@@ -40,12 +57,17 @@ class BookingController {
             const booking = await BookingModel.findByPk(id, {
                 include: [
                     { model: UserModel, as: 'User' },
-                    { 
-                        model: TripModel, 
+                    {
+                        model: TripModel,
                         as: 'Trip',
-                        include: [{ model: RouteModel, as: 'Route' }] 
+                        include: [{ model: RouteModel, as: 'Route' },
+                        {
+                            model: DriverModel,
+                            as: 'drivers',
+                            attributes: ['fullName', 'licenseNumber']
+                        }
+                        ]
                     },
-                    { model: SeatModel, as: 'Seat' }
                 ]
             });
 
@@ -75,7 +97,6 @@ class BookingController {
             const newBooking = await BookingModel.create({
                 userId,
                 tripId,
-                seatId,
                 status,
                 finalPrice,
                 userName,
@@ -108,7 +129,6 @@ class BookingController {
             await booking.update({
                 userId,
                 tripId,
-                seatId,
                 status,
                 finalPrice,
                 userName,

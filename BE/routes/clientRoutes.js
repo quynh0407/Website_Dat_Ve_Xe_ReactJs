@@ -7,6 +7,9 @@ const ProfileController = require('../controllers/Client/profileController');
 const BookingController = require('../controllers/Client/bookingController');
 const BookingDetailController = require('../controllers/Client/bookingDetailController');
 const BookingTicketsController = require('../controllers/Client/bookingTicketsController');
+const BlogCategoryController = require('../controllers/Client/blogCategoryController');
+const BlogController = require('../controllers/Client/blogController');
+
 const upload = require('../config/upload');
 const { checkJWT, isAdmin } = require('../config/authCheck');
 
@@ -40,5 +43,14 @@ router.delete('/booking/delete/:id',BookingController.delete);
 //------------------[ BOOKINGDETAIL ]------------------
 router.get('/booking-detail/list',BookingDetailController.get);
 router.get('/booking-detail/getId/:id',BookingDetailController.getById);
+
+//------------------[ Blog ]-------------
+router.get('/blog/list', BlogController.get);
+router.get('/blog/getById/:id', BlogController.getById);
+router.get('/blog/latest', BlogController.getLatest);
+//------------------[ Blog Category ]-------------
+router.get('/blog-category/list', BlogCategoryController.getAll);
+router.get('/blog-category/:id', BlogCategoryController.getById);
+
 
 module.exports = router;

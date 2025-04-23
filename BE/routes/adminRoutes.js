@@ -14,8 +14,12 @@ const SeatsController = require('../controllers/Admin/seatsController');
 const DriverController = require('../controllers/Admin/driverController');
 const UserController = require('../controllers/Admin/userController');
 const BlogController = require('../controllers/Admin/blogController');
+const BlogCategoryController = require('../controllers/Admin/blogCategoryController');
+
 const ReviewController = require('../controllers/Admin/reviewController');
 const BookingController = require('../controllers/Admin/bookingController');
+const BookingDetailController = require('../controllers/Admin/bookingDetailController');
+
 const upload = require('../config/upload');
 //------------------[ ROUTES ]------------
 router.get('/routes/list',checkJWT, isAdmin ,RoutesController.get);
@@ -84,6 +88,14 @@ router.post('/blog/add',checkJWT,isAdmin, upload.single('image'), BlogController
 router.patch('/blog/update/:id',checkJWT, isAdmin , upload.single('image'), BlogController.update);
 router.delete('/blog/:id',checkJWT, isAdmin , BlogController.delete);
 
+//------------------[ Blog Category ]-------------
+router.get('/blog-category/list', BlogCategoryController.getAll);
+router.get('/blog-category/active', BlogCategoryController.getActive);
+router.get('/blog-category/:id', BlogCategoryController.getById);
+router.post('/blog-category/add', upload.single('image'), BlogCategoryController.create);
+router.patch('/blog-category/update/:id', upload.single('image'), BlogCategoryController.update);
+router.delete('/blog-category/delete/:id', BlogCategoryController.delete);
+
 //------------------[ Review ]-------------
 router.get('/review/list',checkJWT, isAdmin , ReviewController.get);
 router.get('/review/getById/:id',checkJWT, isAdmin , ReviewController.getById);
@@ -95,5 +107,13 @@ router.get('/booking/list', BookingController.get);
 router.get('/booking/getById/:id', BookingController.getById);
 router.patch('/booking/update/:id', upload.single('image'), BookingController.update);
 router.delete('/booking/:id', BookingController.delete);
+
+//------------------[ Booking Detail ]-------------
+router.get('/booking-detail/list', BookingDetailController.get);
+router.get('/booking-detail/getById/:id', BookingDetailController.getById);
+router.post('/booking-detail/create', BookingDetailController.create);
+router.patch('/booking-detail/update/:id', BookingDetailController.update);
+router.delete('/booking-detail/:id', BookingDetailController.delete);
+router.get('/booking-detail/by-booking/:bookingId', BookingDetailController.getByBookingId);
 
 module.exports = router;
