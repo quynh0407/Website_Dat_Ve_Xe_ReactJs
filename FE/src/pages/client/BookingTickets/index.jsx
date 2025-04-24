@@ -91,7 +91,7 @@ function BookingTickets() {
         const totalPrice = pricePerTicket * seatIds.length;
 
         try {
-            await axios.post(`${Constants.DOMAIN_API}/booking/add`, {
+            const bookings = await axios.post(`${Constants.DOMAIN_API}/booking/add`, {
                 userId,
                 userName,
                 phone,
@@ -103,19 +103,37 @@ function BookingTickets() {
                 busId
             });
 
-            toast.success("Đặt vé thành công!");
-            setSelectedSeats([]);
-            setUserName('');
-            setPhone('');
-            setEmailUser('');
+            console.log('Booking Response:', bookings.data);
+
+            const bookingId = bookings.data.data.booking.id;
+            if (!bookingId) {
+                console.error('Không lấy được bookingId:', bookings.data);
+                return;
+            }
+
+            const momoRes = await axios.post(`${Constants.DOMAIN_API}/payment/momo-url`, {
+                amount: totalPrice,
+                orderId: bookingId,
+                orderInfo: `Thanh toán vé xe - Mã đơn: ${bookingId}`
+            });
+
+            console.log('Momo Res:', momoRes.data);
+
+            const payUrl = momoRes.data.payUrl;
+            if (!payUrl) {
+                console.error('Không có đường dẫn thanh toán MOMO!');
+                return;
+            }
+
+            window.location.href = payUrl;
+
+
         } catch (error) {
-            console.error("Lỗi khi tạo đơn vé:", error);
-            toast.error("Có lỗi xảy ra khi đặt vé. Vui lòng thử lại.");
+            console.error("Lỗi khi đặt vé hoặc thanh toán:", error?.response?.data || error.message || error);
+            toast.error("Đặt vé thất bại hoặc lỗi khi tạo thanh toán MOMO.");
         }
+
     };
-
-
-
 
 
     if (!tripData) return <div>Đang tải dữ liệu chuyến xe...</div>;
