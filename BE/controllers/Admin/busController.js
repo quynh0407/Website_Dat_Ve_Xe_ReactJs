@@ -113,10 +113,17 @@ class BusController {
                 });
             }
 
-            const existingBus = await BusModel.findOne({ where: { plateNumber } });
-            if (existingBus && existingBus.id !== id) {
+            const existingBus = await BusModel.findOne({
+                where: {
+                    plateNumber,
+                    id: { [Op.ne]: id } // viết tắt của "not equal" để tìm xe có biển số giống nhưng không phải xe hiện tại
+                }
+            });
+            
+            if (existingBus) {
                 return res.status(400).json({ error: "Biển số xe đã tồn tại. Vui lòng chọn biển số khác." });
             }
+            
 
             const bus = await BusModel.findByPk(id);
             if (!bus) {
