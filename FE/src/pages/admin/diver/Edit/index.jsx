@@ -64,7 +64,7 @@ const DriverEditForm = () => {
                 formData.append("image", props.image[0]);
             }
 
-            const res = await axios.patch(
+            const res = await axiosAdmin.patch(
                 `${Constants.DOMAIN_API}/admin/driver/update/${queryParams.get("id")}`,
                 formData
             );

@@ -4,7 +4,8 @@ import FormDelete from "../../../../components/formDelete";
 import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
 import { toast } from "react-toastify";
-import axios from "axios";
+
+
 
 const DriverGetAll = () => {
 
@@ -33,7 +34,7 @@ const DriverGetAll = () => {
     const deleteDiver = async () => {
         if (!selectedDriver) return;
         try {
-            const res = await axios.delete(`${Constants.DOMAIN_API}/admin/driver/${selectedDriver.id}`);
+            const res = await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/driver/${selectedDriver.id}`);
             setSelectedDriver(null);
             toast.success(res.data.message);
             getAll();

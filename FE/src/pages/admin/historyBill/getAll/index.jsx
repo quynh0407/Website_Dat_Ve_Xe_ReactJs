@@ -21,30 +21,30 @@ const HistoryBillGetAll = () => {
 
 
   const fetchBills = async (customFilters = filters) => {
-  setLoading(true);
-  try {
-    const params = {};
-    if (customFilters.status) params.status = customFilters.status;
-    if (customFilters.userName) params.userName = customFilters.userName;
+    setLoading(true);
+    try {
+      const params = {};
+      if (customFilters.status) params.status = customFilters.status;
+      if (customFilters.userName) params.userName = customFilters.userName;
 
-    const queryString = new URLSearchParams(params).toString();
-    const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/booking/list?${queryString}`);
+      const queryString = new URLSearchParams(params).toString();
+      const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/booking/list?${queryString}`);
 
-    const formattedBills = res.data.data.map(bill => ({
-      ...bill,
-      route: bill.Trip?.Route
-        ? `${getProvince(bill.Trip.Route.startPoint)} → ${getProvince(bill.Trip.Route.endPoint)}`
-        : 'Không xác định'
-    }));
+      const formattedBills = res.data.data.map(bill => ({
+        ...bill,
+        route: bill.Trip?.Route
+          ? `${getProvince(bill.Trip.Route.startPoint)} → ${getProvince(bill.Trip.Route.endPoint)}`
+          : 'Không xác định'
+      }));
 
-    setBills(formattedBills);
-  } catch (error) {
-    console.error("Lỗi khi lấy danh sách hóa đơn:", error);
-    alert("Không thể tải danh sách hóa đơn. Vui lòng thử lại.");
-  } finally {
-    setLoading(false);
-  }
-};
+      setBills(formattedBills);
+    } catch (error) {
+      console.error("Lỗi khi lấy danh sách hóa đơn:", error);
+      alert("Không thể tải danh sách hóa đơn. Vui lòng thử lại.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   // Load danh sách ban đầu
@@ -82,7 +82,7 @@ const HistoryBillGetAll = () => {
     switch (status) {
       case "confirmed": return "Đã xác nhận";
       case "pending": return "Chờ xử lý";
-      case "cancelled": return "Đã hủy";
+      case "canceled": return "Đã hủy";
       default: return "Không xác định";
     }
   };
@@ -117,11 +117,12 @@ const HistoryBillGetAll = () => {
       <td className="p-2 border">
         <span className={`px-2 py-1 rounded-full text-xs ${bill.status === "confirmed" ? "bg-green-100 text-green-800" :
           bill.status === "pending" ? "bg-yellow-100 text-yellow-800" :
-            "bg-red-100 text-red-800"
+            bill.status === "canceled" ? "bg-red-100 text-red-800" : "bg-gray-100 text-gray-800"
           }`}>
           {getStatusText(bill.status)}
         </span>
       </td>
+
       <td className="p-2 border">{bill.finalPrice?.toLocaleString("vi-VN")} ₫</td>
       <td className="p-2 flex gap-2 justify-center">
         <Link
@@ -204,7 +205,7 @@ const HistoryBillGetAll = () => {
               className="bg-gray-400 hover:bg-gray-500 text-white py-2 px-4 rounded text-sm"
               disabled={loading}
             >
-             Bỏ lọc
+              Bỏ lọc
             </button>
 
           </div>
@@ -259,7 +260,7 @@ const HistoryBillGetAll = () => {
                   <p><strong>Email:</strong> {selectedBillDetail.info.emailUser}</p>
                   <p><strong>Chuyến đi:</strong> {selectedBillDetail.info.Trip?.Route?.startPoint} → {selectedBillDetail.info.Trip?.Route?.endPoint}</p>
                   <p><strong>Loại xe:</strong> {selectedBillDetail.detail[0]?.booking?.trips?.buses?.busType?.typeName || "Không rõ"}</p>
-                  <p><strong>Biển số:</strong> {selectedBillDetail.detail[0]?.seat?.bus?.plateNumber || "Không có"}</p>
+                  <p><strong>Biển số:</strong> {selectedBillDetail.detail[0]?.seatDetail?.bus?.plateNumber || "Không có"}</p>
                   <p><strong>Tên tài xế:</strong> {selectedBillDetail.info.Trip?.drivers?.fullName}</p>
                   <p><strong>Trạng thái:</strong> {getStatusText(selectedBillDetail.info.status)}</p>
                   <p><strong>Ngày đặt:</strong> {new Date(selectedBillDetail.info.createdAt).toLocaleString("vi-VN")}</p>
@@ -270,7 +271,7 @@ const HistoryBillGetAll = () => {
                 <ul className="list-disc list-inside pl-4">
                   {selectedBillDetail.detail.map((item, idx) => (
                     <li key={idx}>
-                      Ghế {item.seat?.seatNumber}
+                      Ghế {item.seatDetail?.seatNumber}
                     </li>
                   ))}
                 </ul>

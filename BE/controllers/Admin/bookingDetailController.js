@@ -8,7 +8,7 @@ class BookingDetailController {
                     // Kết hợp thông tin chỗ ngồi và xe
                     {
                         model: SeatsModel,
-                        as: 'seat',
+                        as: 'seatDetail',
                         attributes: ['seatNumber', 'status'],
                         include: [
                             {
@@ -79,7 +79,7 @@ class BookingDetailController {
                 include: [
                     {
                         model: SeatsModel,
-                        as: 'seat',
+                        as: 'seatDetail',
                         attributes: ['seatNumber', 'status'],
                         include: [
                             {
@@ -140,7 +140,7 @@ class BookingDetailController {
             const { id } = req.params;
             const detail = await BookingDetailModel.findByPk(id, {
                 include: [
-                    { model: SeatsModel, as: 'seat' },
+                    { model: SeatsModel, as: 'seatDetail' },
                     { model: BookingModel, as: 'booking' }
                 ]
             });
@@ -166,7 +166,7 @@ class BookingDetailController {
 
             const newDetail = await BookingDetailModel.create({
                 bookingId,
-                seatsId,
+                seatsId: seatId,
                 seatNumber,
                 price
             });
@@ -185,7 +185,7 @@ class BookingDetailController {
     static async update(req, res) {
         try {
             const { id } = req.params;
-            const { bookingId, seatId, seatNumber, price } = req.body;
+            const { bookingId, seatsId, seatNumber, price } = req.body;
 
             const detail = await BookingDetailModel.findByPk(id);
             if (!detail) {
@@ -194,7 +194,7 @@ class BookingDetailController {
 
             await detail.update({
                 bookingId,
-                seatId,
+                seatsId,
                 seatNumber,
                 price
             });

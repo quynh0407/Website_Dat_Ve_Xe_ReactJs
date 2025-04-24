@@ -49,6 +49,8 @@ function HistoryBillEdit() {
         `${Constants.DOMAIN_API}/admin/booking-detail/by-booking/${bookingId}`
       );
       const seatData = res.data.data;
+      console.log("seatData", seatData);
+      
 
       // Lấy danh sách chỗ ngồi
       const seatNumbers = seatData.map(item => item.seatNumber);
