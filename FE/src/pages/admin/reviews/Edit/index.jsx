@@ -3,7 +3,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from 'react-toastify';
 import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
-import { toast } from "react-toastify";
+import axios from "axios";
+
+
 
 function ReviewEdit() {
 
@@ -49,7 +51,7 @@ function ReviewEdit() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.patch(`${Constants.DOMAIN_API}/admin/review/update/${queryParams.get("id")}`, {
+            const res = await axiosAdmin.patch(`${Constants.DOMAIN_API}/admin/review/update/${queryParams.get("id")}`, {
                 status: formData.status,
             });
             toast.success(res.data.message);

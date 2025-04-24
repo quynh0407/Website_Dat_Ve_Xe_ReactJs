@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
-import { toast } from "react-toastify";
 import Cookies from 'js-cookie';
 import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
 const BlogCreate = () => {
     const navigate = useNavigate();
@@ -25,7 +25,7 @@ const BlogCreate = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const res = await axios.get(`${Constants.DOMAIN_API}/admin/blog-category/active`);
+                const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/blog-category/active`);
                 setCategories(res.data.data || []);
             } catch (err) {
                 toast.error("Không thể tải danh mục");
@@ -68,7 +68,7 @@ const BlogCreate = () => {
             formData.append("categoryId", data.blogCategoryId);
             formData.append("userId", data.userId); //  Gửi userId
 
-            const res = await axios.post(`${Constants.DOMAIN_API}/admin/blog/add`, formData);
+            const res = await axiosAdmin.post(`${Constants.DOMAIN_API}/admin/blog/add`, formData);
             toast.success(res.data.message);
             navigate("/admin/blog/getAll");
         } catch (err) {

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const BlogGetAll = () => {
     const [selectedBlog, setSelectedBlog] = useState(null);
@@ -26,7 +27,7 @@ const BlogGetAll = () => {
     const deleteBlog = async () => {
         if (!selectedBlog) return;
         try {
-            const res = await axios.delete(`${Constants.DOMAIN_API}/admin/blog/${selectedBlog.id}`);
+            const res = await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/blog/${selectedBlog.id}`);
             setSelectedBlog(null);
             toast.success(res.data.message);
             getAll();

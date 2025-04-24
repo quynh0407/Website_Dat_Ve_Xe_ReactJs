@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Constants from "../../../../Constants";
 import { toast } from "react-toastify";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 
 const BlogCategoryCreate = () => {
     const navigate = useNavigate();
@@ -32,7 +33,7 @@ const BlogCategoryCreate = () => {
             formData.append("image", data.image[0]);
             formData.append("status", data.status);
 
-            const res = await axios.post(`${Constants.DOMAIN_API}/admin/blog-category/add`, formData);
+            const res = await axiosAdmin.post(`${Constants.DOMAIN_API}/admin/blog-category/add`, formData);
             toast.success(res.data.message);
             navigate("/admin/blog/getCategoryAll");
         } catch (err) {

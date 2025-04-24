@@ -7,7 +7,8 @@ import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import { toast } from 'react-toastify';
 
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import axios from "axios";
+
 
 const DriverEditForm = () => {
     const navigate = useNavigate();

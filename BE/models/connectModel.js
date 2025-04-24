@@ -33,9 +33,7 @@ SeatsModel.belongsTo(BusesModel, { foreignKey: 'busID', as: 'bus' });
 BusesModel.belongsTo(BusTypesModel, { foreignKey: 'busTypeId', as: 'busType' });
 BusTypesModel.hasMany(BusesModel, { foreignKey: 'busTypeId', as: 'buses' });
 
-// Driver - Bus
-DriverModel.hasOne(BusesModel, { foreignKey: 'driverId', as: 'bus' });
-BusesModel.belongsTo(DriverModel, { foreignKey: 'driverId', as: 'drivers' });
+
 
 
 // Booking - Trip

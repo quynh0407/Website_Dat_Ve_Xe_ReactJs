@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import Constants from "../../../../Constants";
 import { toast } from "react-toastify";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 
 const BlogCategoryEdit = () => {
     const [queryParams] = useSearchParams();
@@ -19,7 +20,7 @@ const BlogCategoryEdit = () => {
 
     const getBlogCategoryInfo = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/blog-category/${queryParams.get("id")}`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/blog-category/${queryParams.get("id")}`);
             const data = res.data.data;
             setValue("name", data.name); 
             setValue("description", data.description);
@@ -54,7 +55,7 @@ const BlogCategoryEdit = () => {
                 formData.append("image", previewImage);
             }
 
-            const res = await axios.patch(`${Constants.DOMAIN_API}/admin/blog-category/update/${queryParams.get("id")}`, formData);
+            const res = await axiosAdmin.patch(`${Constants.DOMAIN_API}/admin/blog-category/update/${queryParams.get("id")}`, formData);
             toast.success(res.data.message); 
             navigate("/admin/blog/getCategoryAll");
         } catch (err) {

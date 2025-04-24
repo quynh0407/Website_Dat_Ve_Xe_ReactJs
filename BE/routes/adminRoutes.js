@@ -89,12 +89,12 @@ router.patch('/blog/update/:id',checkJWT, isAdmin , upload.single('image'), Blog
 router.delete('/blog/:id',checkJWT, isAdmin , BlogController.delete);
 
 //------------------[ Blog Category ]-------------
-router.get('/blog-category/list', BlogCategoryController.getAll);
-router.get('/blog-category/active', BlogCategoryController.getActive);
-router.get('/blog-category/:id', BlogCategoryController.getById);
-router.post('/blog-category/add', upload.single('image'), BlogCategoryController.create);
-router.patch('/blog-category/update/:id', upload.single('image'), BlogCategoryController.update);
-router.delete('/blog-category/delete/:id', BlogCategoryController.delete);
+router.get('/blog-category/list',checkJWT, isAdmin, BlogCategoryController.getAll);
+router.get('/blog-category/active',checkJWT, isAdmin, BlogCategoryController.getActive);
+router.get('/blog-category/:id',checkJWT, isAdmin, BlogCategoryController.getById);
+router.post('/blog-category/add',checkJWT, isAdmin, upload.single('image'), BlogCategoryController.create);
+router.patch('/blog-category/update/:id',checkJWT, isAdmin, upload.single('image'), BlogCategoryController.update);
+router.delete('/blog-category/delete/:id',checkJWT, isAdmin, BlogCategoryController.delete);
 
 //------------------[ Review ]-------------
 router.get('/review/list',checkJWT, isAdmin , ReviewController.get);
@@ -103,17 +103,17 @@ router.patch('/review/update/:id',checkJWT, isAdmin , upload.single('image'), Re
 router.delete('/review/:id',checkJWT, isAdmin , ReviewController.delete);
 
 //------------------[ Booking ]-------------
-router.get('/booking/list', BookingController.get);
-router.get('/booking/getById/:id', BookingController.getById);
-router.patch('/booking/update/:id', upload.single('image'), BookingController.update);
-router.delete('/booking/:id', BookingController.delete);
+router.get('/booking/list',checkJWT, isAdmin, BookingController.get);
+router.get('/booking/getById/:id',checkJWT, isAdmin, BookingController.getById);
+router.patch('/booking/update/:id',checkJWT, isAdmin, upload.single('image'), BookingController.update);
+router.delete('/booking/:id',checkJWT, isAdmin, BookingController.delete);
 
 //------------------[ Booking Detail ]-------------
-router.get('/booking-detail/list', BookingDetailController.get);
-router.get('/booking-detail/getById/:id', BookingDetailController.getById);
-router.post('/booking-detail/create', BookingDetailController.create);
-router.patch('/booking-detail/update/:id', BookingDetailController.update);
-router.delete('/booking-detail/:id', BookingDetailController.delete);
-router.get('/booking-detail/by-booking/:bookingId', BookingDetailController.getByBookingId);
+router.get('/booking-detail/list',checkJWT, isAdmin, BookingDetailController.get);
+router.get('/booking-detail/getById/:id',checkJWT, isAdmin, BookingDetailController.getById);
+router.post('/booking-detail/create',checkJWT, isAdmin, BookingDetailController.create);
+router.patch('/booking-detail/update/:id',checkJWT, isAdmin, BookingDetailController.update);
+router.delete('/booking-detail/:id',checkJWT, isAdmin, BookingDetailController.delete);
+router.get('/booking-detail/by-booking/:bookingId',checkJWT, isAdmin, BookingDetailController.getByBookingId);
 
 module.exports = router;

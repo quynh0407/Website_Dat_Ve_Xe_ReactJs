@@ -40,6 +40,10 @@ router.get('/booking/list',BookingController.get);
 router.get('/booking/getId/:id',BookingController.getById);
 router.delete('/booking/delete/:id',BookingController.delete);
 
+
+//------------------[ BOOKINGTICKET]-----------------
+router.post('/booking/add',BookingTicketsController.create);
+
 //------------------[ BOOKINGDETAIL ]------------------
 router.get('/booking-detail/list',BookingDetailController.get);
 router.get('/booking-detail/getId/:id',BookingDetailController.getById);

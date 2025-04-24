@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import Constants from "../../../../Constants";
 import { toast } from "react-toastify";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 
 function HistoryBillEdit() {
   const [queryParams] = useSearchParams();
@@ -21,7 +22,7 @@ function HistoryBillEdit() {
   const fetchBillData = async () => {
     try {
       // Lấy thông tin booking
-      const res = await axios.get(
+      const res = await axiosAdmin.get(
         `${Constants.DOMAIN_API}/admin/booking/getById/${queryParams.get("id")}`
       );
       const data = res.data.data;
@@ -44,7 +45,7 @@ function HistoryBillEdit() {
 
   const fetchSeatsData = async (bookingId) => {
     try {
-      const res = await axios.get(
+      const res = await axiosAdmin.get(
         `${Constants.DOMAIN_API}/admin/booking-detail/by-booking/${bookingId}`
       );
       const seatData = res.data.data;
@@ -61,7 +62,7 @@ function HistoryBillEdit() {
 
   const onSubmit = async (formData) => {
     try {
-      const res = await axios.patch(
+      const res = await axiosAdmin.patch(
         `${Constants.DOMAIN_API}/admin/booking/update/${queryParams.get("id")}`,
         { status: formData.status }
       );

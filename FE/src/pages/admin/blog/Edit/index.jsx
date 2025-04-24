@@ -6,7 +6,8 @@ import { toast } from 'react-toastify';
 import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 
 import Constants from "../../../../Constants";
-import { toast } from "react-toastify";
+import axios from "axios";
+
 
 const BlogEdit = () => {
     const [queryParams] = useSearchParams();
@@ -25,7 +26,7 @@ const BlogEdit = () => {
 
     const fetchCategories = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/blog-category/active`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/blog-category/active`);
             setCategories(res.data.data);
         } catch (error) {
             console.log("Lỗi lấy danh mục:", error);
@@ -59,7 +60,7 @@ const BlogEdit = () => {
                 formData.append("image", data.image[0]);
             }
 
-            const res = await axios.patch(`${Constants.DOMAIN_API}/admin/blog/update/${queryParams.get("id")}`, formData);
+            const res = await axiosAdmin.patch(`${Constants.DOMAIN_API}/admin/blog/update/${queryParams.get("id")}`, formData);
             toast.success(res.data.message);
             navigate("/admin/blog/getAll");
         } catch (err) {

@@ -4,7 +4,8 @@ import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 import Constants from "../../../../Constants";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import axios from "axios";
+
 
 
 const ReviewGetAll = () => {
@@ -27,7 +28,7 @@ const ReviewGetAll = () => {
     const deleteReview = async () => {
         if (!selectedReview) return;
         try {
-            const res = await axios.delete(`${Constants.DOMAIN_API}/admin/review/${selectedReview.id}`);
+            const res = await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/review/${selectedReview.id}`);
             setSelectedReview(null);
             toast.success(res.data.message);
             getAllReviews();

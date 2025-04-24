@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Constants from "../../../../Constants";
 import { toast } from "react-toastify";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 
 const BlogCategoryGetAll = () => {
     const [selectedBlog, setSelectedBlog] = useState(null);
@@ -15,7 +16,7 @@ const BlogCategoryGetAll = () => {
 
     const getAll = async () => {
         try {
-            const res = await axios.get(`${Constants.DOMAIN_API}/admin/blog-category/list`);
+            const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/blog-category/list`);
             console.log(res.data.data);
             setData(res.data.data);
         } catch (error) {
@@ -26,7 +27,7 @@ const BlogCategoryGetAll = () => {
     const deleteBlog = async () => {
         if (!selectedBlog) return;
         try {
-            const res = await axios.delete(`${Constants.DOMAIN_API}/admin/blog-category/delete/${selectedBlog.id}`);
+            const res = await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/blog-category/delete/${selectedBlog.id}`);
             setSelectedBlog(null);
             toast.success(res.data.message);
             getAll();

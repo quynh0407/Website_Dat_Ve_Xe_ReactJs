@@ -8,6 +8,7 @@ import timezone from 'dayjs/plugin/timezone';
 import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
+import axiosAdmin from '../../../apiRoutes/axiosAdmin.js';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -24,7 +25,7 @@ function BookingTickets() {
 
     useEffect(() => {
         if (tripId) {
-            axios
+            axiosAdmin
                 .get(`${Constants.DOMAIN_API}/admin/trips/getById/${tripId}`)
                 .then((response) => setTripData(response.data))
                 .catch((error) => {
@@ -91,7 +92,7 @@ function BookingTickets() {
         const totalPrice = pricePerTicket * seatIds.length;
 
         try {
-            await axios.post(`${Constants.DOMAIN_API}/booking/add`, {
+            await axiosAdmin.post(`${Constants.DOMAIN_API}/booking/add`, {
                 userId,
                 userName,
                 phone,

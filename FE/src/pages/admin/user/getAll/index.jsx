@@ -4,6 +4,8 @@ import Constants from "../../../../Constants";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
+
 
 
 const UserGetAll = () => {
@@ -28,7 +30,7 @@ const UserGetAll = () => {
     const deleteUser = async () => {
         if (!selectedUser) return;
         try {
-            const res = await axios.delete(`${Constants.DOMAIN_API}/admin/user/${selectedUser.id}`);
+            const res = await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/user/${selectedUser.id}`);
             setSelectedUser(null);
             toast.success(res.data.message);
             getAll();

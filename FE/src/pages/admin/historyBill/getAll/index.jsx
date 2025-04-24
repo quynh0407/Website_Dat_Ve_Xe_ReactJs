@@ -4,6 +4,7 @@ import FormDelete from "../../../../components/formDelete";
 import axios from "axios";
 import Constants from "../../../../Constants";
 import { toast } from "react-toastify";
+import axiosAdmin from '../../../../apiRoutes/axiosAdmin.js';
 
 const HistoryBillGetAll = () => {
   const [bills, setBills] = useState([]);
@@ -27,7 +28,7 @@ const HistoryBillGetAll = () => {
     if (customFilters.userName) params.userName = customFilters.userName;
 
     const queryString = new URLSearchParams(params).toString();
-    const res = await axios.get(`${Constants.DOMAIN_API}/admin/booking/list?${queryString}`);
+    const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/booking/list?${queryString}`);
 
     const formattedBills = res.data.data.map(bill => ({
       ...bill,
@@ -67,7 +68,7 @@ const HistoryBillGetAll = () => {
   const deleteBill = async () => {
     if (!selectedBill) return;
     try {
-      const res = await axios.delete(`${Constants.DOMAIN_API}/admin/booking-detail/${selectedBill.id}`);
+      const res = await axiosAdmin.delete(`${Constants.DOMAIN_API}/admin/booking-detail/${selectedBill.id}`);
       setSelectedBill(null);
       toast.success(res.data.message);
       fetchBills();
@@ -94,7 +95,7 @@ const HistoryBillGetAll = () => {
     setShowDetail(true);
     setDetailLoading(true);
     try {
-      const res = await axios.get(`${Constants.DOMAIN_API}/admin/booking-detail/by-booking/${bill.id}`);
+      const res = await axiosAdmin.get(`${Constants.DOMAIN_API}/admin/booking-detail/by-booking/${bill.id}`);
       setSelectedBillDetail({
         info: bill,
         detail: res.data.data,

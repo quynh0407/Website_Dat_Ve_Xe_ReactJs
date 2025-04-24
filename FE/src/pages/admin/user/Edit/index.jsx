@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { FaSave, FaTimes } from 'react-icons/fa';
 import { toast } from "react-toastify";
+import axios from "axios";
+
 
 const UserEdit = () => {
     const [queryParams] = useSearchParams();
@@ -43,7 +45,7 @@ const UserEdit = () => {
 
     const onSubmit = async (data) => {
         try {
-            const res = await axios.patch(`${Constants.DOMAIN_API}/admin/user/update/${queryParams.get("id")}`, {
+            const res = await axiosAdmin.patch(`${Constants.DOMAIN_API}/admin/user/update/${queryParams.get("id")}`, {
                 fullName: data.fullName,
                 email: data.email,
                 phone: data.phone,
