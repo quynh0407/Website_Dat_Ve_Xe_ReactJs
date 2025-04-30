@@ -8,7 +8,8 @@ import timezone from 'dayjs/plugin/timezone';
 import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
-import axiosAdmin from '../../../apiRoutes/axiosAdmin.js';
+import axiosAdmin from '../../../apiRoutes/axiosAdmin';
+
 
 dayjs.extend(utc);
 dayjs.extend(timezone);

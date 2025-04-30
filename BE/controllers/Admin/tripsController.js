@@ -53,9 +53,9 @@ class TripsController {
 
             const currentDateTime = new Date();
             const departureDateTime = new Date(departureTime);
-            /* if (departureDateTime.getTime() <= currentDateTime.getTime() + 2 * 60 * 60 * 1000) {
+            if (departureDateTime.getTime() <= currentDateTime.getTime() + 2 * 60 * 60 * 1000) {
                 return res.status(400).json({ message: "Thời gian khởi hành phải lớn hơn hiện tại ít nhất 2 tiếng!" });
-            } */
+            }
 
             const durationInMs = route.time * 60 * 60 * 1000;
             const arrivalDateTime = new Date(departureDateTime.getTime() + durationInMs);

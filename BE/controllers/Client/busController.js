@@ -26,7 +26,7 @@ class BusController {
                     {
                         model: BusesModel,
                         as: "buses",
-                        where: { status: "active" },
+                        /* where: { status: "running" }, */
                         include: [
                             {
                                 model: BusTypesModel,

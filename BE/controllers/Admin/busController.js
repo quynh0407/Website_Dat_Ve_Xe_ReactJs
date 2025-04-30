@@ -98,6 +98,8 @@ class BusController {
             const { id } = req.params;
 
             let { plateNumber, busTypeId, status, totalSeats } = req.body;
+            console.log("Dữ liệu nhận từ FE",req.body);
+            
 
             if (!plateNumber || !busTypeId || !status || !totalSeats) {
                 return res.status(400).json({

@@ -86,6 +86,8 @@ function BusEdit() {
     };
 
     const handleRegister = async (props) => {
+        console.log("props", props);
+        
         try {
             if (id) {
                 const res = await axiosAdmin.patch(`${Constants.DOMAIN_API}/admin/bus/update/${id}`, {
@@ -95,6 +97,8 @@ function BusEdit() {
                     status: props.status,
                     totalSeats: props.totalSeats,
                 });
+                console.log(res);
+                
 
                 navigate('/admin/bus/getAll');
                 toast.success("Cập nhật thành công");
@@ -131,7 +135,7 @@ function BusEdit() {
                         <select
                             className="w-full p-2 border rounded"
                             {...register("busTypeId", { required: "Loại xe không được để trống" })}
-                            onChange={handleBusTypeChange} // Cập nhật số ghế khi thay đổi loại xe
+                            onChange={handleBusTypeChange} 
                         >
                             <option value="">Chọn loại xe</option>
                             {busTypes.map((type) => (
