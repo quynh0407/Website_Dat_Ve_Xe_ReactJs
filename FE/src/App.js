@@ -10,6 +10,7 @@ import Blog from "./pages/client/Blog";
 import Contact from "./pages/client/Contact";
 import BusDetail from "./pages/client/BusDetail";
 import BookingHistory from "./pages/client/BookingHistory";
+import BookingDetail from "./pages/client/BookingHistory/bookingDetail";
 import Profile from "./pages/client/Profile";
 import Login from "./pages/authenticator/Login";
 import Register from "./pages/authenticator/Register";
@@ -81,10 +82,12 @@ const AppRoutes = () => {
       <Route path="dang-nhap" element={<Login />} />
       <Route path="dang-ky" element={<Register />} />
       <Route path="dang-ky/otp" element={<Otp />} />
+      <Route path="lich-su-dat-ve/:id" element={<BookingDetail />} />
 
-   
-      <Route path="/" element={<PrivateRoute><ClientLayout /></PrivateRoute>}>
-        <Route path="bookingHistory" element={<BookingHistory />} />
+
+      <Route path="/" element={<ClientLayout />}>
+        <Route path="lich-su-dat-ve" element={<BookingHistory />} />
+
         <Route path="profile" element={<Profile />} />
         <Route path="bookingTickets/:tripId" element={<BookingTickets />} />
       </Route>
@@ -134,7 +137,7 @@ const AppRoutes = () => {
           <Route path="edit" element={<BlogEdit />} />
           <Route path="createCategory" element={<BlogCategoryCreate />} />
           <Route path="getCategoryAll" element={< BlogCategoryGetAll />} />
-          <Route path="editCategory" element={< BlogCategoryEdit/>} />
+          <Route path="editCategory" element={< BlogCategoryEdit />} />
         </Route>
 
         <Route path="historyBill">

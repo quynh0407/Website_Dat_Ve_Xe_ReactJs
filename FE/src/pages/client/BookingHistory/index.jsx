@@ -1,9 +1,12 @@
 import Navbar from "../../../components/client/Navbar";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import Constants from "../../../Constants.jsx";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate, Link } from 'react-router-dom';
 import Cookies from "js-cookie";
+import BookingDetail from "../BookingHistory/bookingDetail"
+import { useMediaQuery } from 'react-responsive';
+import { X } from 'lucide-react'; 
 
 function BookingHistory() {
 
@@ -12,199 +15,107 @@ function BookingHistory() {
     const [showCancelModal, setShowCancelModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
 
-    useEffect(() => {
-        getData();
-    }, []);
-
-    const getData = async () => {
-        try {
-            const token = Cookies.get("token");
-            if (!token) {
-                setErrorMessage("Bạn cần đăng nhập để xem lịch sử.");
-                return;
-            }
-
-            const decoded = jwtDecode(token);
-            const userId = decoded.id;
-
-            const res = await axios.get(`${Constants.DOMAIN_API}/booking-detail/list`, {
-                params: { userId }
-            });
-
-            if (res.data.status === 200) {
-                setBusBookingDetailData(res.data.data);
-                setErrorMessage(null);
-            } else {
-                setErrorMessage("Không thể lấy lịch sử đặt vé. Vui lòng thử lại.");
-            }
-        } catch (err) {
-            console.log('Lỗi:', err);
-            setErrorMessage("Lỗi khi kết nối đến server. Vui lòng thử lại.");
-            console.log("Lỗi khi lấy lịch sử đặt vé", err);
-        }
-    };
-
     const deleteBooking = async () => {
-        if (!selectedBooking || selectedBooking.booking.status === 'canceled') {
-            setErrorMessage("Không thể hủy vé này.");
-            return;
-        }
-        try {
-            await axios.delete(`${Constants.DOMAIN_API}/booking/delete/${selectedBooking.id}`);
-            alert("Hủy vé thành công");
-            setShowCancelModal(false);
-            setSelectedBooking(null);
-            getData();
-        } catch (error) {
-            setErrorMessage("Không thể hủy vé, vui lòng thử lại.");
-            console.log("Lỗi khi hủy vé:", error);
-        }
+
     };
 
+    const [showDetail, setShowDetail] = useState(false);
+    const isMobile = useMediaQuery({ maxWidth: 768 });
 
+    const handleViewClick = (bookingId) => {
+        if (isMobile) {
+            window.location.href = `/lich-su-dat-ve/${bookingId}`;
+        } else {
+            setShowDetail(true);
+            setSelectedBooking(bookingId);
+        }
+    };
     return (
         <>
-            <main className="history mb-4 mt-[11%]">
-                <div className="flex w-[80%] mx-auto">
-                    <div className="w-[20%] bg-gray-100 p-3 rounded-md border border-gray-200">
+            <main className="history mb-4 lg:mt-[12%] ">
+                <div className="flex lg:w-[80%]  w-[90%] mx-auto lg:min-h-[30rem] ">
+                    <div className="lg:w-[20%] md:hidden mobile:hidden bg-gray-100 p-3 rounded-md border border-gray-200">
                         <Navbar />
                     </div>
-                    <div className="w-[80%] bg-white p-3 rounded-md ml-4">
+                    <div className="lg:w-[80%] md:w-full mobile:w-full bg-white p-3 rounded-md lg:ml-4 overflow-x-auto">
                         <h1 className="text-3xl font-bold">Lịch sử đặt vé</h1>
                         <p className="text-gray-600 mb-3">Theo dõi và quản lý quá trình lịch sử mua vé của bạn.</p>
 
-                        {errorMessage && (
-                            <div className="text-red-500 text-center mb-4">{errorMessage}</div>
-                        )}
 
-                        {BusBookingDetailData.length === 0 ? (
-                            <div className="alert alert-info text-center text-gray-600 fw-bold" role="alert">
-                                Hiện tại bạn chưa đặt vé. Bạn vui lòng đặt vé để xem lịch sử đặt vé của mình tại đây!
+                        <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 mb-4">
+                            <div>
+                                <label className="block mb-1">Mã vé</label>
+                                <input type="text" placeholder="Nhập mã vé" className="w-full border px-2 py-1 rounded" />
                             </div>
-                        ) : (
-                            BusBookingDetailData.map((item, index) => (
-                                <div key={index} className="bg-white mb-3 shadow-lg rounded-lg flex border border-gray-300">
-                                    <div className="w-2/3 border-r border-dashed border-gray-400">
-                                        <div className="text-white font-mono rounded-tl-lg text-lg font-bold bg-[#043175] px-3 py-2">
-                                            Mã vé: {item.booking.id}
-                                        </div>
-                                        <div className="text-gray-800 font-mono text-lg font-bold px-3">
-                                            Giá <span className="float-right">Chuyến xe</span>
-                                        </div>
-                                        <div className="text-xl font-bold text-gray-900 px-3">
-                                            {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price)}
-                                            <span className="float-right">{item.booking.trips.id}</span>
-                                        </div>
+                            <div>
+                                <label className="block mb-1">Thời gian</label>
+                                <input type="date" className="w-full border px-2 py-1 rounded" />
+                            </div>
+                            <div>
+                                <label className="block mb-1">Tuyến đường</label>
+                                <input type="text" placeholder="Nhập tuyến đường" className="w-full border px-2 py-1 rounded" />
+                            </div>
+                            <div>
+                                <label className="block mb-1">Trạng thái</label>
+                                <select className="w-full border px-2 py-1 rounded">
+                                    <option value="">Tất cả</option>
+                                    <option value="cancelled">Hủy</option>
+                                    <option value="pending">Chờ thanh toán</option>
+                                    <option value="expired">Hết hạn</option>
+                                    <option value="success">Thành công</option>
+                                </select>
+                            </div>
+                            <div className="flex items-end">
+                                <button className="w-full py-2 px-5 border-2 bg-orange-600 hover:bg-orange-700 text-white rounded-xl">
+                                    Tìm
+                                </button>
+                            </div>
+                        </div>
 
-                                        <div className="mt-2 flex justify-between px-3">
-                                            <div>
-                                                <p className="text-gray-700 font-mono text-sm">TỪ</p>
-                                                <p className="text-lg font-bold">{item.booking.trips.routes.startPoint}</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-gray-700 font-mono text-sm">GIỜ ĐI</p>
-                                                <p className="text-lg font-bold">
-                                                    {item.booking.trips?.departureTime
-                                                        ? new Date(new Date(item.booking.trips.departureTime.replace('Z', '')).getTime() + 7 * 60 * 60 * 1000).toLocaleString('vi-VN', {
-                                                            timeZone: 'Asia/Ho_Chi_Minh',
-                                                            hour: '2-digit',
-                                                            minute: '2-digit',
-                                                            hour12: false,
-                                                        })
-                                                        : 'Thời gian không hợp lệ'}
-                                                </p>
-                                            </div>
-                                        </div>
 
-                                        <div className="mt-2 flex justify-between px-3">
-                                            <div>
-                                                <p className="text-gray-700 font-mono text-sm">ĐẾN</p>
-                                                <p className="text-lg font-bold">{item.booking.trips.routes.endPoint}</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-gray-700 font-mono text-sm">GIỜ ĐẾN</p>
-                                                <p className="text-lg font-bold">
-                                                    {item.booking.trips?.arrivalTime
-                                                        ? new Date(new Date(item.booking.trips.arrivalTime.replace('Z', '')).getTime() + 7 * 60 * 60 * 1000).toLocaleString('vi-VN', {
-                                                            timeZone: 'Asia/Ho_Chi_Minh',
-                                                            hour: '2-digit',
-                                                            minute: '2-digit',
-                                                            hour12: false,
-                                                        })
-                                                        : 'Thời gian không hợp lệ'}
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex justify-between p-3">
-                                            <div>
-                                                <p className="text-gray-700 font-mono text-sm">NGÀY</p>
-                                                <p className="text-lg font-bold">{new Date(item.booking.trips?.departureTime).toLocaleDateString('vi-VN')}</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-gray-700 font-mono text-sm">GHẾ</p>
-                                                <p className="text-lg font-bold">{item?.seatNumber}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="w-1/3 p-3 text-center">
-                                        <div className="flex justify-between align-items-center">
-                                            <b>
-                                                {item.booking.status === 'pending'
-                                                    ? 'Chưa khởi hành'
-                                                    : item.booking.status === 'confirmed'
-                                                        ? 'Đã khởi hành'
-                                                        : item.booking.status === 'canceled'
-                                                            ? 'Đã hủy'
-                                                            : item.booking.status}
-                                            </b>
-                                            {item.booking.status === 'pending' && (
+                        <div className="overflow-auto max-h-[30rem]">
+                            <table className="w-full border border-gray-300 min-w-[900px]">
+                                <thead className="bg-gray-100 sticky top-0 z-10">
+                                    <tr>
+                                        <th className="border px-4 py-2">Mã vé</th>
+                                        <th className="border px-4 py-2">Số vé</th>
+                                        <th className="border px-4 py-2">Tuyến đường</th>
+                                        <th className="border px-4 py-2">Ngày đi</th>
+                                        <th className="border px-4 py-2">Số tiền</th>
+                                        <th className="border px-4 py-2">Thanh toán</th>
+                                        <th className="border px-4 py-2">Trạng thái</th>
+                                        <th className="border px-4 py-2">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {Array.from({ length: 15 }).map((_, i) => (
+                                        <tr key={i} className="hover:bg-gray-50">
+                                            <td className="border px-4 py-2">MV00{i + 1}</td>
+                                            <td className="border px-4 py-2">{Math.floor(Math.random() * 5) + 1}</td>
+                                            <td className="border px-4 py-2 max-w-[200px] line-clamp-2 overflow-hidden text-ellipsis">
+                                                Lê Bình, Cái Răng, Cần Thơ → Quận 1, TP. Hồ Chí Minh
+                                            </td>
+                                            <td className="border px-4 py-2">2025-05-{String(i + 1).padStart(2, "0")}</td>
+                                            <td className="border px-4 py-2">{(150000 + i * 10000).toLocaleString()}đ</td>
+                                            <td className="border px-4 py-2">Đã thanh toán</td>
+                                            <td className="border px-4 py-2">
+                                                {["Hủy", "Chờ thanh toán", "Hết hạn", "Thành công"][i % 4]}
+                                            </td>
+                                            <td className="border px-4 py-2">
                                                 <button
-                                                    className="bg-red-400 text-white px-4 py-2 font-mono rounded-md hover:bg-red-600"
-                                                    onClick={() => {
-                                                        setSelectedBooking(item);
-                                                        setShowCancelModal(true);
-                                                    }}
+                                                    className="text-blue-600 hover:underline"
+                                                    onClick={() => handleViewClick(1)}
                                                 >
-                                                    Hủy vé
+                                                    Xem
                                                 </button>
-                                            )}
-                                            {item.booking.status !== 'pending' && (
-                                                <p className="text-red-500">Không thể hủy vé</p>
-                                            )}
-                                        </div>
-                                        <div className="border-b border-gray-400 my-2"></div>
-
-                                        <div className="flex justify-between">
-                                            <p className="text-gray-700 font-mono text-sm">TÊN</p>
-                                            <p className="text-lg font-bold">{item.booking.userName}</p>
-                                        </div>
-
-                                        <div className="flex justify-between mt-2">
-                                            <p className="text-gray-700 font-mono text-sm">TỪ</p>
-                                            <p className="text-lg font-bold">{item.booking.trips.routes.startPoint}</p>
-                                        </div>
-
-                                        <div className="flex justify-between mt-2">
-                                            <p className="text-gray-700 font-mono text-sm">ĐẾN</p>
-                                            <p className="text-lg font-bold">{item.booking.trips.routes.endPoint}</p>
-                                        </div>
-
-                                        <div className="flex justify-between mt-2">
-                                            <p className="text-gray-700 font-mono text-sm">CHUYẾN</p>
-                                            <p className="text-lg font-bold">{item.booking.trips.id}</p>
-                                        </div>
-
-                                        <div className="flex justify-between mt-2">
-                                            <p className="text-gray-700 font-mono text-sm">GHẾ</p>
-                                            <p className="text-lg font-bold">{item?.seatNumber}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        )}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+
                 </div>
             </main>
 
@@ -234,7 +145,19 @@ function BookingHistory() {
                     </div>
                 </div>
             )}
-
+            {showDetail && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
+                    <div className="relative bg-white rounded-lg max-w-3xl w-full">
+                        <button
+                            className="absolute top-2 right-2 text-red-600 font-bold"
+                            onClick={() => setShowDetail(false)}
+                        >
+                           <X size={24} />
+                        </button>
+                        <BookingDetail bookingId={selectedBooking} />
+                    </div>
+                </div>
+            )}
             <div className="bg-gray-100 text-center py-4 text-sm text-gray-600 mb-0">
                 <div className="space-x-4">
                     <a href="#" className="hover:underline">Về chúng tôi</a>

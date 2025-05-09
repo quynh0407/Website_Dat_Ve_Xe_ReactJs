@@ -1,131 +1,178 @@
-import { Link, useLocation } from "react-router";
-import { useEffect, useState } from "react";
 import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { UserCircleIcon } from '@heroicons/react/24/solid';
+
 import '../../../styles/client/scss/pages/home.scss';
 
 function Header() {
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
     return (
         <>
-            <header class="p-0 pb-2 mb-3 mobile:min-h-[47rem] md:min-h-[35rem] lg:min-h-[35rem] " >
-                <div class="menu fixed top-0 left-0 w-full z-50" id="menu">
-                    <div class="menu-top flex justify-between w-[80%] lg:w-[80%] mx-auto items-center py-4">
-                        <div class="menu-top-left font-bold text-2xl">
-                            <img src="/assets/images/main/logo.png" alt class="w-1/2 lg:w-[150px] md:w-[100px] " />
+            <header className="p-0 pb-2 mb-3 h-auto" >
+                <div className="menu fixed top-0 left-0 w-full z-50" id="menu">
+                    <div className="menu-top flex justify-between w-[80%] lg:w-[80%] mx-auto items-center py-4">
+                        <div className="menu-top-left font-bold text-2xl">
+                            <img src="/assets/images/main/logo.png" alt className="w-1/2 lg:w-[150px] md:w-[100px] " />
                         </div>
-                        <div class="menu-top-right flex p-2">
-                            <ul class="flex flex-row flex-nowrap gap-4 justify-between list-none items-center text-base md:text-[1rem] lg:text-[1rem]">
-                                <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md whitespace-nowrap">
+                        <div className="menu-top-right flex p-2">
+                            <ul className="flex flex-row flex-nowrap gap-4 justify-between list-none items-center text-base md:text-[1rem] lg:text-[1rem]">
+                                <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md whitespace-nowrap">
                                     <a href="#">Hỗ trợ</a>
                                 </li>
-                                <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md whitespace-nowrap">
-                                    <a href="#">Đặt chỗ của tôi</a>
+                                <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md whitespace-nowrap">
+                                    <Link to="/lich-su-dat-ve">Đặt chỗ của tôi</Link>
                                 </li>
-                                <li class="border border-white rounded-lg px-4 py-2 hover:bg-black/10 whitespace-nowrap">
-                                    <Link to="/dang-ky" class="no-underline">
-                                        <i class="fas fa-user mr-2"></i> Đăng ký
+                                <li className="border border-white rounded-lg px-4 py-2 hover:bg-black/10 whitespace-nowrap">
+                                    <Link to="/dang-ky" className="no-underline">
+                                        <i className="fas fa-user mr-2"></i> Đăng ký
                                     </Link>
                                 </li>
-                                <li class="rounded-lg px-4 py-2 bg-sky-500 hover:text-white transition duration-300 font-bold hover:bg-sky-600/50 whitespace-nowrap">
-                                    <Link to="/dang-nhap" class="no-underline">Đăng nhập</Link>
+                                <li className="rounded-lg px-4 py-2 bg-sky-500 hover:text-white transition duration-300 font-bold hover:bg-sky-600/50 whitespace-nowrap">
+                                    <Link to="/dang-nhap" className="no-underline">Đăng nhập</Link>
                                 </li>
                             </ul>
 
                         </div>
                     </div>
-                    <hr class="border-gray-500 opacity-50" />
-                    <div class="menu-bottom flex justify-start w-[80%] lg:w-[80%] mx-auto items-center py-1">
-                        <ul class="flex flex-wrap gap-4 justify-center md:justify-start list-none items-center font-bold">
-                            <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Đặt
+                    <hr className="border-gray-500 opacity-50" />
+                    <div className="menu-bottom flex justify-start w-[80%] lg:w-[80%] mx-auto items-center py-1">
+                        <ul className="flex flex-wrap gap-4 justify-center md:justify-start list-none items-center font-bold">
+                            <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Đặt
                                 vé xe</li>
-                            <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Về
+                            <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Về
                                 chúng tôi</li>
-                            <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="./bus.html">Lịch
+                            <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="./bus.html">Lịch
                                 trình</a></li>
-                            <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Tin
+                            <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Tin
                                 tức</li>
-                            <li class="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Liên
+                            <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Liên
                                 hệ</li>
                         </ul>
                     </div>
-                    <hr class="border-gray-500 opacity-50" />
+                    <hr className="border-gray-500 opacity-50" />
                 </div>
 
-                <div id="mobileMenu" class=" w-full z-50 bg-[#043175] text-white ">
-                    <div class="menu-top flex justify-between w-[90%] mx-auto items-center py-4">
-                        <button type="submit" class="hamburger material-icons" id="ham-main">menu</button>
+                <div id="mobileMenu" className=" w-full z-50 bg-[#043175] text-white ">
+                    <div className="menu-top flex justify-between w-[90%] mx-auto items-center py-4">
+                        <button type="submit" className="hamburger material-icons" id="ham-main">menu</button>
 
-                        <div class="menu-top-left font-bold w-[14%] ">
-                            <img src="/assets/images/main/logo.png" alt="Logo" class=" w-[100%]" />
+                        <div className="menu-top-left font-bold w-[14%] ">
+                            <img src="/assets/images/main/logo.png" alt="Logo" className=" w-[100%]" />
                         </div>
-                        <button class="hamburger-button" id="ham-user" aria-label="User menu">
-                            <span class="material-icons">account_circle</span>
-                        </button>
+                        <div className="relative">
+                            <button
+                                type="button"
+                                onClick={() => setDropdownOpen(!dropdownOpen)}
+                                className="text-white bg-blue-700 hover:bg-blue-800 p-[0.5] rounded-full"
+                            >
+                                <UserCircleIcon className="w-8 h-8" />
+                            </button>
 
+                            <div
+                                id="dropdown"
+                                className={`${dropdownOpen ? 'block' : 'hidden'
+                                    } absolute top-15 right-0 z-[1000] bg-white divide-y divide-gray-100 rounded-lg shadow w-44`}
+                            >
+                                <ul className="py-2 text-sm text-gray-700">
+                                    <li>
+                                        <a href="#" className="flex items-center gap-3 block px-3 py-2 hover:bg-gray-100">
+                                            <img
+                                                src="/assets/images/logos/user.png"
+                                                alt="User avatar"
+                                                className="w-8 h-8 rounded-full object-cover"
+                                            />
+                                            <span className="text-sm text-sky-900 font-medium">Trang cá nhân</span>
+                                        </a>
 
+                                    </li>
+                                    <li>
+                                        <Link to="/lich-su-dat-ve" className="flex items-center gap-3 block px-3 py-2 hover:bg-gray-100">
+                                            <img
+                                                src="/assets/images/logos/clock.png"
+                                                alt="User avatar"
+                                                className="w-8 h-8 rounded-full object-cover"
+                                            />
+                                            <span className="text-sm text-sky-900 font-medium">Lịch sử đặt vé</span>
+                                        </Link>
+                                    </li>                 
+                                    <li>
+                                        <a href="#" className="flex items-center gap-3 block px-3 py-2 hover:bg-gray-100">
+                                            <img
+                                                src="/assets/images/logos/logout.png"
+                                                alt="User avatar"
+                                                className="w-8 h-8 rounded-full object-cover"
+                                            />
+                                            <span className="text-sm text-sky-900 font-medium">Đăng xuất</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
 
                     </div>
 
-                    <hr class="border-gray-500 opacity-50" />
+                    <hr className="border-gray-500 opacity-50" />
                 </div>
 
-                <div
-                    class="w-full h-[300px] md:h-[100%] mobile:[100%]  bg-cover bg-center  text-white flex justify-center items-center">
+                <div id="homeHeader" className="w-full mobile:min-h-[47rem] md:min-h-[35rem] lg:min-h-[30rem]   bg-cover bg-center  text-white flex justify-center items-center">
                     <div
-                        class=" w-full lg:w-[90%] max-w-[1000px] text-center sm:mt-[50rem] md:mt-[10rem] lg:mt-[30rem] px-4 header-content">
-                        <h1 class="text-2xl lg:text-3xl text-light font-bold mb-8">Khám Phá
+                        className=" w-full lg:w-[90%] max-w-[1000px] text-center sm:mt-[50rem] md:mt-[10rem] lg:mt-[18rem] px-4 header-content">
+                        <h1 className="text-2xl lg:text-3xl text-light font-bold mb-8">Khám Phá
                             Việt Nam, Theo Cách Của Bạn</h1>
-                        <div class="w-full flex justify-center items-center rounded-[16px] border-[6px] border-gray-100/10 ">
+                        <div className="w-full flex justify-center items-center rounded-[16px] border-[6px] border-gray-100/10 ">
                             <form action method
-                                class="w-full bg-white shadow-md rounded-lg p-4 flex flex-col lg:flex-row items-end gap-4">
+                                className="w-full bg-white shadow-md rounded-lg p-4 flex flex-col lg:flex-row items-end gap-4">
 
-                                <div class="flex flex-col w-full lg:w-[30%]">
-                                    <label class="text-blue-950 text-sm text-left px-2 font-semibold mb-1">Từ</label>
-                                    <div class="flex items-center p-2 rounded">
-                                        <i class="fas fa-bus text-lg text-sky-700"></i>
+                                <div className="flex flex-col w-full lg:w-[30%]">
+                                    <label className="text-blue-950 text-sm text-left px-2 font-semibold mb-1">Từ</label>
+                                    <div className="flex items-center p-2 rounded">
+                                        <i className="fas fa-bus text-lg text-sky-700"></i>
                                         <input type="text" placeholder="Nhập điểm đi"
-                                            class="outline-none w-full bg-transparent ml-2 py-1 text-blue-950" />
+                                            className="outline-none w-full bg-transparent ml-2 py-1 text-blue-950" />
                                     </div>
                                 </div>
 
-                                <div class="flex items-center justify-center w-full lg:w-[50px] lg:h-[50px]">
-                                    <i class="fas fa-exchange-alt text-sky-700 text-lg cursor-pointer hover:text-gray-700"></i>
+                                <div className="flex items-center justify-center w-full lg:w-[50px] lg:h-[50px]">
+                                    <i className="fas fa-exchange-alt text-sky-700 text-lg cursor-pointer hover:text-gray-700"></i>
                                 </div>
 
-                                <div class="flex flex-col w-full lg:w-[30%]">
-                                    <label class="text-blue-950 text-sm text-left px-2 font-semibold mb-1">Đến</label>
-                                    <div class="flex items-center bg-white p-2 rounded">
-                                        <i class="fas fa-bus text-lg text-sky-700"></i>
+                                <div className="flex flex-col w-full lg:w-[30%]">
+                                    <label className="text-blue-950 text-sm text-left px-2 font-semibold mb-1">Đến</label>
+                                    <div className="flex items-center bg-white p-2 rounded">
+                                        <i className="fas fa-bus text-lg text-sky-700"></i>
                                         <input type="text" placeholder="Nhập điểm đến"
-                                            class="outline-none w-full bg-transparent ml-2 py-1 text-blue-950" />
+                                            className="outline-none w-full bg-transparent ml-2 py-1 text-blue-950" />
                                     </div>
                                 </div>
 
-                                <div class="flex flex-col w-full lg:w-[30%]">
-                                    <label class="text-blue-950 text-sm text-left px-2 font-semibold mb-1">Ngày khởi hành</label>
-                                    <div class="flex items-center bg-white p-2 rounded relative">
-                                        <i class="fas fa-calendar-alt text-lg text-sky-700 cursor-pointer absolute left-2"
+                                <div className="flex flex-col w-full lg:w-[30%]">
+                                    <label className="text-blue-950 text-sm text-left px-2 font-semibold mb-1">Ngày khởi hành</label>
+                                    <div className="flex items-center bg-white p-2 rounded relative">
+                                        <i className="fas fa-calendar-alt text-lg text-sky-700 cursor-pointer absolute left-2"
                                             onclick="document.getElementById('departure-date').showPicker()"></i>
                                         <input type="date" id="departure-date"
-                                            class="outline-none w-full bg-transparent pl-8 text-blue-950 cursor-pointer appearance-none [&::-webkit-calendar-picker-indicator]:hidden" />
+                                            className="outline-none w-full bg-transparent pl-8 text-blue-950 cursor-pointer appearance-none [&::-webkit-calendar-picker-indicator]:hidden" />
                                     </div>
                                 </div>
 
                                 <button
-                                    class="bg-orange-500 hover:bg-orange-600 w-full lg:w-[50px] lg:h-[50px] text-white rounded transition duration-300">
-                                    <i class="fas fa-search"></i>
+                                    className="bg-orange-500 hover:bg-orange-600 w-full lg:w-[50px] lg:h-[50px] text-white rounded transition duration-300">
+                                    <i className="fas fa-search"></i>
                                 </button>
                             </form>
 
                         </div>
 
                         <div
-                            class="w-full md:w-[80%] flex flex-wrap items-center gap-2 mt-4 text-white justify-start">
-                            <span class="font-bold">Tìm kiếm</span>
+                            className="w-full md:w-[80%] flex flex-wrap items-center gap-2 mt-4 text-white justify-start">
+                            <span className="font-bold">Tìm kiếm</span>
                             <a href="#"
-                                class="flex items-center gap-1 bg-gray-500 text-white px-3 py-1 rounded text-sm">Khám
+                                className="flex items-center gap-1 bg-gray-500 text-white px-3 py-1 rounded text-sm">Khám
                                 phá ý tưởng chuyến đi</a>
                             <a href="#"
-                                class="flex items-center gap-1 bg-gray-500 text-white px-3 py-1 rounded text-sm">Tin
+                                className="flex items-center gap-1 bg-gray-500 text-white px-3 py-1 rounded text-sm">Tin
                                 tức</a>
                         </div>
                     </div>
@@ -133,83 +180,85 @@ function Header() {
 
 
             </header>
-            <nav class="nav-drill">
-                <ul class="nav-items nav-level-1 font-bold">
+            <nav className="nav-drill">
+                <ul className="nav-items nav-level-1 font-bold">
 
-                    <li class="nav-item">
-                        <Link to="/" class="nav-link linkmenu !text-orange-600" href="#">
+                    <li className="nav-item">
+                        <Link to="/" className="nav-link linkmenu !text-orange-600" href="#">
                             Trang chủ
                         </Link>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link linkmenu" href="#">
+                    <li className="nav-item">
+                        <a className="nav-link linkmenu" href="#">
                             Tra cứu vé
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link linkmenu" href="#">
+                    <li className="nav-item">
+                        <a className="nav-link linkmenu" href="#">
                             Về chúng tôi
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link linkmenu" href="#">
+                    <li className="nav-item">
+                        <a className="nav-link linkmenu" href="#">
                             Tin tức
                         </a>
                     </li>
 
 
-                    <li class="nav-item">
-                        <a class="nav-link linkmenu" href="#">
+                    <li className="nav-item">
+                        <a className="nav-link linkmenu" href="#">
                             Lịch trình
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link linkmenu" href="#">
+                    <li className="nav-item">
+                        <a className="nav-link linkmenu" href="#">
                             Về chúng tôi
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link linkmenu" href="#">
+                    <li className="nav-item">
+                        <a className="nav-link linkmenu" href="#">
                             Liên hệ
                         </a>
                     </li>
 
-                    <li class="nav-item nav-expand">
-                        <a class="nav-link linkmenu nav-expand-link" href="#">
+                    <li className="nav-item nav-expand">
+                        <a className="nav-link linkmenu nav-expand-link" href="#">
                             Tài khoản
                         </a>
-                        <ul class="nav-items nav-expand-content">
-                            <li class="nav-item">
-                                <Link to="/dang-nhap" class="nav-link" href="#">
+                        <ul className="nav-items nav-expand-content">
+                            <li className="nav-item">
+                                <Link to="/dang-nhap" className="nav-link" href="#">
                                     Đăng nhập
                                 </Link>
                             </li>
-                            <li class="nav-item">
-                                <Link to="/dang-ky" class="nav-link" href="#">
+                            <li className="nav-item">
+                                <Link to="/dang-ky" className="nav-link" href="#">
                                     Đăng ký
                                 </Link>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
+                            <li className="nav-item">
+                                <a className="nav-link" href="#">
                                     Thông tin tài khoản
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
+                            <li className="nav-item">
+                                <a className="nav-link" href="#">
                                     Lịch sử đặt vé
                                 </a>
                             </li>
 
                         </ul>
                     </li>
-                    <li class="nav-item ">
-                        <button class="text-left nav-link w-[100%] hover:bg-red-500 hover:text-white" href="#">
+                    <li className="nav-item ">
+                        <button className="text-left nav-link w-[100%] hover:text-red-700 text-sky-700" >
                             Đăng xuất
                         </button>
                     </li>
 
                 </ul>
             </nav>
+
+
         </>
     )
 }

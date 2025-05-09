@@ -111,8 +111,9 @@ export function toggleTextarea(show) {
   if (!main) return; 
 
   const allowedPages = ["home", "booktickets", "busDetail"];
-
+   
   function updateVisibility() {
+    
     if (allowedPages.includes(main.id)) {
       homeHeader?.classList.remove("hidden");
       homeComment?.classList.remove("hidden");
