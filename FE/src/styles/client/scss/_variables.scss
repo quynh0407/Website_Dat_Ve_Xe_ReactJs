@@ -1,7 +1,38 @@
+@use "sass:color";
 $primary-color: #043175; 
 $secondary-color: rgb(1, 148, 243);
 $button-color: rgb(255, 94, 31);
 $text-color: rgba(3,18,26,1.00);
 
+$black: #252525;
+$white: #fff;
+$grey: #eaeaea;
 
-$font-family:"Godwit", sans-serif;
+$primary-color-dark: darken( $primary-color, 10% );
+$primary-color-tint-1: lighten( $primary-color, 10% );
+$primary-color-tint-2: lighten( $primary-color, 20% );
+$primary-color-tint-3: lighten( $primary-color, 30% );
+$primary-color-tint-4: lighten( $primary-color, 40% );
+$primary-color-tint-5: lighten( $primary-color, 70% );
+$primary-font: "Fira Sans", Arial, sans-serif;
+
+$link-color: $primary-color;
+
+
+$primary-font: "Fira Sans", Arial, sans-serif;
+$link-color: $primary-color;
+
+$nav-width: 250px;
+$nav-padding: 0.875em 1em;
+$nav-border-color: $primary-color-tint-5;
+$nav-background-color: $white;
+
+$nav-icon-font: 'Material Icons';
+$nav-icon-arrow-right: 'chevron_left';
+$nav-icon-arrow-left: 'chevron_right';
+
+$nav-level-border-color: $primary-color;
+$nav-level-background-color: $primary-color-tint-5;
+$nav-level3-background-color: $primary-color-tint-4;
+$nav-level4-background-color: $primary-color-tint-3;
+$nav-level5-background-color: $primary-color-tint-2;

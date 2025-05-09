@@ -14,7 +14,9 @@ font-family: var(--font-family);
 background-color: #e2e8ef;
 margin: 0 !important;
 }
-
+body::after{
+    height: auto !important;
+}
 h1,
 h2,
 h3,
@@ -22,6 +24,7 @@ h4,
 h5,
 h6, p , a {
 font-family: var(--font-family);
+
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {

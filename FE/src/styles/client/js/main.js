@@ -1,30 +1,7 @@
 import Swiper from "swiper";
 import "swiper/css";
 
-// ================== HIỆU ỨNG COMMENT SLIDER ==================
-export function initCommentSlider() {
-  const commentContainer = document.getElementById("comment-container");
-  const comments = [
-    "“Tuyến Sài Gòn - Đà Lạt dịch vụ tốt, tài xế vui vẻ, xe sạch sẽ! ⭐⭐⭐⭐⭐”",
-    "“Xe chạy êm, đặt vé nhanh chóng. Rất hài lòng! 👍”",
-    "“Tài xế thân thiện, dịch vụ chuyên nghiệp. ⭐⭐⭐⭐”",
-    "“Giá cả hợp lý, đặt vé tiện lợi. Chắc chắn sẽ quay lại! ❤️”",
-    "“Chuyến đi thoải mái, không bị say xe. Rất tuyệt vời! 🌟”",
-  ];
-
-  if (commentContainer) {
-    let currentIndex = 0;
-    function updateComment() {
-      commentContainer.textContent = comments[currentIndex];
-    }
-    function nextComment() {
-      currentIndex = (currentIndex + 1) % comments.length;
-      updateComment();
-    }
-    setInterval(nextComment, 5000);
-    updateComment();
-  }
-}
+ 
 
 // ================== HIỆU ỨNG SWIPER SLIDER ==================
 export function initSwiper() {
@@ -35,7 +12,7 @@ export function initSwiper() {
     pagination: { el: ".swiper-pagination", clickable: true },
     autoplay: { delay: 3000, disableOnInteraction: false },
     breakpoints: {
-      320: { slidesPerView: 1 },
+      320: { slidesPerView: 2 },
       640: { slidesPerView: 2 },
       768: { slidesPerView: 3 },
       1024: { slidesPerView: 4 },
@@ -88,35 +65,26 @@ export function initMenu() {
   };
 }
 // ================== HIỆU ỨNG XE DI CHUYỂN ==================
-export function initBusAnimation() {
+document.addEventListener('DOMContentLoaded', function () {
   const busElement = document.getElementById("bus");
   if (!busElement) return;
 
   function checkBusVisibility() {
     const rect = busElement.getBoundingClientRect();
     const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-    busElement.classList.toggle("bus-move", isVisible);
+    
+    // Nếu xe bus xuất hiện trong viewport, thêm class bus-move
+    if (isVisible) {
+      busElement.classList.add("bus-move");
+    } else {
+      busElement.classList.remove("bus-move");
+    }
   }
 
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            busElement.classList.add("bus-move");
-          } else {
-            busElement.classList.remove("bus-move");
-          }
-        });
-      },
-      { threshold: 0.5 }  
-    );
-    observer.observe(busElement);
-  } else {
-    window.addEventListener("scroll", checkBusVisibility);
-    checkBusVisibility();
-  }
-}
+  checkBusVisibility(); // Kiểm tra ngay khi trang tải
+  window.addEventListener("scroll", checkBusVisibility); // Kiểm tra khi cuộn trang
+});
+
  // ============== Modal hủy vé ==============
 export function openCancelModal() {
   document.getElementById("cancelModal")?.classList.remove("hidden");
@@ -160,3 +128,63 @@ export function toggleTextarea(show) {
 
    updateVisibility();
 }
+
+//=============== MENU MOBILE ==================
+document.addEventListener('DOMContentLoaded', function () {
+  console.clear();
+
+  const navExpand = [].slice.call(document.querySelectorAll('.nav-expand'));
+  const backLink = `<li class="nav-item">
+      <a class="nav-link nav-back-link" href="javascript:;">
+      Trở về
+      </a>
+  </li>`;
+
+  navExpand.forEach(item => {
+      const content = item.querySelector('.nav-expand-content');
+      const link = item.querySelector('.nav-link');
+      if (content && link) {
+          content.insertAdjacentHTML('afterbegin', backLink);
+          link.addEventListener('click', () => {
+              item.classList.add('active');
+          });
+      }
+
+      const back = item.querySelector('.nav-back-link');
+      if (back) {
+          back.addEventListener('click', () => {
+              item.classList.remove('active');
+          });
+      }
+  });
+
+  const hamMain = document.getElementById('ham-main');
+  const hamUser = document.getElementById('ham-user');
+
+  if (hamMain) {
+      hamMain.addEventListener('click', function (event) {
+          event.stopPropagation();
+          document.body.classList.toggle('nav-is-toggled');
+      });
+  }
+
+  if (hamUser) {
+      hamUser.addEventListener('click', function (event) {
+          event.stopPropagation();
+          console.log("User menu clicked");
+      });
+  }
+
+  document.addEventListener('click', function (event) {
+      const navDrill = document.querySelector('.nav-drill');
+
+      if (
+          navDrill &&
+          !navDrill.contains(event.target) &&
+          (!hamMain || !hamMain.contains(event.target)) &&
+          (!hamUser || !hamUser.contains(event.target))
+      ) {
+          document.body.classList.remove('nav-is-toggled');
+      }
+  });
+});
