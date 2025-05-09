@@ -13,7 +13,9 @@ import BookingHistory from "./pages/client/BookingHistory";
 import Profile from "./pages/client/Profile";
 import Login from "./pages/authenticator/Login";
 import Register from "./pages/authenticator/Register";
+import Otp from "./pages/authenticator/Register/otp";
 import BookingTickets from "./pages/client/BookingTickets";
+
 
 //------------ADMIN-------------
 import BusGetAll from "./pages/admin/bus/getAll";
@@ -64,14 +66,6 @@ import BlogDetail from "./pages/client/BlogDetail";
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* <Route path="/" element={<ClientLayout />}>
-        <Route index element={<Home />} />
-        <Route path="bus" element={<Bus />} />
-        <Route path="about" element={<AboutUs />} />
-        <Route path="blog" element={<Blog />} />
-        <Route path="contact" element={<Contact />} />
-      </Route>
- */}
 
       <Route path="/" element={<ClientLayout />}>
         <Route index element={<Home />} />
@@ -80,39 +74,15 @@ const AppRoutes = () => {
         <Route path="blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/blog/category/:id" element={<Blog />} />
-
-
-        {/* Các route cần bảo vệ được bọc riêng lẻ bằng <PrivateRoute> */}
-        {/* <Route path="bookingHistory"element={ <PrivateRoute><BookingHistory />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="profile"
-          element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="bookingTickets/:tripId"
-          element={
-            <PrivateRoute>
-              <BookingTickets />
-            </PrivateRoute>
-          }
-        /> */}
       </Route>
 
 
 
-      <Route path="login" element={<Login />} />
-      <Route path="register" element={<Register />} />
-      <Route path="resetForm" element={<ResetForm />} />
-      <Route path="resetPassword/:token" element={<ResetPassword />} />
+      <Route path="dang-nhap" element={<Login />} />
+      <Route path="dang-ky" element={<Register />} />
+      <Route path="dang-ky/otp" element={<Otp />} />
 
-
+   
       <Route path="/" element={<PrivateRoute><ClientLayout /></PrivateRoute>}>
         <Route path="bookingHistory" element={<BookingHistory />} />
         <Route path="profile" element={<Profile />} />

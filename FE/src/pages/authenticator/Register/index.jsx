@@ -1,111 +1,84 @@
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import Constants from "../../../Constants.jsx";
+import { Link, Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-const URL = Constants.DOMAIN_API;
+import { toast } from "react-toastify";
 function Register() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+        mode: "onChange", 
+    });
     const navigate = useNavigate();
 
-    const onSubmit = async (data) => {
-        console.log(data);
-        try {
-            const formData = {
-                fullName: data.fullName,
-                phone: data.phone,
-                email: data.email,
-                password: data.password,
-            };
-            await axios.post(`${URL}/register`, formData);
-            toast.success("Đăng ký thành công!", {
-                onClose: () => {
-                    navigate("/login");
-                }
-            });
-
-        } catch (err) {
-            console.log(err);
-            if (err.response) {
-                const errorMessage = err.response.data.message;
-                toast.error(errorMessage);
-            } else {
-                toast.error("Lỗi kết nối đến server!");
-            }
+    const handleRegister = async (props) => {
+        if (isValid) { 
+            navigate("/dang-ky/otp");
+        } 
+        if (!isValid) {
+            toast.error("Vui lòng điền đầy đủ và chính xác thông tin.");
         }
-    };
+    }
+
     return (
         <>
-            <main className="mx-auto w-full md:w-[80%] px-4 flex items-center justify-center h-screen "  >
-                <ToastContainer position="top-right" autoClose={2000} />
-                <div className="w-full max-w-md bg-white my-[50px] p-6 rounded-lg shadow-lg">
-                    <a href="/" className="text-[#043175] hover:underline hover:text-blue-800 text-sm">&larr; Quay về trang chủ</a>
-                    <h2 className="text-2xl font-bold text-center text-[#043175]">Đăng ký</h2>
-                    <form className="p-3" onSubmit={handleSubmit(onSubmit)}>
+            <main className="flex items-center justify-center h-screen">
+                <div className="w-full max-w-md bg-white p-9 my-[50px] rounded-xl shadow-xl mx-auto">
+                    <div className="text-center mb-6">
+                        <a href="/">
+                            <img src="/assets/images/logos/logo-light.png" className="w-[20] h-20" alt="logo" />
+                        </a>
+                    </div>
+
+                    <div className="flex gap-4 mb-6">
+                        <button className="flex items-center justify-center w-full border border-gray-400 rounded-xl py-2 hover:bg-gray-100">
+                            <img src="/assets/images/logos/google.png" alt="google" className="w-4 h-4 mr-2" />
+                            <span>Đăng Nhập Google</span>
+                        </button>
+                    </div>
+
+                    <div className="flex items-center justify-center my-9">
+                        <hr className="flex-grow border-t-2 border-gray-400" />
+                        <span className="mx-4 text-gray-900">Đăng Ký Bằng</span>
+                        <hr className="flex-grow border-t-2 border-gray-500" />
+                    </div>
+
+                    <form className="space-y-4" onSubmit={handleSubmit(handleRegister)}>
                         <div>
-                            <label className="block text-sm mb-1 font-bold text-[#043175]">Họ và Tên</label>
-                            <input type="text" className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                                {...register("fullName", {
-                                    required: { value: true, message: "Họ và Tên không được để trống" }
-                                })}
-                            />
-                            {errors.fullName && <small className="text-red-500">{errors.fullName.message}</small>}
-                        </div>
-
-                        <div className="mt-3">
-                            <label className="block text-sm mb-1 font-bold text-[#043175]">Số điện thoại</label>
-                            <input type="tel" className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                            <label className="block text-sm font-bold text-[#043175] mb-1">Số điện thoại</label>
+                            <input
+                                type="tel"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                                 {...register("phone", {
-                                    required: "Số điện thoại không được để trống",
+                                    required: "Vui lòng nhập số điện thoại",
                                     pattern: {
-                                        value: /^[0-9]{10}$/,
-                                        message: "Số điện thoại không hợp lệ, chỉ được nhập 10 chữ số",
+                                        value: /^(0|\+84)[0-9]{9}$/,
+                                        message: "Số điện thoại không hợp lệ",
                                     },
                                 })}
                             />
-                            {errors.phone && <small className="text-red-500">{errors.phone.message}</small>}
+                            {errors.phone && <small className="text-red-600">{errors.phone.message}</small>}
                         </div>
-
-                        <div className="mt-3">
-                            <label className="block text-sm mb-1 font-bold text-[#043175]">Email</label>
-                            <input type="email" className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                                {...register("email", {
-                                    required: "Email không được để trống",
-                                    pattern: {
-                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                        message: "Email không hợp lệ",
-                                    },
-                                })}
-                            />
-                            {errors.email && <small className="text-red-500">{errors.email.message}</small>}
-                        </div>
-
-                        <div className="mt-3">
-                            <label className="block text-sm mb-1 font-bold text-[#043175]">Mật khẩu</label>
-                            <input type="password" className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                                {...register("password", {
-                                    required: "Mật khẩu không được để trống",
-                                    minLength: {
-                                        value: 5,
-                                        message: "Mật khẩu phải ít nhất 5 ký tự",
-                                    },
-                                })}
-                            />
-                            {errors.password && <small className="text-red-500">{errors.password.message}</small>}
-                        </div>
-
-
-                        <button type="submit" className="w-full bg-[#043175] text-white py-2 rounded-lg mt-4 hover:bg-blue-800">Đăng ký</button>
-
-                        <p className="text-center text-sm mt-3">
-                            Đã có tài khoản? <Link to="/login" className="text-[#043175] hover:underline">Đăng nhập</Link>
-                        </p>
+                        <button
+                            type="submit"
+                            className="w-full bg-[#043175] text-white py-2 rounded-lg hover:bg-[#031f4d] transition-colors"
+                        >
+                            Đăng ký
+                        </button>
                     </form>
+
+                    <p className="text-center text-sm mt-4">
+                        Bạn đã biết BusGo?{" "}
+                        <Link to="/dang-nhap" className="text-blue-600 hover:underline">
+                            Đăng nhập
+                        </Link>
+                    </p>
+                    <p className="text-center text-sm mt-1">
+                        Bạn không nhớ mật khẩu?{" "}
+                        <Link to="/resetForm" className="text-blue-600 hover:underline">
+                            Quên mật khẩu
+                        </Link>
+                    </p>
                 </div>
+
             </main>
         </>
     )

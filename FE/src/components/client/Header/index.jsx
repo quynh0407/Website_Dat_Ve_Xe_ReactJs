@@ -21,12 +21,12 @@ function Header() {
                                     <a href="#">Đặt chỗ của tôi</a>
                                 </li>
                                 <li class="border border-white rounded-lg px-4 py-2 hover:bg-black/10 whitespace-nowrap">
-                                    <a href="login.html" class="no-underline">
+                                    <Link to="/dang-ky" class="no-underline">
                                         <i class="fas fa-user mr-2"></i> Đăng ký
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li class="rounded-lg px-4 py-2 bg-sky-500 hover:text-white transition duration-300 font-bold hover:bg-sky-600/50 whitespace-nowrap">
-                                    <a href="register.html" class="no-underline">Đăng nhập</a>
+                                    <Link to="/dang-nhap" class="no-underline">Đăng nhập</Link>
                                 </li>
                             </ul>
 
@@ -137,9 +137,9 @@ function Header() {
                 <ul class="nav-items nav-level-1 font-bold">
 
                     <li class="nav-item">
-                        <a class="nav-link linkmenu !text-orange-600" href="#">
+                        <Link to="/" class="nav-link linkmenu !text-orange-600" href="#">
                             Trang chủ
-                        </a>
+                        </Link>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link linkmenu" href="#">
@@ -180,14 +180,14 @@ function Header() {
                         </a>
                         <ul class="nav-items nav-expand-content">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <Link to="/dang-nhap" class="nav-link" href="#">
                                     Đăng nhập
-                                </a>
+                                </Link>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <Link to="/dang-ky" class="nav-link" href="#">
                                     Đăng ký
-                                </a>
+                                </Link>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
