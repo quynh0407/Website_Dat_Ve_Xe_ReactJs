@@ -9,7 +9,7 @@ import { useMediaQuery } from 'react-responsive';
 import { X } from 'lucide-react'; 
 
 function BookingHistory() {
-
+    const navigate = useNavigate();
     const [BusBookingDetailData, setBusBookingDetailData] = useState([]);
     const [selectedBooking, setSelectedBooking] = useState(null);
     const [showCancelModal, setShowCancelModal] = useState(false);
@@ -24,7 +24,7 @@ function BookingHistory() {
 
     const handleViewClick = (bookingId) => {
         if (isMobile) {
-            window.location.href = `/lich-su-dat-ve/${bookingId}`;
+            navigate(`/lich-su-dat-ve/${bookingId}`);
         } else {
             setShowDetail(true);
             setSelectedBooking(bookingId);
@@ -90,7 +90,9 @@ function BookingHistory() {
                                 <tbody>
                                     {Array.from({ length: 15 }).map((_, i) => (
                                         <tr key={i} className="hover:bg-gray-50">
-                                            <td className="border px-4 py-2">MV00{i + 1}</td>
+                                            <td className="border hover:text-orange-700 px-4 py-2" onClick={() => handleViewClick(1)}>
+                                                MV00{i + 1}
+                                                </td>
                                             <td className="border px-4 py-2">{Math.floor(Math.random() * 5) + 1}</td>
                                             <td className="border px-4 py-2 max-w-[200px] line-clamp-2 overflow-hidden text-ellipsis">
                                                 Lê Bình, Cái Răng, Cần Thơ → Quận 1, TP. Hồ Chí Minh
@@ -102,12 +104,7 @@ function BookingHistory() {
                                                 {["Hủy", "Chờ thanh toán", "Hết hạn", "Thành công"][i % 4]}
                                             </td>
                                             <td className="border px-4 py-2">
-                                                <button
-                                                    className="text-blue-600 hover:underline"
-                                                    onClick={() => handleViewClick(1)}
-                                                >
-                                                    Xem
-                                                </button>
+                                               
                                             </td>
                                         </tr>
                                     ))}

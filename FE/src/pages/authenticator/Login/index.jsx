@@ -18,9 +18,9 @@ function Login() {
         <main className="flex items-center justify-center h-screen">
             <div className="w-full max-w-md bg-white p-9 my-[50px] rounded-xl shadow-xl mx-auto">
                 <div className="text-center mb-6">
-                    <a href="/">
+                    <Link to="/">
                         <img src="/assets/images/logos/logo-light.png" className="w-[20] h-20" alt="logo" />
-                    </a>
+                    </Link>
                 </div>
 
                 <div className="flex gap-4 mb-6">

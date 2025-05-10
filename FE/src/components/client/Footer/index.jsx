@@ -4,7 +4,7 @@ function Footer() {
             <footer>
                 <div className="footer-top"></div>
                 <div className="footer-bottom bg-[#1C2930] text-white py-10">
-    <div className="px-4 w-full lg:w-[80%] mx-auto">
+        <div className="px-4 w-full lg:w-[80%] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
             <div className="text-center lg:text-left mb-6 md:mb-0 grid grid-cols-1 ">
@@ -19,7 +19,7 @@ function Footer() {
             </div>
 
        
-            <div className="text-left lg:text-left mobile:ml-10 lg:ml-[40%] md:ml-10 mb-6 md:mb-0">
+            <div className="text-left lg:text-left  lg:ml-[40%] md:ml-10 mb-6 md:mb-0">
                 <h3 className="text-lg text-gray-500 font-semibold mb-3">Về chúng tôi</h3>
                 <ul className="space-y-2 text-gray-300">
                     <li><a href="#" className="hover:text-gray-100">Liên hệ với chúng tôi</a></li>
@@ -38,7 +38,7 @@ function Footer() {
                 </ul>
             </div>
 
-            <div className="text-left mobile:ml-10 md:ml-10 lg:ml-[40%] lg:text-left">
+            <div className="text-left  md:ml-10 lg:ml-[40%] lg:text-left">
                 <h3 className="text-lg text-gray-500 font-semibold mb-3">Chính sách</h3>
                 <ul className="space-y-2 text-gray-300">
                     <li><a href="#" className="hover:text-gray-100">Chính sách bảo mật</a></li>
@@ -49,7 +49,7 @@ function Footer() {
     </div>
 
     <div className="border-t border-gray-600 mt-8 pt-4 text-center text-gray-400 text-sm">
-        © 2025 Bụi đường - Tất cả quyền được bảo lưu.
+        © 2025 BUSGO - Tất cả quyền được bảo lưu.
     </div>
 </div>
 

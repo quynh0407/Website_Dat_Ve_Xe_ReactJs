@@ -62,6 +62,7 @@ import BlogCategoryGetAll from "./pages/admin/blog/getAllCategory";
 import BlogCategoryCreate from "./pages/admin/blog/CreateCategory";
 import BlogCategoryEdit from "./pages/admin/blog/EditCategory";
 import BlogDetail from "./pages/client/BlogDetail";
+import ManageBooking from "./pages/client/ManageBooking";
 
 
 const AppRoutes = () => {
@@ -75,6 +76,7 @@ const AppRoutes = () => {
         <Route path="blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/blog/category/:id" element={<Blog />} />
+        <Route path="/tra-cuu-ve" element={<ManageBooking />} />
       </Route>
 
 

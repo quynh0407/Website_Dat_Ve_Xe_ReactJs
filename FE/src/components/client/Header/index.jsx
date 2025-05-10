@@ -7,19 +7,20 @@ import '../../../styles/client/scss/pages/home.scss';
 
 function Header() {
     const [dropdownOpen, setDropdownOpen] = useState(false);
+//=============== MENU MOBILE ==================
 
     return (
         <>
             <header className="p-0 pb-2 mb-3 h-auto" >
                 <div className="menu fixed top-0 left-0 w-full z-50" id="menu">
                     <div className="menu-top flex justify-between w-[80%] lg:w-[80%] mx-auto items-center py-4">
-                        <div className="menu-top-left font-bold text-2xl">
+                        <Link to="/" className="menu-top-left font-bold text-2xl">
                             <img src="/assets/images/main/logo.png" alt className="w-1/2 lg:w-[150px] md:w-[100px] " />
-                        </div>
+                        </Link>
                         <div className="menu-top-right flex p-2">
                             <ul className="flex flex-row flex-nowrap gap-4 justify-between list-none items-center text-base md:text-[1rem] lg:text-[1rem]">
                                 <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md whitespace-nowrap">
-                                    <a href="#">Hỗ trợ</a>
+                                    <Link to="#">Hỗ trợ</Link>
                                 </li>
                                 <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md whitespace-nowrap">
                                     <Link to="/lich-su-dat-ve">Đặt chỗ của tôi</Link>
@@ -39,16 +40,22 @@ function Header() {
                     <hr className="border-gray-500 opacity-50" />
                     <div className="menu-bottom flex justify-start w-[80%] lg:w-[80%] mx-auto items-center py-1">
                         <ul className="flex flex-wrap gap-4 justify-center md:justify-start list-none items-center font-bold">
-                            <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Đặt
-                                vé xe</li>
-                            <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Về
-                                chúng tôi</li>
-                            <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md"><a href="./bus.html">Lịch
-                                trình</a></li>
-                            <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Tin
-                                tức</li>
-                            <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">Liên
-                                hệ</li>
+                            <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">
+                              <Link to="/">Trang chủ</Link>
+                            </li>
+                           
+                            <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">
+                            <Link to="/tra-cuu-ve">Đặt vé xe</Link> </li>
+                           
+                            <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">
+                            <Link href="./bus.html"> Lịch trình</Link></li>
+                            <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">
+                             <Link>Tin tức</Link> </li>
+                            <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">
+                            <Link to=""> Liên hệ</Link>
+                           </li>
+                             <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">
+                            <Link to="">Về chúng tôi</Link> </li>
                         </ul>
                     </div>
                     <hr className="border-gray-500 opacity-50" />
@@ -58,9 +65,9 @@ function Header() {
                     <div className="menu-top flex justify-between w-[90%] mx-auto items-center py-4">
                         <button type="submit" className="hamburger material-icons" id="ham-main">menu</button>
 
-                        <div className="menu-top-left font-bold w-[14%] ">
+                        <Link to="/" className="menu-top-left font-bold w-[14%] ">
                             <img src="/assets/images/main/logo.png" alt="Logo" className=" w-[100%]" />
-                        </div>
+                        </Link>
                         <div className="relative">
                             <button
                                 type="button"
@@ -189,42 +196,38 @@ function Header() {
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link linkmenu" href="#">
+                        <Link to="/tra-cuu-ve" className="nav-link linkmenu" href="#">
                             Tra cứu vé
-                        </a>
+                        </Link>
                     </li>
+
                     <li className="nav-item">
-                        <a className="nav-link linkmenu" href="#">
-                            Về chúng tôi
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link linkmenu" href="#">
+                        <Link to="/tin-tuc" className="nav-link linkmenu" href="#">
                             Tin tức
-                        </a>
+                        </Link>
                     </li>
 
 
                     <li className="nav-item">
-                        <a className="nav-link linkmenu" href="#">
+                        <Link to="/lich-trinh" className="nav-link linkmenu" href="#">
                             Lịch trình
-                        </a>
+                        </Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link linkmenu" href="#">
+                        <Link to="/ve-chung-toi" className="nav-link linkmenu" href="#">
                             Về chúng tôi
-                        </a>
+                        </Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link linkmenu" href="#">
+                        <Link to="/lien-he" className="nav-link linkmenu" href="#">
                             Liên hệ
-                        </a>
+                        </Link>
                     </li>
 
                     <li className="nav-item nav-expand">
-                        <a className="nav-link linkmenu nav-expand-link" href="#">
+                        <p className="nav-link linkmenu nav-expand-link">
                             Tài khoản
-                        </a>
+                        </p>
                         <ul className="nav-items nav-expand-content">
                             <li className="nav-item">
                                 <Link to="/dang-nhap" className="nav-link" href="#">
@@ -237,14 +240,14 @@ function Header() {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">
+                                <Link to="/thong-tin-tai-khoan" className="nav-link" href="#">
                                     Thông tin tài khoản
-                                </a>
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">
+                                <Link to="/lich-su-dat-ve" className="nav-link" href="#">
                                     Lịch sử đặt vé
-                                </a>
+                                </Link>
                             </li>
 
                         </ul>

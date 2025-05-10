@@ -5,13 +5,10 @@ import { CheckCircle, Download, Share2, ArrowLeft, MoreVertical } from 'lucide-r
 function BookingDetail() {
     const navigate = useNavigate();
     const handleBack = () => {
-        if (window.history.length > 1) {
-          navigate(-1);
-        } else {
-          navigate('/'); 
-        }
-      };
-    
+        navigate(-1);
+    };
+
+
 
     const handleDownload = () => {
         const link = document.createElement('a');
@@ -32,7 +29,7 @@ function BookingDetail() {
         }
     };
 
-    
+
     return (
         <>
             <div className="max-w-3xl mx-auto hidden lg:block bg-white rounded-lg shadow-lg p-6 mt-10">
@@ -51,7 +48,7 @@ function BookingDetail() {
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8  p-4 ">
                         <div className="space-y-2 text-left text-sm text-gray-700">
-                            <p><strong>Họ và tên:</strong> Cao Quốc Lĩnh</p>
+                            <p><strong>Họ và tên:</strong> Kha BAo Duyen</p>
                             <p><strong>Số điện thoại:</strong> 086xxxx010</p>
                             <p><strong>Email:</strong> cao************@gmail.com</p>
                         </div>

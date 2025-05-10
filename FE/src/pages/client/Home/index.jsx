@@ -1,7 +1,5 @@
 
 function Home() {
-
-
     return (
         <main class="home mx-auto w-full lg:w-[80%] mb-5 px-4" id="home">
             <div class="bg-white p-4 rounded-lg shadow mt-4 text-center mx-auto">
