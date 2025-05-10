@@ -7,7 +7,6 @@ import '../../../styles/client/scss/pages/home.scss';
 
 function Header() {
     const [dropdownOpen, setDropdownOpen] = useState(false);
-//=============== MENU MOBILE ==================
 
     return (
         <>
@@ -50,12 +49,12 @@ function Header() {
                             <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">
                             <Link href="./bus.html"> Lịch trình</Link></li>
                             <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">
-                             <Link>Tin tức</Link> </li>
+                             <Link to="tin-tuc">Tin tức</Link> </li>
                             <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">
-                            <Link to=""> Liên hệ</Link>
+                            <Link to="lien-he"> Liên hệ</Link>
                            </li>
                              <li className="hover:bg-black/10 px-4 py-2 cursor-pointer rounded-md">
-                            <Link to="">Về chúng tôi</Link> </li>
+                            <Link to="ve-chung-toi">Về chúng tôi</Link> </li>
                         </ul>
                     </div>
                     <hr className="border-gray-500 opacity-50" />

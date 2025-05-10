@@ -63,6 +63,7 @@ import BlogCategoryCreate from "./pages/admin/blog/CreateCategory";
 import BlogCategoryEdit from "./pages/admin/blog/EditCategory";
 import BlogDetail from "./pages/client/BlogDetail";
 import ManageBooking from "./pages/client/ManageBooking";
+import Password from "./pages/authenticator/Register/Password";
 
 
 const AppRoutes = () => {
@@ -72,9 +73,9 @@ const AppRoutes = () => {
       <Route path="/" element={<ClientLayout />}>
         <Route index element={<Home />} />
         <Route path="bus" element={<Bus />} />
-        <Route path="about" element={<AboutUs />} />
-        <Route path="blog" element={<Blog />} />
-        <Route path="/blog/:id" element={<BlogDetail />} />
+        <Route path="ve-chung-toi" element={<AboutUs />} />
+        <Route path="tin-tuc" element={<Blog />} />
+        <Route path="/tin-tuc/:id" element={<BlogDetail />} />
         <Route path="/blog/category/:id" element={<Blog />} />
         <Route path="/tra-cuu-ve" element={<ManageBooking />} />
       </Route>
@@ -84,6 +85,7 @@ const AppRoutes = () => {
       <Route path="dang-nhap" element={<Login />} />
       <Route path="dang-ky" element={<Register />} />
       <Route path="dang-ky/otp" element={<Otp />} />
+      <Route path="dat-mat-khau" element={<Password />} />
       <Route path="lich-su-dat-ve/:id" element={<BookingDetail />} />
 
 

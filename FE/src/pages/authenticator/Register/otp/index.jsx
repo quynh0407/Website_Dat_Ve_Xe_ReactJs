@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState, useEffect} from "react";
+import { useRef, useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 function Opt() {
     const { handleSubmit } = useForm();
@@ -22,7 +23,7 @@ function Opt() {
         return () => clearInterval(timer);
     }, [time]);
 
-//============[ Xu ly nhap otp ]=================
+    //============[ Xu ly nhap otp ]=================
     const otpRefs = [
         useRef(null),
         useRef(null),
@@ -31,13 +32,18 @@ function Opt() {
         useRef(null),
         useRef(null),
     ];
-    const otpValues = useRef(["", "", "", "", "", ""]);
+    const [otpValues, setOtpValues] = useState(["", "", "", "", "", ""]);
 
     const handleChange = (e, index) => {
         const value = e.target.value;
         if (/^\d$/.test(value)) {
-            otpValues.current[index] = value;
-            if (index < 5) otpRefs[index + 1].current.focus();
+            const newOtp = [...otpValues];
+            newOtp[index] = value;
+            setOtpValues(newOtp);
+
+            if (index < 5) {
+                otpRefs[index + 1].current.focus();
+            }
         } else {
             e.target.value = "";
         }
@@ -48,22 +54,28 @@ function Opt() {
             otpRefs[index - 1].current.focus();
         }
     };
-//============[ Xu ly thgian dem nguoc va gui lai otp ]=================
+    //============[ Xu ly thgian dem nguoc va gui lai otp ]=================
 
-const handleResendOtp = () => {
-    setTime(120); 
-    setCanResend(false);
-};
+    const handleResendOtp = () => {
+        setTime(120);
+        setCanResend(false);
+    };
 
-const formatTime = (seconds) => {
-    const min = Math.floor(seconds / 60);
-    const sec = seconds % 60;
-    return `${min}:${sec.toString().padStart(2, "0")}`;
-};
+    const formatTime = (seconds) => {
+        const min = Math.floor(seconds / 60);
+        const sec = seconds % 60;
+        return `${min}:${sec.toString().padStart(2, "0")}`;
+    };
 
-    const handleRegister = () => {
-        const otp = otpValues.current.join("");
-        console.log("opt nhập:", otp);
+
+    const handlePassword = () => {
+        const otp = otpValues.join("");
+        if (otp.length !== 6) {
+            toast.error("Vui lòng nhập đầy đủ mã xác thực gồm 6 chữ số.");
+            return;
+        }
+        console.log("otp nhập:", otp);
+        navigate("/dat-mat-khau");
     };
 
     return (
@@ -83,7 +95,7 @@ const formatTime = (seconds) => {
                     <hr className="flex-grow border-t-2 border-gray-500" />
                 </div>
 
-                <form className="space-y-4" onSubmit={handleSubmit(handleRegister)}>
+                <form className="space-y-4" onSubmit={handleSubmit(handlePassword)}>
                     <p className="text-center text-sm text-gray-700 mb-2">
                         Mã xác thực đã được gửi về số <span className="text-sky-900 font-semibold">0968935134</span>
                     </p>
@@ -111,22 +123,22 @@ const formatTime = (seconds) => {
                 </form>
 
                 <div className="text-center mt-2 text-sm text-gray-700">
-    {!canResend ? (
-        <p>
-            Gửi lại mã sau: <span className="font-semibold text-blue-600">{formatTime(time)}</span>
-        </p>
-    ) : (
-        <button
-            onClick={handleResendOtp}
-            className="text-blue-600 hover:underline font-medium"
-            type="button"
-        >
-            Gửi lại mã
-        </button>
-    )}
-</div>
+                    {!canResend ? (
+                        <p>
+                            Gửi lại mã sau: <span className="font-semibold text-blue-600">{formatTime(time)}</span>
+                        </p>
+                    ) : (
+                        <button
+                            onClick={handleResendOtp}
+                            className="text-blue-600 hover:underline font-medium"
+                            type="button"
+                        >
+                            Gửi lại mã
+                        </button>
+                    )}
+                </div>
 
-          
+
             </div>
         </main>
     );

@@ -26,8 +26,8 @@ function ManageBooking() {
     }
     return (
         <>
-            <main className="flex lg:items-center lg:justify-center lg:h-screen">
-                <div className="w-[90%]  lg:max-w-md  bg-white p-9 my-[50px]  rounded-xl shadow-xl mx-auto">
+            <main className="flex lg:items-center lg:justify-center  lg:mt-[10%]">
+                <div className="w-[90%]  lg:max-w-xl  bg-white p-9 my-[50px]  rounded-xl shadow-xl mx-auto">
                     <form action="" onSubmit={handleSubmit(() => handleManageBooking(1))}>
                         <h1 className="text-[#031f4d] text-center !text-2xl  ">TRA CỨU THÔNG TIN ĐẶT VÉ</h1>
                         <div className="pt-4 py-2">

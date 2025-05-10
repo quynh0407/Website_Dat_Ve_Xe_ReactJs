@@ -8,8 +8,6 @@ function BookingDetail() {
         navigate(-1);
     };
 
-
-
     const handleDownload = () => {
         const link = document.createElement('a');
         link.href = 'https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=245887897';
@@ -197,6 +195,30 @@ function BookingDetail() {
                                 <strong className="text-gray-500">Điểm xuống xe:</strong>
                                 <p className="text-right w-[70%]">
                                     68 Trần Chiên, Lê Bình, Cái Răng, Cần Thơ, Vietnam
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="border-[1px] border-gray-200 p-2 bg-slate-100 rounded">
+                            <div className="flex justify-between mb-2">
+                                <strong className="text-gray-500">Giá vé</strong>
+                                <p className="text-right w-[70%]">
+                                  165,000đ
+                                </p>
+                            </div>
+                            <div className="flex justify-between mb-2">
+                                <strong className="text-gray-500">Phí thanh toán</strong>
+                                <p className="text-right w-[70%]">
+                                  0đ
+                                </p>
+                            </div>
+                            <hr className="border-gray-400 py-2"/>
+                            <div className="flex justify-between mb-2">
+                                <strong className="text-gray-500 "><p>Thanh toán với </p><br /> 
+                                <span className="bg-green-600  text-white p-2 rounded">Momo</span>
+                                </strong>
+                                <p className="text-right text-xl w-[70%]">
+                                  165,000đ
                                 </p>
                             </div>
                         </div>

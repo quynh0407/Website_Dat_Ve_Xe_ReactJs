@@ -8,6 +8,8 @@ import "../../src/styles/client/scss/index.scss";
 import 'intersection-observer';
 import { useState } from "react";
 import { HashLoader } from "react-spinners";
+
+
 import {
   initSwiper,
   initMenu,
